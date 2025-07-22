@@ -1,0 +1,53 @@
+{% load static i18n %}
+<header class="main-header header-three">
+    <div class="header-upper">
+        <div class="container clearfix">
+            <div class="header-inner py-20">
+
+                <div class="logo-outer">
+                    <div class="logo">
+                        <a href="{% url 'page:index' %}">
+                            <img src="{% static 'assets/images/logos/logo.png' %}" alt="Logo StarChat">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nav-outer d-flex align-items-center clearfix mx-lg-auto">
+                    <nav class="main-menu navbar-expand-lg">
+                        <div class="navbar-header">
+                            <div class="logo-mobile">
+                                <a href="{% url 'page:index' %}">
+                                    <img src="{% static 'assets/images/logos/logo.png' %}" alt="Logo StarChat">
+                                </a>
+                            </div>
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="main-menu">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="navbar-collapse collapse clearfix" id="main-menu">
+                            <ul class="navigation clearfix">
+                                <li><a href="#home">{% trans "Início" %}</a></li>
+                                <li><a href="#solucoes">{% trans "Soluções" %}</a></li>
+                                <li><a href="#widget">{% trans "Widget" %}</a></li>
+                                <li><a href="#auto">{% trans "Automatizações" %}</a></li>
+                                <li><a href="#servicos">{% trans "Serviços" %}</a></li>
+                                <li><a href="#sistema">{% trans "Sistema" %}</a></li>
+
+                            </ul>
+                        </div>
+                    </nav>
+
+                </div>
+
+                <div class="menu-right d-none d-lg-flex align-items-center">
+                    <a href="{% url 'admin:login' %}" class="login">{% trans "Entrar" %} <i class="fas fa-lock"></i></a>
+                    <a href="{% url 'auth:register' %}" class="theme-btn style-two">{% trans "Criar Conta" %} <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>

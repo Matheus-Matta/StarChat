@@ -1,0 +1,121 @@
+{% extends 'auth/auth_base.html' %}
+{% load static %}
+{% block content %}
+
+<div
+  style="max-width: 460px; min-width: 460px"
+  class="text-center p-4 shadow rounded bg-white mx-auto mt-5"
+>
+  <!-- Logo -->
+  <a href="/">
+    <img
+      src="{% static 'assets/images/logos/logo.png' %}"
+      alt="Starchat"
+      class="mb-4"
+    />
+  </a>
+
+  <h2 class="mb-3 fs-2">Bem‑vindo!</h2>
+  <p class="text-muted mb-4">Faça login para continuar no Starchat</p>
+
+  <form
+    method="post"
+    action="{% url 'admin:login' %}"
+    novalidate
+  >
+    {% csrf_token %}
+
+    {# non‑field errors #}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {{ form.non_field_errors|striptags }}
+      </div>
+    {% endif %}
+
+<!-- Usuário (antes era standalone) -->
+<div class="mb-2 text-start">
+  <label for="id_username" class="form-label">Usuário</label>
+  <div class="input-group">
+    <span class="input-group-text bg-white border-end-0">
+      <i class="fas fa-envelope"></i>
+    </span>
+    <input
+      type="text"
+      name="{{ form.username.html_name }}"
+      id="id_username"
+      class="form-control ps-2 h-48 {% if form.username.errors %}is-invalid{% endif %}"
+      placeholder="Digite seu usuário"
+      value="{{ form.username.value|default_if_none:'' }}"
+      required
+    />
+  </div>
+  {% if form.username.errors %}
+    <div class="invalid-feedback d-block">
+      {{ form.username.errors.0 }}
+    </div>
+  {% endif %}
+</div>
+
+<!-- Senha -->
+<div class="mb-2 text-start">
+  <label for="id_password" class="form-label">Senha</label>
+  <div class="input-group position-relative">
+    <span class="input-group-text bg-white border-end-0">
+      <i class="fas fa-lock"></i>
+    </span>
+    <input
+      type="password"
+      name="{{ form.password.html_name }}"
+      id="id_password"
+      class="form-control ps-2 h-48 {% if form.password.errors %}is-invalid{% endif %}"
+      placeholder="••••••••"
+      required
+    />
+    <span class="input-group-text bg-white border-start-0" style="cursor:pointer" id="togglePassword">
+      <i class="fas fa-eye"></i>
+    </span>
+  </div>
+  {% if form.password.errors %}
+    <div class="invalid-feedback d-block">
+      {{ form.password.errors.0 }}
+    </div>
+  {% endif %}
+  <div class="form-text text-end">
+    <a href="{% url 'auth:password_reset' %}" class="read-more">Esqueceu sua senha?</a>
+  </div>
+</div>
+
+    <!-- Submit -->
+    <button type="submit" class="theme-btn style-six w-100 py-2 mb-3">
+      Entrar <i class="fas fa-arrow-right"></i>
+    </button>
+  </form>
+
+  <p class="small mb-2">
+    Ainda não tem conta?
+    <a href="{% url 'auth:register' %}" class="read-more">Cadastre‑se agora</a>
+  </p>
+  <a class="read-more" href="{% url 'page:index' %}">
+     Voltar
+  </a>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+  {# toggle eye script #}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const pwd = document.getElementById('id_password');
+    const toggle = document.getElementById('togglePassword');
+    toggle.addEventListener('click', ()=> {
+      const isPwd = pwd.type === 'password';
+      pwd.type = isPwd ? 'text' : 'password';
+      toggle.querySelector('i')
+            .classList.toggle('fa-eye-slash', isPwd);
+      toggle.querySelector('i')
+            .classList.toggle('fa-eye', !isPwd);
+    });
+  });
+</script>
+{% endblock %}

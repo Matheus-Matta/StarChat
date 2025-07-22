@@ -1,0 +1,281 @@
+{% extends 'auth/auth_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<div
+  style="max-width: 860px; min-width: 360px; min-height: 600px"
+  class="text-center p-4 shadow rounded bg-white mx-auto mt-5"
+>
+  <!-- Logo -->
+  <a href="/">
+    <img
+      src="{% static 'assets/images/logos/logo.png' %}"
+      alt="Starchat"
+      class="mb-4"
+    />
+  </a>
+
+  <h2 class="mb-3 fs-2">{% trans "Inscrever‑se" %}</h2>
+  <p class="text-muted mb-4">{% trans "Crie sua conta grátis e teste sem limites." %}</p>
+
+  <form
+    method="post"
+    action="{% url 'auth:register' %}"
+    novalidate
+  >
+    {% csrf_token %}
+
+    {# Mensagens gerais #}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-danger">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="row g-3">
+      {# Email #}
+      <div class="col-md-6 text-start">
+        <label for="id_email" class="form-label">{% trans "Email" %}</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            name="{{ form.email.html_name }}"
+            id="id_email"
+            class="form-control ps-2 h-48 {% if form.email.errors %}is-invalid{% endif %}"
+            placeholder="{% trans 'seu@email.com' %}"
+            value="{{ form.email.value|default_if_none:'' }}"
+            required
+          />
+        </div>
+        {% if form.email.errors %}
+          <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      
+      {# Tipo de Empresa #}
+      <div class="col-md-6 text-start">
+        <label for="id_company_type" class="form-label">{% trans "Tipo de Empresa" %}</label>
+        <select
+          name="{{ form.company_type.html_name }}"
+          id="id_company_type"
+          class="form-select h-48 pt-1 {% if form.company_type.errors %}is-invalid{% endif %}"
+          required
+        >
+          {% for val,label in form.company_type.field.choices %}
+            <option value="{{ val }}" {% if form.company_type.value == val %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+        {% if form.company_type.errors %}
+          <div class="invalid-feedback d-block">{{ form.company_type.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      {# Senha #}
+      <div class="col-md-6 text-start">
+        <label for="id_password" class="form-label">{% trans "Senha" %}</label>
+        <div class="input-group position-relative">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input
+            type="password"
+            name="{{ form.password.html_name }}"
+            id="id_password"
+            class="form-control ps-2 h-48 {% if form.password.errors %}is-invalid{% endif %}"
+            placeholder="••••••••"
+            required
+          />
+          <span
+            class="input-group-text bg-white border-start-0"
+            id="togglePassword"
+            style="cursor: pointer;"
+          >
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+        {% if form.password.errors %}
+          <div class="invalid-feedback d-block">{{ form.password.errors.0 }}</div>
+        {% endif %}
+        <!-- barra de força -->
+        <div style="height:12px;" class="w-100 bg-gray-200 rounded mt-2">
+          <div id="password-strength-bar" class="h-100 rounded transition-all" style="width:0">
+          </div>
+       
+        </div>
+      </div>
+
+      {# Confirmar Senha #}
+      <div class="col-md-6 text-start">
+        <label for="id_confirm_password" class="form-label">{% trans "Confirmar Senha" %}</label>
+        <div class="input-group position-relative">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input
+            type="password"
+            name="{{ form.confirm_password.html_name }}"
+            id="id_confirm_password"
+            class="form-control ps-2 h-48 {% if form.confirm_password.errors %}is-invalid{% endif %}"
+            placeholder="••••••••"
+            required
+          />
+          <span
+            class="input-group-text bg-white border-start-0"
+            id="toggleConfirmPassword"
+            style="cursor: pointer;"
+          >
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+        {% if form.confirm_password.errors %}
+          <div class="invalid-feedback d-block">{{ form.confirm_password.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      {# Nome da Empresa #}
+      <div class="col-md-6 text-start">
+        <label for="id_company_name" class="form-label">{% trans "Nome da Empresa" %}</label>
+        <input
+          type="text"
+          name="{{ form.company_name.html_name }}"
+          id="id_company_name"
+          class="form-control ps-2 h-48 {% if form.company_name.errors %}is-invalid{% endif %}"
+          value="{{ form.company_name.value|default_if_none:'' }}"
+          required
+        />
+        {% if form.company_name.errors %}
+          <div class="invalid-feedback d-block">{{ form.company_name.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      {# CNPJ #}
+      <div class="col-md-6 text-start">
+        <label for="id_cnpj" class="form-label">{% trans "CNPJ" %}</label>
+        <input
+          type="text"
+          name="{{ form.cnpj.html_name }}"
+          id="id_cnpj"
+          class="form-control ps-2 h-48 {% if form.cnpj.errors %}is-invalid{% endif %}"
+          value="{{ form.cnpj.value|default_if_none:'' }}"
+          required
+        />
+        {% if form.cnpj.errors %}
+          <div class="invalid-feedback d-block">{{ form.cnpj.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      {# Telefone #}
+      <div class="col-md-6 text-start">
+        <label for="id_phone" class="form-label">{% trans "Telefone" %}</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-phone"></i>
+          </span>
+          <input
+            type="text"
+            name="{{ form.phone.html_name }}"
+            id="id_phone"
+            class="form-control ps-2 h-48 {% if form.phone.errors %}is-invalid{% endif %}"
+            placeholder="(00) 00000-0000"
+            value="{{ form.phone.value|default_if_none:'' }}"
+            required
+          />
+        </div>
+        {% if form.phone.errors %}
+          <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    {# Botão de submit #}
+    <div class="mt-4">
+      <button style="width: 300px;" type="submit" class="theme-btn style-six py-2 mb-3">
+        {% trans "Inscrever‑se" %} <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <p class="small mb-2">
+        {% trans "Já tem uma conta?" %}
+        <a href="{% url 'admin:login' %}" class="read-more">{% trans "Entrar" %}</a>
+      </p>
+      <a class="read-more" href="{% url 'page:index' %}">{% trans "Voltar" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function setupToggle(inputId, toggleId) {
+    const pw = document.getElementById(inputId);
+    const tp = document.getElementById(toggleId);
+    if (!pw || !tp) return;
+    tp.addEventListener('click', () => {
+      const isPwd = pw.type === 'password';
+      pw.type = isPwd ? 'text' : 'password';
+      tp.querySelector('i')
+        .classList.toggle('fa-eye-slash', isPwd);
+      tp.querySelector('i')
+        .classList.toggle('fa-eye', !isPwd);
+    });
+  }
+  setupToggle('id_password', 'togglePassword');
+  setupToggle('id_confirm_password', 'toggleConfirmPassword');
+
+  $('#id_phone').mask('(00) 00000-0000', {
+    placeholder: '(00) 00000-0000'
+  });
+  $('#id_cnpj').mask('00.000.000/0000-00', {
+    placeholder: '00.000.000/0000-00'
+  });
+
+  // **Barra de força de senha**
+  const pwdInput = document.getElementById('id_password');
+  const strengthBar = document.getElementById('password-strength-bar');
+  const strengthText = document.getElementById('password-strength-text');
+
+  pwdInput.addEventListener('input', () => {
+    const val = pwdInput.value;
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const pct = (score / 4) * 100;
+    strengthBar.style.width = pct + '%';
+
+    // cores: vermelho<50%, amarelo<75%, verde ≥75%
+    if (pct < 50) {
+      strengthBar.style.backgroundColor = '#dc2626';
+    } else if (pct < 75) {
+      strengthBar.style.backgroundColor = '#f59e0b';
+    } else {
+      strengthBar.style.backgroundColor = '#16a34a';
+    }
+
+    if (pct === 100) {
+      strengthText.textContent = 'Senha forte!';
+      strengthText.classList.remove('text-muted');
+      strengthText.classList.add('text-success');
+    } else {
+      // lista o que falta
+      const needs = [];
+      if (val.length < 8) needs.push('8 caracteres');
+      if (!/[A-Z]/.test(val)) needs.push('letra maiúscula');
+      if (!/[0-9]/.test(val)) needs.push('número');
+      if (!/[^A-Za-z0-9]/.test(val)) needs.push('caractere especial');
+      strengthText.textContent = 'Faltam: ' + needs.join(', ');
+      strengthText.classList.remove('text-success');
+      strengthText.classList.add('text-muted');
+    }
+  });
+});
+</script>
+{% endblock extra_scripts %}

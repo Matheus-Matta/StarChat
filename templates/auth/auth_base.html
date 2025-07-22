@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>{% block title %}Starchat{% endblock %}</title>
+    {% include 'head.html' %}
+    {% block extra_head %}{% endblock %}
+    <style>
+    html, body { height: 100%; }
+    .bg-image {
+      background: url('{% static 'assets\images\dashboard-screenshots\dashboard-screenshot6.png' %}') no-repeat center center;
+      background-size: contain;
+    }
+  </style>
+</head>
+<body class="d-flex vh-100">
+    <div class="container h-100">
+        <div class="row justify-items-center g-0 h-100">
+            <div class="col-12 col-lg-12 d-flex align-items-center justify-content-center">
+            {% block content %}
+
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'scripts.html' %}
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,93 @@
+{% load static i18n %}
+
+<footer class="footer-section footer-two bg-gray text-white rel z-1">
+    <div class="container">
+
+        <div class="call-to-action bg-blue bgs-cover text-white rel z-1">
+            <div class="row align-items-center">
+                <div class="col-xl-7 col-lg-6">
+                    <div class="section-title mb-20">
+                        <h2>{% trans "Precisa de ajuda para sua operação de atendimento?" %}</h2>
+                        <p>{% trans "Nossa equipe está pronta para te auxiliar no que for preciso." %}</p>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6">
+                    <div class="call-to-action-btns text-xl-right mb-20">
+                        <a href="#" class="theme-btn style-two rmb-15">{% trans "Comece agora" %} <i class="fas fa-arrow-right"></i></a>
+                        <a href="#" class="theme-btn style-three rmb-15">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <img class="white-circle" src="{% static 'assets/images/shapes/white-circle.png' %}" alt="White Circle">
+            <img class="white-dots slideUpRight" src="{% static 'assets/images/shapes/white-dots.png' %}" alt="shape">
+            <img class="white-dots-circle slideLeftRight" src="{% static 'assets/images/shapes/white-dots-circle.png' %}" alt="shape">
+        </div>
+
+        <div class="row justify-content-between">
+            <div class="col-xl-3 col-sm-6 col-7 col-small">
+                <div class="footer-widget about-widget">
+                    <div class="footer-logo mb-20">
+                        <a href="{% url 'page:index' %}">
+                            <img src="{% static 'assets/images/logos/logo-footer.png' %}" alt="Logo">
+                        </a>
+                    </div>
+                    <p><span>{% trans "Com o StarChat, você tem uma central inteligente de atendimento multicanal" %}</span></p>
+                    <a href="#" class="read-more">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-xl-2 col-sm-4 col-5 col-small">
+                <div class="footer-widget link-widget">
+                    <h4 class="footer-title">{% trans "Sobre" %}</h4>
+                    <ul class="list-style-two">
+                        <li><a href="#">{% trans "Nossa história" %}</a></li>
+                        <li><a href="#">{% trans "Equipe" %}</a></li>
+                        <li><a href="#">{% trans "Notícias" %}</a></li>
+                        <li><a href="#">{% trans "Carreiras" %}</a></li>
+                        <li><a href="#">{% trans "Funcionalidades" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-8">
+                <div class="footer-widget link-widget">
+                    <h4 class="footer-title">{% trans "Links rápidos" %}</h4>
+                    <ul class="list-style-two two-column">
+                        <li><a href="#">{% trans "Widget de Atendimento" %}</a></li>
+                        <li><a href="#">{% trans "Automatizações" %}</a></li>
+                        <li><a href="#">{% trans "Integrações" %}</a></li>
+                        <li><a href="#">{% trans "Relatórios e Métricas" %}</a></li>
+                        <li><a href="#">{% trans "Gestão de Equipes" %}</a></li>
+                        <li><a href="#">{% trans "Respostas Rápidas" %}</a></li>
+                        <li><a href="#">{% trans "Atalhos e Macros" %}</a></li>
+                        <li><a href="#">{% trans "Segurança de Dados" %}</a></li>
+                        <li><a href="#">{% trans "APIs Abertas" %}</a></li>
+                        <li><a href="#">{% trans "CRM Integrado" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-4">
+                <div class="footer-widget contact-widget">
+                    <h4 class="footer-title">{% trans "Fale Conosco" %}</h4>
+                    <ul class="list-style-three">
+                        <li><i class="fas fa-envelope-open"></i> <span><a href="mailto:suporte@starchat.com.br">suporte@starchat.com.br</a></span></li>
+                        <li><i class="fas fa-phone"></i> <span>{% trans "WhatsApp:" %} <a href="tel:+5521999999999">(21) 99999-9999</a></span></li>
+                    </ul>
+                    <div class="social-style-one mt-25">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright-area text-center">
+            <p>© {% now "Y" %} <a href="{% url 'page:index' %}">StarChat</a>. {% trans "Todos os direitos reservados" %}</p>
+        </div>
+    </div>
+
+    <img class="dots-shape" src="{% static 'assets/images/shapes/dots.png' %}" alt="Shape">
+    <img class="tringle-shape" src="{% static 'assets/images/shapes/tringle.png' %}" alt="Shape">
+    <img class="close-shape" src="{% static 'assets/images/shapes/close.png' %}" alt="Shape">
+    <img class="circle-shape" src="{% static 'assets/images/shapes/circle.png' %}" alt="Shape">
+</footer>

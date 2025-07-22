@@ -1,0 +1,2813 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-21 20:59-0300\n"
+"PO-Revision-Date: 2025-07-22 16:19-0300\n"
+"Last-Translator:   <admin@example.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.10.2\n"
+
+#: .\accounts\models\account.py:7
+msgid "Plano"
+msgstr "Plano"
+
+#: .\accounts\models\account.py:8
+msgid "Ativo"
+msgstr "Ativo"
+
+#: .\accounts\models\account.py:8
+msgid "Inativo"
+msgstr "Inativo"
+
+#: .\accounts\models\account.py:8
+msgid "Status"
+msgstr "Status"
+
+#: .\accounts\models\account.py:9
+msgid "Data de início"
+msgstr "Data de início"
+
+#: .\accounts\models\account.py:10
+msgid "Data de fim"
+msgstr "Data de fim"
+
+#: .\accounts\models\account.py:11
+msgid "Data de fim do trial"
+msgstr "Data de fim do trial"
+
+#: .\accounts\models\account.py:13
+msgid "Método de pagamento"
+msgstr "Método de pagamento"
+
+#: .\accounts\models\account.py:14
+msgid "ID do cliente no pagamento"
+msgstr "ID do cliente no pagamento"
+
+#: .\accounts\models\account.py:15
+msgid "Status do pagamento"
+msgstr "Status do pagamento"
+
+#: .\accounts\models\account.py:16
+msgid "Data da última cobrança"
+msgstr "Data da última cobrança"
+
+#: .\accounts\models\account.py:17
+msgid "Data da próxima cobrança"
+msgstr "Data da próxima cobrança"
+
+#: .\accounts\models\account.py:18
+msgid "Pagamentos falhados"
+msgstr "Pagamentos falhados"
+
+#: .\accounts\models\account.py:20
+msgid "Criado em"
+msgstr "Criado em"
+
+#: .\accounts\models\account.py:23 .\accounts\models\company.py:7
+msgid "Conta"
+msgstr "Conta"
+
+#: .\accounts\models\account.py:24
+msgid "Contas"
+msgstr "Contas"
+
+#: .\accounts\models\company.py:8
+msgid "Nome"
+msgstr "Nome"
+
+#: .\accounts\models\company.py:9
+msgid "Slug"
+msgstr "Lesma"
+
+#: .\accounts\models\company.py:10
+msgid "CNPJ"
+msgstr "CNPJ"
+
+#: .\accounts\models\company.py:11
+msgid "Endereço de cobrança"
+msgstr "Endereço de cobrança"
+
+#: .\accounts\models\company.py:12
+msgid "Tipo de empresa"
+msgstr "Tipo de empresa"
+
+#: .\accounts\models\plan.py:6
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:17
+msgid "Name"
+msgstr "Nome"
+
+#: .\accounts\models\plan.py:7
+msgid "Price"
+msgstr "Preço"
+
+#: .\accounts\models\plan.py:8
+msgid "Description"
+msgstr "Descrição"
+
+#: .\accounts\models\plan.py:9
+msgid "Is active"
+msgstr "Está ativo"
+
+#: .\config\settings.py:147
+msgid "Português"
+msgstr "Português"
+
+#: .\config\settings.py:148
+msgid "English"
+msgstr "Inglês"
+
+#: .\config\unfold\unfold.py:7 .\config\unfold\unfold.py:8
+msgid "Starchat"
+msgstr "Starchat"
+
+#: .\config\unfold\unfold.py:9
+msgid "Painel de Controle"
+msgstr "Painel de Controle"
+
+#: .\config\unfold\unfold.py:15
+msgid "Documentação"
+msgstr "Documentação"
+
+#: .\config\unfold\unfold.py:21
+msgid "Site principal"
+msgstr "Site principal"
+
+#: .\config\unfold\unfold.py:32
+msgid "Navegação"
+msgstr "Navegação"
+
+#: .\config\unfold\unfold.py:38 .\templates\partials\header.html:32
+msgid "Início"
+msgstr "Início"
+
+#: .\config\unfold\unfold.py:43
+#| msgid "Soluções"
+msgid "Traduções"
+msgstr "Traduções"
+
+#: .\templates\admin\index.html:7 .\templates\rosseta\form-list.html:7
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_index.html:5
+#: .\venv\Lib\site-packages\unfold\templates\admin\base_site.html:3
+#: .\venv\Lib\site-packages\unfold\templates\admin\index.html:7
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:15
+#: .\venv\Lib\site-packages\unfold\templates\unfold\layouts\base.html:7
+msgid "Django site admin"
+msgstr "Admin do site Django"
+
+#: .\templates\partials\about.html:9
+msgid "Sobre o StarChat"
+msgstr "Sobre o Starchat"
+
+#: .\templates\partials\about.html:15
+msgid "Solução de widget para seu Atendimento"
+msgstr "Solução de widget para seu Atendimento"
+
+#: .\templates\partials\about.html:16
+msgid "O widget de conversa que conecta seu cliente em segundos"
+msgstr "O widget de conversa que conecta seu cliente em segundos"
+
+#: .\templates\partials\about.html:19
+msgid ""
+"Com o StarChat, você oferece suporte e vendas direto do seu site através de "
+"um único widget inteligente. Rápido de instalar, simples de gerenciar e "
+"pronto para escalar seu atendimento multicanal com eficiência."
+msgstr ""
+"Com o StarChat, você oferece suporte e vendas direto do seu site através de "
+"um único widget inteligente. Rápido de instalar, simples de gerenciar e "
+"pronto para escalar seu atendimento multicanal com eficiência."
+
+#: .\templates\partials\about.html:22
+msgid "Widget flutuante para seu site"
+msgstr "Widget flutuante para seu site"
+
+#: .\templates\partials\about.html:23
+msgid "Automaçãoes inteligentes"
+msgstr "Automaçãoes inteligentes"
+
+#: .\templates\partials\about.html:26
+msgid "Quero ativar"
+msgstr "Quero ativar"
+
+#: .\templates\partials\auto.html:10
+msgid "Atendimento eficiente"
+msgstr "Atendimento eficiente"
+
+#: .\templates\partials\auto.html:11
+msgid "Ganhe tempo com automações, macros e atalhos"
+msgstr "Ganhe tempo com automações, macros e atalhos"
+
+#: .\templates\partials\auto.html:17
+msgid "Automatize respostas"
+msgstr "Automatize respostas"
+
+#: .\templates\partials\auto.html:18
+msgid ""
+"Use macros e automaçãoes para acelerar cada atendimento, sem perder o toque "
+"humano."
+msgstr ""
+"Use macros e automaçãoes para acelerar cada atendimento, sem perder o toque "
+"humano."
+
+#: .\templates\partials\auto.html:24
+msgid "Ganhe velocidade"
+msgstr "Ganhe velocidade"
+
+#: .\templates\partials\auto.html:25
+msgid ""
+"Acesse comandos e ações em segundos com atalhos que tornam o atendimento "
+"mais ágil."
+msgstr ""
+"Acesse comandos e ações em segundos com atalhos que tornam o atendimento "
+"mais ágil."
+
+#: .\templates\partials\auto.html:34
+msgid "Automação no Navegador"
+msgstr "Automação no Navegador"
+
+#: .\templates\partials\contact.html:8
+msgid "Entre em contato"
+msgstr "Entre em contato"
+
+#: .\templates\partials\contact.html:10
+msgid "Fale com a gente e agende uma demostração do nosso Sistema!"
+msgstr "Fale com a gente e agende uma demostração do nosso Sistema!"
+
+#: .\templates\partials\contact.html:12
+msgid "Entre em contato conosco para mais informações."
+msgstr "Entre em contato conosco para mais informações."
+
+#: .\templates\partials\contact.html:22
+msgid "Email"
+msgstr "E-mail"
+
+#: .\templates\partials\contact.html:38
+msgid "WhatsApp"
+msgstr "Whatsapp"
+
+#: .\templates\partials\contact.html:47
+msgid "Ou, Preencha o formulário abaixo! Vamos entrar em contato."
+msgstr "Ou, Preencha o formulário abaixo! Vamos entrar em contato."
+
+#: .\templates\partials\footer.html:10
+msgid "Precisa de ajuda para sua operação de atendimento?"
+msgstr "Precisa de ajuda para sua operação de atendimento?"
+
+#: .\templates\partials\footer.html:11
+msgid "Nossa equipe está pronta para te auxiliar no que for preciso."
+msgstr "Nossa equipe está pronta para te auxiliar no que for preciso."
+
+#: .\templates\partials\footer.html:16
+msgid "Comece agora"
+msgstr "Comece agora"
+
+#: .\templates\partials\footer.html:17 .\templates\partials\footer.html:35
+msgid "Saiba mais"
+msgstr "Saiba mais"
+
+#: .\templates\partials\footer.html:34
+msgid ""
+"Com o StarChat, você tem uma central inteligente de atendimento multicanal"
+msgstr ""
+"Com o StarChat, você tem uma central inteligente de atendimento multicanal"
+
+#: .\templates\partials\footer.html:40
+msgid "Sobre"
+msgstr "Sobre"
+
+#: .\templates\partials\footer.html:42
+msgid "Nossa história"
+msgstr "Nossa história"
+
+#: .\templates\partials\footer.html:43
+msgid "Equipe"
+msgstr "Equipe"
+
+#: .\templates\partials\footer.html:44
+msgid "Notícias"
+msgstr "Notícias"
+
+#: .\templates\partials\footer.html:45
+msgid "Carreiras"
+msgstr "Carreiras"
+
+#: .\templates\partials\footer.html:46
+msgid "Funcionalidades"
+msgstr "Funcionalidades"
+
+#: .\templates\partials\footer.html:52
+msgid "Links rápidos"
+msgstr "Links rápidos"
+
+#: .\templates\partials\footer.html:54
+msgid "Widget de Atendimento"
+msgstr "Widget de Atendimento"
+
+#: .\templates\partials\footer.html:55 .\templates\partials\header.html:35
+msgid "Automatizações"
+msgstr "Automatizações"
+
+#: .\templates\partials\footer.html:56
+msgid "Integrações"
+msgstr "Integrações"
+
+#: .\templates\partials\footer.html:57
+msgid "Relatórios e Métricas"
+msgstr "Relatórios e Métricas"
+
+#: .\templates\partials\footer.html:58
+msgid "Gestão de Equipes"
+msgstr "Gestão de Equipes"
+
+#: .\templates\partials\footer.html:59
+msgid "Respostas Rápidas"
+msgstr "Respostas Rápidas"
+
+#: .\templates\partials\footer.html:60
+msgid "Atalhos e Macros"
+msgstr "Atalhos e Macros"
+
+#: .\templates\partials\footer.html:61
+msgid "Segurança de Dados"
+msgstr "Segurança de Dados"
+
+#: .\templates\partials\footer.html:62
+msgid "APIs Abertas"
+msgstr "ABERTAS ABERTAS"
+
+#: .\templates\partials\footer.html:63
+msgid "CRM Integrado"
+msgstr "CRM integrado"
+
+#: .\templates\partials\footer.html:69
+msgid "Fale Conosco"
+msgstr "Fale Conosco"
+
+#: .\templates\partials\footer.html:72
+msgid "WhatsApp:"
+msgstr "Whatsapp:"
+
+#: .\templates\partials\footer.html:85
+msgid "Todos os direitos reservados"
+msgstr "Todos os direitos reservados"
+
+#: .\templates\partials\header.html:33
+msgid "Soluções"
+msgstr "Soluções"
+
+#: .\templates\partials\header.html:34
+msgid "Widget"
+msgstr "Widget"
+
+#: .\templates\partials\header.html:36
+msgid "Serviços"
+msgstr "Serviços"
+
+#: .\templates\partials\header.html:37
+msgid "Sistema"
+msgstr "Sistema"
+
+#: .\templates\partials\header.html:46
+msgid "Entrar"
+msgstr "Entrar"
+
+#: .\templates\partials\header.html:47
+msgid "Criar Conta"
+msgstr "Criar Conta"
+
+#: .\templates\partials\hero.html:10
+msgid "Transforme seu atendimento com o StarChat"
+msgstr "Transforme seu atendimento com o StarChat"
+
+#: .\templates\partials\hero.html:13
+msgid "Centralize conversas, equipes e canais em um único CRM multicanal."
+msgstr "Centralize conversas, equipes e canais em um único CRM multicanal."
+
+#: .\templates\partials\hero.html:15 .\templates\partials\newsletter.html:14
+msgid "Quero testar grátis"
+msgstr "Quero testar grátis"
+
+#: .\templates\partials\newsletter.html:11
+msgid "Experimente o StarChat"
+msgstr "Experimentos o Starchat"
+
+#: .\templates\partials\newsletter.html:12
+msgid "Crie sua conta grátis e teste à vontade, sem limite de dias"
+msgstr "Crie sua conta grátis e teste à vontade, sem limite de dias"
+
+#: .\templates\partials\newsletter.html:19
+msgid "Cadastro no StarChat"
+msgstr "Cadastro no StarChat"
+
+#: .\templates\partials\screenshot.html:9
+msgid "Visual do Sistema"
+msgstr "Visual do Sistema"
+
+#: .\templates\partials\screenshot.html:10
+msgid "Veja como é o painel do StarChat"
+msgstr "Veja como é o painel do StarChat"
+
+#: .\templates\partials\screenshot.html:11
+msgid ""
+"Visual moderno, intuitivo e totalmente pensado para facilitar o atendimento "
+"em múltiplos canais."
+msgstr ""
+"Visual moderno, intuitivo e totalmente pensado para facilitar o atendimento "
+"em múltiplos canais."
+
+#: .\templates\partials\screenshot.html:17
+#: .\templates\partials\screenshot.html:20
+#: .\templates\partials\screenshot.html:23
+#: .\templates\partials\screenshot.html:26
+#: .\templates\partials\screenshot.html:29
+#: .\templates\partials\screenshot.html:32
+#: .\templates\partials\screenshot.html:35
+msgid "Captura de Tela do Painel"
+msgstr "Captura de Tela do Painel"
+
+#: .\templates\partials\services.html:10
+msgid "Recursos Poderosos"
+msgstr "Recursos poderosos"
+
+#: .\templates\partials\services.html:11
+msgid "Tudo o que você precisa para um atendimento eficiente e inteligente"
+msgstr "Tudo o que você precisa para um atendimento eficiente e inteligente"
+
+#: .\templates\partials\services.html:20
+msgid "Multicanal"
+msgstr "Multicanal"
+
+#: .\templates\partials\services.html:21
+msgid ""
+"Conecte WhatsApp, Instagram, Facebook e mais em um só lugar com múltiplos "
+"atendentes."
+msgstr ""
+"Conecte WhatsApp, Instagram, Facebook e mais em um só lugar com múltiplos "
+"atendentes."
+
+#: .\templates\partials\services.html:29
+msgid "Widget Personalizável"
+msgstr "Widget Personalizável"
+
+#: .\templates\partials\services.html:30
+msgid ""
+"Adicione um botão de atendimento no seu site com sua identidade e mensagem "
+"de boas-vindas."
+msgstr ""
+"Adicione um botão de atendimento no seu site com sua identidade e mensagem "
+"de boas-vindas."
+
+#: .\templates\partials\services.html:38
+msgid "Permissões por Equipe"
+msgstr "Permissões por Equipe"
+
+#: .\templates\partials\services.html:39
+msgid ""
+"Controle o que cada usuário pode ver e acessar, com segurança por empresa "
+"(multi-tenant)."
+msgstr ""
+"Controle o que cada usuário pode ver e acessar, com segurança por empresa "
+"(multi-tenant)."
+
+#: .\templates\partials\services.html:47
+msgid "Automação e Macros"
+msgstr "Automação e Macros"
+
+#: .\templates\partials\services.html:48
+msgid ""
+"Respostas rápidas, fluxos automáticos e ações inteligentes para economizar "
+"tempo e padronizar o atendimento."
+msgstr ""
+"Respostas rápidas, fluxos automáticos e ações inteligentes para economizar "
+"tempo e padronizar o atendimento."
+
+#: .\templates\partials\services.html:56
+msgid "Conta Grátis"
+msgstr "Conta Grátis"
+
+#: .\templates\partials\services.html:57
+msgid ""
+"Crie sua conta sem cartão de crédito, teste livremente por tempo ilimitado e"
+" conheça os planos depois."
+msgstr ""
+"Crie sua conta sem cartão de crédito, teste livremente por tempo ilimitado e"
+" conheça os planos depois."
+
+#: .\templates\partials\services.html:65
+msgid "Estatísticas"
+msgstr "Estatísticas"
+
+#: .\templates\partials\services.html:66
+msgid ""
+"Tenha visibilidade dos atendimentos, acessos, cliques no widget e "
+"performance da equipe em tempo real."
+msgstr ""
+"Tenha visibilidade dos atendimentos, acessos, cliques no widget e "
+"performance da equipe em tempo real."
+
+#: .\templates\partials\solutions.html:9
+msgid "Soluções Inteligentes"
+msgstr "Soluções Inteligentes"
+
+#: .\templates\partials\solutions.html:10
+msgid "Transformamos atendimento em resultados com StarChat"
+msgstr "Transformamos atendimento em resultados com StarChat"
+
+#: .\templates\partials\solutions.html:18
+msgid "Atendimento Multicanal"
+msgstr "Atendimento Multicanal"
+
+#: .\templates\partials\solutions.html:19
+msgid ""
+"Gerencie WhatsApp, Instagram, Facebook, e muito mais em um só lugar com sua "
+"equipe organizada por departamentos."
+msgstr ""
+"Gerencie WhatsApp, Instagram, Facebook, e muito mais em um só lugar com sua "
+"equipe organizada por departamentos."
+
+#: .\templates\partials\solutions.html:25
+msgid "Gestão de Equipe"
+msgstr "Gestão de Equipe"
+
+#: .\templates\partials\solutions.html:26
+msgid ""
+"Atribua atendimentos, acompanhe produtividade e crie permissões para cada "
+"membro da equipe com base na empresa."
+msgstr ""
+"Atribua atendimentos, acompanhe produtividade e crie permissões para cada "
+"membro da equipe com base na empresa."
+
+#: .\templates\partials\solutions.html:32
+msgid "Relatórios e Insights"
+msgstr "Relatórios e Insights"
+
+#: .\templates\partials\solutions.html:33
+msgid ""
+"Visualize relatórios por empresa, canal e usuário. Veja o desempenho real do"
+" seu time em tempo real."
+msgstr ""
+"Visualize relatórios por empresa, canal e usuário. Veja o desempenho real do"
+" seu time em tempo real."
+
+#: .\templates\rosseta\form-list.html:20
+#, fuzzy
+#| msgid "Object"
+msgid "Project"
+msgstr "Objeto"
+
+#: .\templates\rosseta\form-list.html:26
+msgid "Third party"
+msgstr "Terceiro"
+
+#: .\templates\rosseta\form-list.html:38
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:22
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:65
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:78
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:22
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:45
+msgid "All"
+msgstr "Todos"
+
+#: .\templates\rosseta\form-list.html:54
+#, fuzzy
+#| msgid "All applications"
+msgid "Application"
+msgstr "Todas as aplicações"
+
+#: .\templates\rosseta\form-list.html:57
+msgid "Progress"
+msgstr "Progresso"
+
+#: .\templates\rosseta\form-list.html:60
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
+msgid "Messages"
+msgstr "Mensagens"
+
+#: .\templates\rosseta\form-list.html:63
+msgid "Translated"
+msgstr "Traduzido"
+
+#: .\templates\rosseta\form-list.html:66
+msgid "Fuzzy"
+msgstr "Difuso"
+
+#: .\templates\rosseta\form-list.html:69
+msgid "Obsolete"
+msgstr "Obsoleto"
+
+#: .\templates\rosseta\form-list.html:72
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:232
+msgid "File"
+msgstr "Arquivo"
+
+#: .\templates\rosseta\form-list.html:106
+msgid "Nothing to translate!"
+msgstr "Nada para traduzir!"
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr "Mapas do site"
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr "Arquivos estáticos"
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr "Sindicação"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr "..."
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:50
+msgid "That page number is not an integer"
+msgstr "Esse número de página não é um número inteiro"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:52
+msgid "That page number is less than 1"
+msgstr "Esse número de página é menor que 1"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:54
+msgid "That page contains no results"
+msgstr "Essa página não contém resultados"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr "Insira um valor válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:104
+#: .\venv\Lib\site-packages\django\forms\fields.py:752
+msgid "Enter a valid URL."
+msgstr "Digite um URL válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:165
+msgid "Enter a valid integer."
+msgstr "Insira um número inteiro válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:176
+msgid "Enter a valid email address."
+msgstr "Digite um endereço de e -mail válido."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:259
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+"Digite uma “lesma” válida composta por letras, números, sublinhados ou "
+"hífens."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:267
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or"
+" hyphens."
+msgstr ""
+"Digite uma “lesma” válida composta por letras unicode, números, sublinhados "
+"ou hífens."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:281
+#: .\venv\Lib\site-packages\django\core\validators.py:289
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+msgid "Enter a valid IPv4 address."
+msgstr "Digite um endereço IPv4 válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:298
+#: .\venv\Lib\site-packages\django\core\validators.py:319
+msgid "Enter a valid IPv6 address."
+msgstr "Digite um endereço IPv6 válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:310
+#: .\venv\Lib\site-packages\django\core\validators.py:317
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr "Digite um endereço IPv4 ou IPv6 válido."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:353
+msgid "Enter only digits separated by commas."
+msgstr "Digite apenas dígitos separados por vírgulas."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:359
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr "Verifique se esse valor é %(limit_value)s (é %(show_value)s)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:394
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr "Verifique se esse valor é menor ou igual a %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:403
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr "Verifique se esse valor é maior ou igual a %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:412
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr ""
+"Verifique se esse valor é um múltiplo do tamanho da etapa %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:422
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+"Certifique-se de que este valor tenha pelo menos %(limit_value)dum caractere"
+" (ele tem %(show_value)d)."
+msgstr[1] ""
+"Certifique-se de que este valor tenha pelo menos %(limit_value)dcaracteres "
+"(tem %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:440
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+"Certifique-se de que este valor tenha no máximo %(limit_value)dcaracteres "
+"(tem %(show_value)d)."
+msgstr[1] ""
+"Certifique-se de que este valor tenha no máximo %(limit_value)dcaracteres "
+"(tem %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:463
+#: .\venv\Lib\site-packages\django\forms\fields.py:347
+#: .\venv\Lib\site-packages\django\forms\fields.py:386
+msgid "Enter a number."
+msgstr "Digite um número."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:465
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] "Certifique-se de que não haja mais de %(max)sum dígito no total."
+msgstr[1] "Certifique-se de que não haja mais de %(max)sdígitos no total."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:470
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] "Certifique-se de que não haja mais do que %(max)suma casa decimal."
+msgstr[1] "Certifique-se de que não haja mais do que %(max)suma casa decimal."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:475
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] "Certifique-se de que não haja mais do que %(max)suma casa decimal."
+msgstr[1] "Certifique-se de que não haja mais do que %(max)suma casa decimal."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:546
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+"A extensão do arquivo “%(extension)s” não é permitida. As extensões "
+"permitidas são: %(allowed_extensions)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:607
+msgid "Null characters are not allowed."
+msgstr "Caracteres nulos não são permitidos."
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1423
+#: .\venv\Lib\site-packages\django\forms\models.py:893
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:108
+msgid "and"
+msgstr "e"
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1425
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr "%(model_name)s com este %(field_labels)s já existe."
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:17
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr "A restrição “%(name)s” é violada."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:128
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr "Valor %(value)r não é uma escolha válida."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:129
+msgid "This field cannot be null."
+msgstr "Este campo não pode ser nulo."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:130
+msgid "This field cannot be blank."
+msgstr "Este campo não pode ficar em branco."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:131
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr "%(model_name)s com este %(field_label)s já existe."
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+"%(field_label)s deve ser único para %(date_field_label)s %(lookup_type)s."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:173
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr "Campo do tipo: %(field_type)s"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1094
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr "O valor “%(value)s” deve ser verdadeiro ou falso."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1095
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr "O valor “%(value)s” deve ser verdadeiro, falso ou nenhum."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1097
+msgid "Boolean (Either True or False)"
+msgstr "Booleano (verdadeiro ou falso)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1147
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr "String (até %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1149
+msgid "String (unlimited)"
+msgstr "String (ilimitado)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1253
+msgid "Comma-separated integers"
+msgstr "Inteiros inteiros separados por vírgula"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1354
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+"O valor “%(value)s” tem um formato de data inválido. Deve estar em formato "
+"AAAA-MM-DD."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1358
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1493
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+"O valor “%(value)s” possui o formato correto (AAAA-MM-DD), mas é uma data "
+"inválida."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1362
+msgid "Date (without time)"
+msgstr "Data (sem hora)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1489
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr ""
+"O valor “%(value)s” tem um formato inválido. Deve estar no formato AA YYYY-"
+"MM-DD HH: MM [: SS [.UUUUUU]] [TZ]."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1497
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr ""
+"O valor “%(value)s__” possui o formato correto (aaaa-mm-dd hh: mm [: ss "
+"[.uuuuuu]] [tz]), mas é uma data/hora inválida."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1502
+msgid "Date (with time)"
+msgstr "Data (com hora)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1626
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr "O valor “%(value)s” deve ser um número decimal."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1628
+msgid "Decimal number"
+msgstr "Número decimal"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1789
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] "
+"[[HH:]MM:]ss[.uuuuuu] format."
+msgstr ""
+"O valor “%(value)s” tem um formato inválido. Deve estar em [dd] [[hh:] mm:] "
+"SS [.uuuuuu] formato."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1793
+msgid "Duration"
+msgstr "Duração"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1845
+msgid "Email address"
+msgstr "Endereço de email"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1870
+msgid "File path"
+msgstr "Caminho do arquivo"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1948
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr "O valor “%(value)s” deve ser um flutuador."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1950
+msgid "Floating point number"
+msgstr "Número do ponto flutuante"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1990
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr "O valor “%(value)s__” deve ser um número inteiro."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1992
+msgid "Integer"
+msgstr "Inteiro"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2088
+msgid "Big (8 byte) integer"
+msgstr "Grande (8 byte) inteiro"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2105
+msgid "Small integer"
+msgstr "Pequeno número inteiro"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2113
+msgid "IPv4 address"
+msgstr "Endereço IPv4"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2144
+msgid "IP address"
+msgstr "Endereço IP"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2237
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2238
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr "O valor “%(value)s” deve ser nenhum, verdadeiro ou falso."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2240
+msgid "Boolean (Either True, False or None)"
+msgstr "Booleano (verdadeiro, falso ou nenhum)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2291
+msgid "Positive big integer"
+msgstr "Inteiro grande positivo"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2306
+msgid "Positive integer"
+msgstr "Número inteiro positivo"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2321
+msgid "Positive small integer"
+msgstr "Inteiro pequeno positivo"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2337
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr "Slug (até %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2373
+msgid "Text"
+msgstr "Texto"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2448
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+"O valor “%(value)s” tem um formato inválido. Deve estar em HH: MM [: SS "
+"[.uuuuuu]] formato."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2452
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+"O valor “%(value)s” possui o formato correto (hh: mm [: ss [.uuuuuu]]), mas "
+"é um tempo inválido."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2456
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:263
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:279
+#: .\venv\Lib\site-packages\unfold\widgets.py:597
+#: .\venv\Lib\site-packages\unfold\widgets.py:642
+msgid "Time"
+msgstr "Tempo"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2564
+msgid "URL"
+msgstr "Url"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2588
+msgid "Raw binary data"
+msgstr "Dados binários brutos"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2653
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr "\"%(value)s\" não é um UUID válido."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2655
+msgid "Universally unique identifier"
+msgstr "Identificador universalmente único"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:393
+msgid "Image"
+msgstr "Imagem"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "A JSON object"
+msgstr "Um objeto JSON"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:28
+msgid "Value must be valid JSON."
+msgstr "O valor deve ser válido JSON."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:919
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr "%(model)s Instância com %(field)s %(value)r não existe."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:921
+msgid "Foreign Key (type determined by related field)"
+msgstr "Chave estrangeira (tipo determinado pelo campo relacionado)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1212
+msgid "One-to-one relationship"
+msgstr "Relacionamento individual"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1269
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr "%(from)s-%(to)s relationship"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1271
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr "%(from)s-%(to)s relationships"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1319
+msgid "Many-to-many relationship"
+msgstr "Relacionamento muitos para muitos"
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the
+#. label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:184
+msgid ":?.!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:91
+msgid "This field is required."
+msgstr "Este campo é obrigatório."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:298
+msgid "Enter a whole number."
+msgstr "Insira um número inteiro."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:467
+#: .\venv\Lib\site-packages\django\forms\fields.py:1241
+msgid "Enter a valid date."
+msgstr "Insira uma data válida."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:490
+#: .\venv\Lib\site-packages\django\forms\fields.py:1242
+msgid "Enter a valid time."
+msgstr "Insira um horário válido."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:517
+msgid "Enter a valid date/time."
+msgstr "Insira uma data/hora válida."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:551
+msgid "Enter a valid duration."
+msgstr "Insira uma duração válida."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:552
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr "O número de dias deve estar entre {min_days} e {max_days}."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:621
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+"Nenhum arquivo foi enviado. Verifique o tipo de codificação no formulário."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:622
+msgid "No file was submitted."
+msgstr "Nenhum arquivo foi enviado."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:623
+msgid "The submitted file is empty."
+msgstr "O arquivo enviado está vazio."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:625
+#, python-format
+msgid ""
+"Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+"Certifique-se de que este nome de arquivo tenha no máximo %(max)dcaracteres "
+"(tem %(length)d)."
+msgstr[1] ""
+"Certifique-se de que este nome de arquivo tenha no máximo %(max)dcaracteres "
+"(tem %(length)d)."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:630
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr "Envie um arquivo ou verifique a caixa de seleção Clear, não os dois."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:694
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+"Carregue uma imagem válida. O arquivo que você carregou não foi uma imagem "
+"ou uma imagem corrompida."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:857
+#: .\venv\Lib\site-packages\django\forms\fields.py:949
+#: .\venv\Lib\site-packages\django\forms\models.py:1566
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+"Selecione uma opção válida. %(value)s não é uma das opções disponíveis."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:951
+#: .\venv\Lib\site-packages\django\forms\fields.py:1070
+#: .\venv\Lib\site-packages\django\forms\models.py:1564
+msgid "Enter a list of values."
+msgstr "Digite uma lista de valores."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1071
+msgid "Enter a complete value."
+msgstr "Insira um valor completo."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1313
+msgid "Enter a valid UUID."
+msgstr "Digite um UUID válido."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1343
+msgid "Enter a valid JSON."
+msgstr "Digite um JSON válido."
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:98
+msgid ":"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:244
+#: .\venv\Lib\site-packages\django\forms\forms.py:328
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr "(Campo oculto %(name)s) %(error)s"
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:63
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+"Os dados da Managementform estão ausentes ou foram adulterados. Campos "
+"ausentes: %(field_names)s. Pode ser necessário registrar um relatório de bug"
+" se o problema persistir."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:67
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] "Por favor, envie o máximo %(num)dde formulário possível."
+msgstr[1] "Por favor, envie a maioria %(num)ddos formulários."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:72
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] "Por favor, envie pelo menos %(num)do formulário."
+msgstr[1] "Por favor, envie pelo menos %(num)dformulários."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr "Ordem"
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:26
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:60
+msgid "Delete"
+msgstr "Excluir"
+
+#: .\venv\Lib\site-packages\django\forms\models.py:886
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr "Corrija os dados duplicados para %(field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:891
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr "Corrija os dados duplicados para %(field)s, que devem ser únicos."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:898
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+"Corrija os dados duplicados para %(field_name)s, que devem ser únicos para o"
+" %(lookup)s em %(date_field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:907
+msgid "Please correct the duplicate values below."
+msgstr "Corrija os valores duplicados abaixo."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1338
+msgid "The inline value did not match the parent instance."
+msgstr "O valor embutido não correspondeu à instância do pai."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1429
+msgid ""
+"Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+"Selecione uma opção válida. Essa escolha não é uma das opções disponíveis."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1568
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr "\"%(pk)s\" não é um valor válido."
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:226
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+"%(datetime)s não pôde ser interpretado no fuso horário %(current_timezone)s;"
+" Pode ser ambíguo ou não existir."
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:463
+msgid "Clear"
+msgstr "Claro"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:464
+msgid "Currently"
+msgstr "Atualmente"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:465
+#: .\venv\Lib\site-packages\unfold\templates\admin\edit_inline\stacked.html:63
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:42
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_title.html:23
+msgid "Change"
+msgstr "Mudar"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:794
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:8
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:795
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:88
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:96
+msgid "Yes"
+msgstr "Sim"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:796
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:89
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:97
+msgid "No"
+msgstr "Não"
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:874
+msgid "yes,no,maybe"
+msgstr "Sim, não, talvez"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:904
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:921
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] "%(size)d byte"
+msgstr[1] "%(size)d bytes"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:923
+#, python-format
+msgid "%s KB"
+msgstr "%s kb"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:925
+#, python-format
+msgid "%s MB"
+msgstr "%S mb"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:927
+#, python-format
+msgid "%s GB"
+msgstr "%S gb"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:929
+#, python-format
+msgid "%s TB"
+msgstr "%s TB"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:931
+#, python-format
+msgid "%s PB"
+msgstr "%s pb"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:73
+msgid "p.m."
+msgstr "da tarde"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "a.m."
+msgstr "sou."
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:79
+msgid "PM"
+msgstr "PM"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "AM"
+msgstr "SOU"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:152
+msgid "midnight"
+msgstr "meia-noite"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:154
+msgid "noon"
+msgstr "meio-dia"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr "Segunda-feira"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr "Terça-feira"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr "Quarta-feira"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr "Quinta-feira"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr "Sexta-feira"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr "Sábado"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr "Domingo"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr "seg"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr "ter"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr "qua"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr "qui"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr "sex"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+msgid "Sat"
+msgstr "Sentado"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr "Sol"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgid "January"
+msgstr "Janeiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr "Fevereiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgid "March"
+msgstr "Marchar"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr "abril"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr "Poderia"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr "Junho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr "Julho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr "Agosto"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr "Setembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr "outubro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr "novembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr "dezembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgid "jan"
+msgstr "Jan"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr "fevereiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr "mar"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr "Apr"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr "poderia"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr "Jun"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr "Jul"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr "AUG"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr "set"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr "OUT"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr "Nov"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr "DEC"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "Jan."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "Fevereiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "Marchar"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "abril"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "Poderia"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "Junho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "Julho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "Agosto"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr "Setembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "Outubro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "Novembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "Dez."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr "Janeiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr "Fevereiro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr "Marchar"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr "abril"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr "Poderia"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr "Junho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr "Julho"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr "Agosto"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr "Setembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr "outubro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr "novembro"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr "dezembro"
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr "Este não é um endereço IPv6 válido."
+
+#: .\venv\Lib\site-packages\django\utils\text.py:138
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr "%(truncated_text)s…"
+
+#: .\venv\Lib\site-packages\django\utils\text.py:323
+msgid "or"
+msgstr "ou"
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:342
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ", Assim,"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] "%(num)d ano"
+msgstr[1] " %(num)d anos"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] "%(num)d mês"
+msgstr[1] "%(num)d meses"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] "%(num)d semana"
+msgstr[1] "%(num)d semanas"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] "%(num)d dia"
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:111
+msgid "Forbidden"
+msgstr "Proibido"
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:112
+msgid "CSRF verification failed. Request aborted."
+msgstr "A verificação do CSRF falhou. Solicitação abortada."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:116
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+"Você está vendo esta mensagem porque este site HTTPS exige que um "
+"\"cabeçalho do referente\" seja enviado pelo seu navegador da web, mas "
+"nenhum foi enviado. Esse cabeçalho é necessário por razões de segurança, "
+"para garantir que seu navegador não esteja sendo seqüestrado por terceiros."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:122
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+"Se você configurou seu navegador para desativar os cabeçalhos do "
+"\"referente\", reative-os, pelo menos para este site ou para conexões HTTPS,"
+" ou para solicitações de \"mesmo origem\"."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:127
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or"
+" including the “Referrer-Policy: no-referrer” header, please remove them. "
+"The CSRF protection requires the “Referer” header to do strict referer "
+"checking. If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
+msgstr ""
+"Se você estiver usando a tag <meta name = \"refereper\" content = \"no-"
+"referrer\"> ou incluindo o cabeçalho \"Referer-Policy: No-Referrer\", "
+"remova-os. A proteção do CSRF requer que o cabeçalho do \"referente\" faça "
+"uma verificação estrita do referente. Se você está preocupado com a "
+"privacidade, use alternativas como <a rel = \"noreferer\" ...> para links "
+"para sites de terceiros."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:136
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+"Você está vendo esta mensagem porque este site requer um cookie CSRF ao "
+"enviar formulários. Este cookie é necessário por razões de segurança, para "
+"garantir que seu navegador não esteja sendo seqüestrado por terceiros."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:142
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+"Se você configurou seu navegador para desativar os cookies, reative-os, pelo"
+" menos para este site ou para solicitações de “Origin”."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:148
+msgid "More information is available with DEBUG=True."
+msgstr "Mais informações estão disponíveis com Debug = True."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr "Nenhum ano especificado"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr "Data fora do alcance"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr "Nenhum mês especificado"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr "Nenhum dia especificado"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr "Sem semana especificada"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:349
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:380
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr "Não %(verbose_name_plural)s disponível"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:652
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
+msgstr ""
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:692
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr "String de data inválida “%(datestr)s”, dada o formato “%(format)s”"
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "Não %(verbose_name)s encontrou correspondendo a consulta"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr "A página não é \"por último\", nem pode ser convertida em um int."
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Página inválida (%(page_number)s): %(message)s"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:169
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr "Empty list and “%(class_name)s.allow_empty” is False."
+
+#: .\venv\Lib\site-packages\django\views\static.py:38
+msgid "Directory indexes are not allowed here."
+msgstr "Os índices de diretório não são permitidos aqui."
+
+#: .\venv\Lib\site-packages\django\views\static.py:40
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr "\"%(path)s\" não existe"
+
+#: .\venv\Lib\site-packages\django\views\static.py:79
+#, python-format
+msgid "Index of %(directory)s"
+msgstr "ÍNDICE DE %(directory)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:220
+msgid "The install worked successfully! Congratulations!"
+msgstr "A instalação funcionou com sucesso! Parabéns!"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+"View <a href = \"https://docs.djangoproject.com/en/%(version)s/RELEASES/\" "
+"Target = \"_ Blank\" rel = \"Noopener\"> Notas de liberação </a> Para django"
+" %(version)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:221
+#, python-format
+msgid ""
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
+msgstr ""
+"Você está vendo esta página porque <a href = "
+"\"https://docs.djangoproject.com/en/%(version)s__/ref/settings/#debug\" "
+"Target = \"_ Blank\" rel = \"Noopener\"> Debug = True </a> está no seu "
+"arquivo de configurações e você não foi configurado nenhum Urls."
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:229
+msgid "Django Documentation"
+msgstr "Documentação de Django"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
+msgid "Topics, references, &amp; how-to’s"
+msgstr "Tópicos, Referências, & amp; Como fazer"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:238
+msgid "Tutorial: A Polling App"
+msgstr "Tutorial: um aplicativo de votação"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:239
+msgid "Get started with Django"
+msgstr "Comece com Django"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:247
+msgid "Django Community"
+msgstr "Comunidade Django"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
+msgid "Connect, get help, or contribute"
+msgstr "Conectar, obter ajuda ou contribuir"
+
+#: .\venv\Lib\site-packages\unfold\admin.py:40
+#: .\venv\Lib\site-packages\unfold\templatetags\unfold_list.py:337
+msgid "Select record"
+msgstr "Selecione Registro"
+
+#: .\venv\Lib\site-packages\unfold\admin.py:167
+msgid "Select action"
+msgstr "Selecione Ação"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\change_list.html:18
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage.html:10
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:13
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:14
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:17
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import.html:28
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:11
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_index.html:15
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:13
+#: .\venv\Lib\site-packages\unfold\templates\admin\base.html:23
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form.html:18
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list.html:31
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:17
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:17
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:9
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_done.html:12
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:12
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:7
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:9
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:11
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:5
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:7
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:9
+msgid "Home"
+msgstr "Lar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\change_list.html:56
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:49
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:50
+#: .\venv\Lib\site-packages\unfold\templates\admin\pagination.html:19
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:9
+msgid "Save"
+msgstr "Salvar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:9
+msgid "Collapse"
+msgstr "Colapso"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:18
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:172
+msgid "Value"
+msgstr "Valor"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:19
+msgid "Default"
+msgstr "Padrão"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:20
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:59
+msgid "Code"
+msgstr "Código"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:21
+msgid "Modified"
+msgstr "Modificado"
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:63
+msgid "Reset to default"
+msgstr "Redefinir para padrão"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:46
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:103
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:137
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:168
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:28
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:61
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:105
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:71
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:169
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\text_filters.py:29
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\text_filters.py:60
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_date_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_datetime_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_single.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_slider.html:7
+#: .\venv\Lib\site-packages\unfold\templates\admin\filter.html:5
+#, python-format
+msgid " By %(filter_title)s "
+msgstr "Por %(filter_title)s"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:186
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:224
+msgid "From"
+msgstr "De"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:193
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:234
+msgid "To"
+msgstr "Para"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:258
+msgid "Date from"
+msgstr "Data de"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:274
+msgid "Date to"
+msgstr "Data para"
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_slider.html:30
+msgid "Not enough data."
+msgstr "Dados não suficientes."
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\array.html:30
+msgid "Add new item"
+msgstr "Adicione um novo item"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:7
+msgid "Paragraph"
+msgstr "Parágrafo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:11
+msgid "Underlined"
+msgstr "Sublinhado"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:15
+msgid "Bold"
+msgstr "Audacioso"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:19
+msgid "Italic"
+msgstr "itálico"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:23
+msgid "Strike"
+msgstr "Batida"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:27
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:98
+msgid "Link"
+msgstr "Link"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:35
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:39
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:43
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:47
+msgid "Heading"
+msgstr "Cabeçalho"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:55
+msgid "Quote"
+msgstr "Citar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:63
+msgid "Unordered list"
+msgstr "Lista não ordenada"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:67
+msgid "Ordered list"
+msgstr "Lista ordenada"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:71
+msgid "Indent increase"
+msgstr "Aumento do recuo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:75
+msgid "Indent decrease"
+msgstr "Diminuição do recuo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:83
+msgid "Undo"
+msgstr "Desfazer"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:87
+msgid "Redo"
+msgstr "Refazer"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:95
+msgid "Enter an URL"
+msgstr "Digite um URL"
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:102
+msgid "Unlink"
+msgstr "Desvincular"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\change_form.html:8
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage.html:22
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:25
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:26
+msgid "Object permissions"
+msgstr "Permissões de objeto"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:39
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:40
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:10
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:44
+msgid "Object"
+msgstr "Objeto"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:42
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:15
+msgid "Group"
+msgstr "Grupo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:43
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:33
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:15
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:33
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:38
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:54
+msgid "User"
+msgstr "Usuário"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:7
+msgid "Group permissions"
+msgstr "Permissões de grupo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:25
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:49
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:25
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:49
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:42
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:58
+msgid "Action"
+msgstr "Ação"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:51
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:51
+msgid "Edit"
+msgstr "Editar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:67
+msgid "Manage group"
+msgstr "Gerenciar grupo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:7
+msgid "User permissions"
+msgstr "Permissões de usuário"
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:67
+msgid "Manage user"
+msgstr "Gerenciar usuário"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_form.html:8
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_list_export_item.html:4
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:28
+msgid "Export"
+msgstr "Exportar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_list_import_item.html:4
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import.html:39
+msgid "Import"
+msgstr "Importar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:41
+#, python-format
+msgid ""
+"\n"
+"                    Export %(len)s selected item.\n"
+"                "
+msgid_plural ""
+"\n"
+"                    Export %(len)s selected items.\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:60
+msgid "This exporter will export the following fields"
+msgstr "Este exportador exportará os seguintes campos"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:79
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_form.html:21
+msgid "Submit"
+msgstr "Enviar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_confirm.html:10
+msgid ""
+"Below is a preview of data to be imported. If you are satisfied with the "
+"results, click 'Confirm import'"
+msgstr ""
+"Abaixo está uma prévia dos dados a serem importados. Se você estiver "
+"satisfeito com os resultados, clique em 'Confirmar Importar'"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_confirm.html:15
+msgid "Confirm import"
+msgstr "Confirme a importação"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_errors.html:20
+msgid "Line number"
+msgstr "Número da linha"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:22
+msgid "New"
+msgstr "Novo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:24
+msgid "Skipped"
+msgstr "Pulou"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:28
+msgid "Update"
+msgstr "Atualizar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:6
+msgid "Some rows failed to validate"
+msgstr "Algumas linhas falharam em validar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:10
+msgid ""
+"Please correct these errors in your data where possible, then reupload it "
+"using the form above."
+msgstr ""
+"Corrija esses erros em seus dados sempre que possível e depois reinicie -os "
+"usando o formulário acima."
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:22
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:40
+msgid "Row"
+msgstr "Linha"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:26
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:44
+msgid "Errors"
+msgstr "Erros"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:70
+msgid "Non field specific"
+msgstr "Não específico de campo"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\resource_fields_list.html:6
+msgid "This exporter will export the following fields: "
+msgstr "Este exportador exportará os seguintes campos:"
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\resource_fields_list.html:8
+msgid "This importer will import the following fields: "
+msgstr "Este importador importará os seguintes campos:"
+
+#. Translators: Model verbose name and instance representation,
+#. suitable to be an item in a list.
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:99
+#, python-format
+msgid "%(class_name)s %(instance)s"
+msgstr "%(class_name)s %(instance)s"
+
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:111
+#, python-format
+msgid ""
+"Deleting %(class_name)s %(instance)s would require deleting the following "
+"protected related objects: %(related_objects)s"
+msgstr ""
+"A exclusão %(class_name)s %(instance)s exigiria a exclusão dos seguintes "
+"objetos relacionados protegidos: %(related_objects)s"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:8
+msgid ""
+"Choose a date from the list below to revert to a previous version of this "
+"object."
+msgstr ""
+"Escolha uma data da lista abaixo para reverter para uma versão anterior "
+"deste objeto."
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:28
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:81
+msgid "entry"
+msgid_plural "entries"
+msgstr[0] "entrada"
+msgstr[1] "entradas"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:32
+msgid "This object doesn't have a change history."
+msgstr "Este objeto não tem um histórico de mudanças."
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:22
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form_object_tools.html:6
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:21
+msgid "History"
+msgstr "História"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:26
+#: .\venv\Lib\site-packages\unfold\templates\admin\edit_inline\stacked.html:65
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:38
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_title.html:25
+msgid "View"
+msgstr "Visualizar"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:29
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:8
+msgid "Revert"
+msgstr "Reverter"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:48
+msgid ""
+"Press the 'Revert' button below to revert to this version of the object."
+msgstr ""
+"Pressione o botão 'reverter' abaixo para reverter para esta versão do "
+"objeto."
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:52
+msgid "Press the 'Change History' button below to edit the history."
+msgstr "Pressione o botão 'Mudar histórico' abaixo para editar o histórico."
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:20
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:56
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:34
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:50
+msgid "Date/time"
+msgstr "Data/hora"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:24
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:60
+msgid "Comment"
+msgstr "Comentário"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:28
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:64
+msgid "Changed by"
+msgstr "Alterado por"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:32
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:78
+msgid "Change reason"
+msgstr "Mudar a razão"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:36
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:82
+msgid "Changes"
+msgstr "Mudanças"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:74
+msgid "None"
+msgstr "Nenhum"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:14
+msgid "Change History"
+msgstr "Mudança de história"
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:19
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:52
+msgid "Close"
+msgstr "Fechar"
+
+#: .\venv\Lib\site-packages\unfold\forms.py:71
+msgid "Select action to run"
+msgstr "Selecione Ação para executar"
+
+#: .\venv\Lib\site-packages\unfold\forms.py:129
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user’s "
+"password, but you can change the password using <a href=\"{}\" class=\"text-"
+"primary-600 dark:text-primary-500\">this form</a>."
+msgstr ""
+"As senhas brutas não são armazenadas; portanto, não há como ver a senha "
+"desse usuário, mas você pode alterar a senha usando <a href = \"{}\" \"class"
+" =\" text-primary-600 escuro: text-Primary-500 \"> este formulário </a>."
+
+#: .\venv\Lib\site-packages\unfold\mixins\base_model_admin.py:57
+#: .\venv\Lib\site-packages\unfold\mixins\base_model_admin.py:78
+msgid "Select value"
+msgstr "Selecione o valor"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:22
+msgid "Run the selected action"
+msgstr "Execute a ação selecionada"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:23
+msgid "Run"
+msgstr "Correr"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:43
+msgid "Click here to select the objects across all pages"
+msgstr "Clique aqui para selecionar os objetos em todas as páginas"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:44
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr "Selecione todos %(total_count)s %(module_name)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:50
+msgid "Clear selection"
+msgstr "Seleção clara"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_list.html:12
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:9
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr "Modelos no aplicativo %(name)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_list.html:48
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list.html:99
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:59
+msgid "You don’t have permission to view or edit anything."
+msgstr "Você não tem permissão para visualizar ou editar nada."
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\add_form.html:6
+msgid "After you've created a user, you’ll be able to edit more user options."
+msgstr ""
+"Depois de criar um usuário, você poderá editar mais opções de usuário."
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:25
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:55
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_done.html:15
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:15
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:46
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:30
+msgid "Change password"
+msgstr "Alterar a senha"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:44
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr "Enter a new password for the user <strong>%(username)s</strong>."
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form.html:32
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\add_link.html:5
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\add_link.html:8
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:4
+#, python-format
+msgid "Add %(name)s"
+msgstr "Adicionar %(name)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form_object_tools.html:12
+#: .\venv\Lib\site-packages\unfold\templates\admin\edit_inline\stacked.html:77
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_title.html:33
+msgid "View on site"
+msgstr "Ver no local"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list.html:88
+msgid "Filters"
+msgstr "Filtros"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:32
+msgid "Select all rows"
+msgstr "Selecione todas as linhas"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:46
+msgid "Toggle sorting"
+msgstr "Alternar a classificação"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:54
+msgid "Remove from sorting"
+msgstr "Retire da classificação"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:60
+#, python-format
+msgid "Sorting priority: %(priority_number)s"
+msgstr "Prioridade de classificação: %(priority_number)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:85
+msgid "Expand row"
+msgstr "Expanda a linha"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:37
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+"A exclusão do %(object_name)s '%(escaped_object)s' resultaria na exclusão de"
+" objetos relacionados, mas sua conta não tem permissão para excluir os "
+"seguintes tipos de objetos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:53
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the"
+" following protected related objects:"
+msgstr ""
+"A exclusão do %(object_name)s '%(escaped_object)s' exigiria a exclusão dos "
+"seguintes objetos relacionados protegidos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:69
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+"Tem certeza de que deseja excluir o %(object_name)s \"%(escaped_object)s\"? "
+"Todos os seguintes itens relacionados serão excluídos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:76
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:71
+msgid "Objects"
+msgstr "Objetos"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:27
+msgid "Delete multiple objects"
+msgstr "Exclua vários objetos"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:37
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+"A exclusão do %(objects_name)s selecionado resultaria na exclusão de objetos"
+" relacionados, mas sua conta não tem permissão para excluir os seguintes "
+"tipos de objetos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:50
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+"A exclusão do %(objects_name)s selecionado exigiria a exclusão dos seguintes"
+" objetos relacionados protegidos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:64
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+"Tem certeza de que deseja excluir o %(objects_name)s selecionado? Todos os "
+"objetos a seguir e seus itens relacionados serão excluídos:"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\includes\object_delete_summary.html:5
+msgid "Summary"
+msgstr "Resumo"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:15
+msgid "Welcome back to"
+msgstr "Bem -vindo de volta a"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:26
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this"
+" page. Would you like to login to a different account?"
+msgstr ""
+"Você é autenticado como %(username)s, mas não está autorizado a acessar esta"
+" página. Você gostaria de fazer login em uma conta diferente?"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:47
+msgid "Log in"
+msgstr "Conecte-se"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:55
+msgid "Forgotten your password or username?"
+msgstr "Esqueceu sua senha ou nome de usuário?"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:84
+msgid ""
+"This object doesn’t have a change history. It probably wasn’t added via this"
+" admin site."
+msgstr ""
+"Este objeto não tem um histórico de mudanças. Provavelmente não foi "
+"adicionado através deste site de administrador."
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\pagination.html:12
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\popup_header.html:14
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:30
+msgid "Show all"
+msgstr "Mostre tudo"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\search_form.html:18
+msgid "Type to search"
+msgstr "Digite para pesquisar"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:28
+msgid "Save and continue editing"
+msgstr "Salve e continue editando"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:30
+msgid "Save and view"
+msgstr "Salve e visualize"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:37
+msgid "Save and add another"
+msgstr "Salve e adicione outro"
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:43
+msgid "Save as new"
+msgstr "Salve como novo"
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:14
+msgid "You have been successfully logged out from the administration"
+msgstr "Você foi registrado com sucesso da administração"
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:18
+msgid "Thanks for spending some quality time with the web site today."
+msgstr "Obrigado por passar algum tempo de qualidade com o site hoje."
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:23
+msgid "Log in again"
+msgstr "Faça login novamente"
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_done.html:26
+msgid "Your password was changed."
+msgstr "Sua senha foi alterada."
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:35
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
+msgstr ""
+"Digite sua senha antiga, por uma questão de segurança e digite sua nova "
+"senha duas vezes para que possamos verificar se você a digitou corretamente."
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\components\table.html:43
+msgid "No data"
+msgstr "Sem dados"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:17
+msgid "View site"
+msgstr "Visualize o site"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:40
+msgid "Log out"
+msgstr "Log Out"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\actions_row.html:4
+msgid "More actions"
+msgstr "Mais ações"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list.html:68
+msgid "All applications"
+msgstr "Todas as aplicações"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:31
+msgid "Add"
+msgstr "Adicionar"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:10
+msgid "True"
+msgstr "Verdadeiro"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:12
+msgid "False"
+msgstr "Falso"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:7
+msgid "Apply Filters"
+msgstr "Aplicar filtros"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:16
+msgid "Hide counts"
+msgstr "Ocultar contagens"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:20
+msgid "Show counts"
+msgstr "Contagens de shows"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:27
+msgid "Clear all filters"
+msgstr "Limpe todos os filtros"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\delete_submit_line.html:5
+msgid "No, take me back"
+msgstr "Não, leve -me de volta"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\delete_submit_line.html:9
+msgid "Yes, I’m sure"
+msgstr "Sim, tenho certeza"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\display_header.html:10
+msgid "Record picture"
+msgstr "Gravar imagem"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_delete.html:4
+msgid "Remove"
+msgstr "Remover"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_heading.html:21
+msgid "Delete?"
+msgstr "Excluir?"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:12
+msgid "No results found"
+msgstr "Nenhum resultado encontrado"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:16
+msgid ""
+"This page yielded into no results. Create a new item or reset your filters."
+msgstr ""
+"Esta página rendeu em nenhum resultado. Crie um novo item ou redefina seus "
+"filtros."
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:30
+msgid "Reset filters"
+msgstr "Redefinir filtros"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\header_back_button.html:7
+msgid "Go back"
+msgstr "Volte"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\history.html:9
+msgid "Recent actions"
+msgstr "Ações recentes"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\history.html:28
+msgid "Unknown content"
+msgstr "Conteúdo desconhecido"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\messages\errornote.html:5
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Por favor, corrija o erro abaixo."
+msgstr[1] "Por favor, corrija os erros abaixo."
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\pagination_infinite.html:5
+msgid "Previous"
+msgstr "Anterior"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\pagination_infinite.html:9
+msgid "Next"
+msgstr "Próximo"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\popup_header.html:14
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:30
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] "%(counter)s resultado"
+msgstr[1] "%(counter)s resultados"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\popup_header.html:14
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:30
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr "%(full_result_count)s Total"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\search.html:22
+msgid "Search apps and models..."
+msgstr "Aplicativos e modelos de pesquisa ..."
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\search.html:23
+msgid "Filter navigation items"
+msgstr "Filtrar itens de navegação"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_branding.html:3
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_branding.html:6
+msgid "Django administration"
+msgstr "Administração de Django"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\tab_items.html:27
+msgid "General"
+msgstr "Em geral"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:16
+msgid "Dark"
+msgstr "Escuro"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:23
+msgid "Light"
+msgstr "Luz"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:30
+msgid "System"
+msgstr "Sistema"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\unauthenticated_header.html:6
+msgid "Return to site"
+msgstr "Retornar ao site"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:38
+msgid "Welcome,"
+msgstr "Bem-vindo,"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input.html:6
+msgid "Image preview"
+msgstr "Visualização de imagem"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input.html:24
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input_small.html:17
+msgid "Choose file to upload"
+msgstr "Escolha o arquivo para fazer upload"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:16
+#, python-format
+msgid "Change selected %(model)s"
+msgstr "Alteração selecionada %(model)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:26
+#, python-format
+msgid "Add another %(model)s"
+msgstr "Adicione outro %(model)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:35
+#, python-format
+msgid "View selected %(model)s"
+msgstr "Ver selecionado %(model)s"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:45
+#, python-format
+msgid "Delete selected %(model)s"
+msgstr "Excluir %(model)s selecionado"
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold_crispy\layout\table_inline_formset.html:65
+msgid "Add row"
+msgstr "Adicione a linha"
+
+#: .\venv\Lib\site-packages\unfold\templatetags\unfold_list.py:118
+msgid "Select all objects on this page for an action"
+msgstr "Selecione todos os objetos nesta página para uma ação"
+
+#: .\venv\Lib\site-packages\unfold\widgets.py:596
+#: .\venv\Lib\site-packages\unfold\widgets.py:637
+msgid "Date"
+msgstr "Data"
+
+#: .\venv\Lib\site-packages\unfold\widgets.py:819
+msgid "Select currency"
+msgstr "Selecione moeda"
