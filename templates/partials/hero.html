@@ -1,0 +1,31 @@
+{% load static i18n %}
+
+<!--====== Hero Section Start ======-->
+<section class="hero-section-three rel z-2 pt-235 rpt-150 pb-130 rpb-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 col-md-11">
+                <div class="hero-content-three rpt-15 rmb-75">
+                    <h1 style="font-size: 48px;" class="mb-15 wow fadeInUp delay-0-2s">
+                        {% trans "Transforme seu atendimento com o StarChat" %}
+                    </h1>
+                    <p class="wow fadeInUp delay-0-4s">
+                        {% trans "Centralize conversas, equipes e canais em um único CRM multicanal." %}
+                    </p>
+                    <a class="theme-btn style-two mt-30" type="submit">{% trans "Quero testar grátis" %} <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="hero-image-three overlay wow fadeInLeft delay-0-4s">
+                    <img style="width: 150%;" src="{% static 'assets/images/hero/hero-three.jpg' %}" alt="Hero">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img class="dots-shape" src="{% static 'assets/images/shapes/dots.png' %}" alt="Shape">
+    <img class="tringle-shape" src="{% static 'assets/images/shapes/tringle.png' %}" alt="Shape">
+    <img class="close-shape" src="{% static 'assets/images/shapes/close.png' %}" alt="Shape">
+</section>
+<!--====== Hero Section End ======-->
