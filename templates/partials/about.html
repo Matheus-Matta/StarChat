@@ -4,12 +4,12 @@
 <section id="widget" class="about-section-three rel z-1 pt-130 rpt-100">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-xl-7 col-lg-3">
+            <div class="col-xl-7 col-lg-6">
                 <div class="d-flex align-items-center justify-content-center about-image rmb-55 wow fadeInLeft delay-0-2s">
-                    <img width="50%" src="{% static 'assets/images/about/message-view.png' %}" alt="{% trans 'Sobre o StarChat' %}">
+                    <img style="width: 180%;" src="{% static 'assets/images/about/message-view.svg' %}" alt="{% trans 'Sobre o StarChat' %}">
                 </div>
             </div>
-            <div class="col-xl-5 col-lg-9">
+            <div class="col-xl-5 col-lg-6">
                 <div class="about-content-three wow fadeInRight delay-0-2s">
                     <div class="section-title mb-25">
                         <span class="sub-title">{% trans "Solução de widget para seu Atendimento" %}</span>
@@ -22,7 +22,7 @@
                         <li class="w-100">{% trans "Widget flutuante para seu site" %}</li>
                         <li class="w-100">{% trans "Automaçãoes inteligentes" %}</li>
                     </ul>
-                    <a href="" class="theme-btn style-three">
+                    <a href="{% url 'auth:register' %}" class="theme-btn style-three">
                         {% trans "Quero ativar" %} <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
