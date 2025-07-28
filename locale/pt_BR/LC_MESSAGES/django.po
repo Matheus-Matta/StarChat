@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-21 20:59-0300\n"
-"PO-Revision-Date: 2025-07-22 16:19-0300\n"
+"PO-Revision-Date: 2025-07-26 12:43-0300\n"
 "Last-Translator:   <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -400,7 +400,7 @@ msgstr "Quero testar grátis"
 
 #: .\templates\partials\newsletter.html:11
 msgid "Experimente o StarChat"
-msgstr "Experimentos o Starchat"
+msgstr "Experimente o StarChat"
 
 #: .\templates\partials\newsletter.html:12
 msgid "Crie sua conta grátis e teste à vontade, sem limite de dias"

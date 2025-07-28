@@ -27,8 +27,8 @@
             <div class="col-xl-3 col-sm-6 col-7 col-small">
                 <div class="footer-widget about-widget">
                     <div class="footer-logo mb-20">
-                        <a href="{% url 'page:index' %}">
-                            <img src="{% static 'assets/images/logos/logo-footer.png' %}" alt="Logo">
+                        <a href="#home">
+                            <img src="{{ site_config.logo_footer.url }}" alt="Logo">
                         </a>
                     </div>
                     <p><span>{% trans "Com o StarChat, você tem uma central inteligente de atendimento multicanal" %}</span></p>
@@ -68,14 +68,15 @@
                 <div class="footer-widget contact-widget">
                     <h4 class="footer-title">{% trans "Fale Conosco" %}</h4>
                     <ul class="list-style-three">
-                        <li><i class="fas fa-envelope-open"></i> <span><a href="mailto:suporte@starchat.com.br">suporte@starchat.com.br</a></span></li>
-                        <li><i class="fas fa-phone"></i> <span>{% trans "WhatsApp:" %} <a href="tel:+5521999999999">(21) 99999-9999</a></span></li>
+                        <li><i class="fas fa-envelope-open"></i> <span><a href="mailto:{{ site_config.email }}">{{ site_config.email }}</a></span></li>
+                        <li><i class="fas fa-phone"></i> <span>{% trans "WhatsApp:" %} <a href="{{ site_config.whatsapp }}">{{ site_config.phone }}</a></span></li>
                     </ul>
                     <div class="social-style-one mt-25">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        {% if site_config.facebook %}<a href="{{ site_config.facebook }}"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                        {% if site_config.twitter %}<a href="{{ site_config.twitter }}"><i class="fab fa-twitter"></i></a>{% endif %}
+                        {% if site_config.linkedin %}<a href="{{ site_config.linkedin }}"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+                        {% if site_config.instagram %}<a href="{{ site_config.instagram }}"><i class="fab fa-instagram"></i></a>{% endif %}
+                        {% if site_config.whatsapp %}<a href="{{ site_config.whatsapp }}"><i class="fab fa-whatsapp"></i></a>{% endif %}
                     </div>
                 </div>
             </div>

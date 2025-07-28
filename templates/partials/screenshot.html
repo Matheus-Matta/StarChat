@@ -13,27 +13,11 @@
            </div>
        </div>
         <div class="dashboard-screenshot-wrap">
+            {% for screenshot in site_config.screenshots.all %}
             <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot4.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
+                <img src="{{ screenshot.image.url }}" alt="{% trans 'Captura de Tela do Painel' %}">
             </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot5.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot6.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot7.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot8.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot9.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
-            <div class="dashboard-screenshot-item">
-                <img src="{% static 'assets/images/dashboard-screenshots/dashboard-screenshot10.png' %}" alt="{% trans 'Captura de Tela do Painel' %}">
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

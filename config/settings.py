@@ -51,10 +51,6 @@ UNFOLD_APPS = [
     "unfold.contrib.import_export",   
     "unfold.contrib.simple_history",       
     "unfold.contrib.guardian",
-    "crispy_forms",
-    "import_export",             
-    "simple_history",  
-    'rosetta',
 ]
 
 INSTALLED = [
@@ -64,10 +60,18 @@ INSTALLED = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+EXTRA_APPS = [
+    'django_svg_image_form_field',
+    "crispy_forms",
+    "import_export",             
+    "simple_history",  
+    'rosetta',
     "guardian",
 ]
 
-INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED
+INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -92,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.site_config',
             ],
         },
     },
@@ -155,7 +160,7 @@ ROSETTA_ACCESS_CONTROL_FUNCTION = None
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/home/app/web/staticfiles"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
@@ -169,7 +174,7 @@ STATICFILES_FINDERS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT  = "/home/app/web/media"
+MEDIA_ROOT  = BASE_DIR / 'media'
 
 
 # Default primary key field type

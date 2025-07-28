@@ -23,21 +23,28 @@ def create_master_plan_account_and_admin(sender, **kwargs):
         print('✔ Plano "Master" criado com preço 0')
 
     # 2) Cria a conta padrão usando esse plano
-    account_name = os.getenv('DEFAULT_ACCOUNT_NAME', 'Master Account')
-    account, created_acc = Account.objects.get_or_create(
-                                defaults={
-                                    'plan': plan_master,
-                                    'status': 'active',
-                                    'start_date': timezone.now()
-                                }
-                            )
+    account_email = os.getenv('DEFAULT_ADMIN_EMAIL')
+    account_qs = Account.objects.filter(email=account_email)
+
+    if account_qs.exists():
+        account = account_qs.first()
+        created_acc = False
+    else:
+        account = Account.objects.create(
+            email=account_email,
+            plan=plan_master,
+            status='active',
+            start_date=timezone.now()
+        )
+        created_acc = True
+
     if created_acc:
-        print(f'✔ Conta padrão criada: {account_name} com plano Master')
+        print(f'✔ Conta padrão criada para: {account_email} com plano Master')
 
     # 3) Cria o superadmin padrão ligado à conta Master
-    username = os.getenv('DEFAULT_ADMIN_USERNAME', 'admin')
-    email = os.getenv('DEFAULT_ADMIN_EMAIL', 'admin@starchat.com.br')
-    password = os.getenv('DEFAULT_ADMIN_PASSWORD', 'admin123')
+    username = os.getenv('DEFAULT_ADMIN_USERNAME')
+    email = os.getenv('DEFAULT_ADMIN_EMAIL')
+    password = os.getenv('DEFAULT_ADMIN_PASSWORD')
 
     user, created_user = User.objects.get_or_create(
         username=username,

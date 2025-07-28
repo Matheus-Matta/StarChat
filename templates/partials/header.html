@@ -7,7 +7,7 @@
                 <div class="logo-outer">
                     <div class="logo">
                         <a href="{% url 'page:index' %}">
-                            <img src="{% static 'assets/images/logos/logo.svg' %}" alt="Logo StarChat">
+                            <img src="{{ site_config.logo.url }}" alt="Logo StarChat">
                         </a>
                     </div>
                 </div>
@@ -33,7 +33,6 @@
                                 <li><a href="#solucoes">{% trans "Soluções" %}</a></li>
                                 <li><a href="#servicos">{% trans "Serviços" %}</a></li>
                                 <li><a href="#sistema">{% trans "Sistema" %}</a></li>
-
                             </ul>
                         </div>
                     </nav>
@@ -41,8 +40,13 @@
                 </div>
 
                 <div class="menu-right d-none d-lg-flex align-items-center">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'admin:logout' %}" class="login text-danger">{% trans "Sair" %}</a>
+                    <a href="{% url 'admin:index' %}" class="theme-btn style-two">{% trans "Minha Conta" %} <i class="fas fa-arrow-right"></i></a>
+                    {% else %}
                     <a href="{% url 'admin:login' %}" class="login">{% trans "Entrar" %} <i class="fas fa-lock"></i></a>
                     <a href="{% url 'auth:register' %}" class="theme-btn style-two">{% trans "Criar Conta" %} <i class="fas fa-arrow-right"></i></a>
+                    {% endif %}
                 </div>
 
             </div>

@@ -6,20 +6,20 @@
         <div class="row align-items-center">
             <div class="col-xl-7 col-lg-6">
                 <div class="d-flex align-items-center justify-content-center about-image rmb-55 wow fadeInLeft delay-0-2s">
-                    <img style="width: 180%;" src="{% static 'assets/images/about/message-view.svg' %}" alt="{% trans 'Sobre o StarChat' %}">
+                    <img style="width: 180%;" src="{{ site_config.widget_image.url }}" alt="{% trans 'Sobre o StarChat' %}">
                 </div>
             </div>
             <div class="col-xl-5 col-lg-6">
                 <div class="about-content-three wow fadeInRight delay-0-2s">
                     <div class="section-title mb-25">
-                        <span class="sub-title">{% trans "Solução de widget para seu Atendimento" %}</span>
-                        <h2>{% trans "O widget de conversa que conecta seu cliente em segundos" %}</h2>
+                        <span class="sub-title">{% trans "Solução de Live chat para seu Atendimento" %}</span>
+                        <h2>{% trans "O Live chat que conecta seu cliente em segundos" %}</h2>
                     </div>
                     <p>
-                        {% trans "Com o StarChat, você oferece suporte e vendas direto do seu site através de um único widget inteligente. Rápido de instalar, simples de gerenciar e pronto para escalar seu atendimento multicanal com eficiência." %}
+                        {% trans "Com o StarChat, você oferece suporte e vendas direto do seu site através de um único Live chat inteligente. Rápido de instalar, simples de gerenciar e pronto para escalar seu atendimento multicanal com eficiência." %}
                     </p>
                     <ul class="list-style-one mt-25 mb-35">
-                        <li class="w-100">{% trans "Widget flutuante para seu site" %}</li>
+                        <li class="w-100">{% trans "Live chat flutuante para seu site" %}</li>
                         <li class="w-100">{% trans "Automaçãoes inteligentes" %}</li>
                     </ul>
                     <a href="{% url 'auth:register' %}" class="theme-btn style-three">

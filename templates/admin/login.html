@@ -1,5 +1,5 @@
 {% extends 'auth/auth_base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block content %}
 
 <div
@@ -9,14 +9,14 @@
   <!-- Logo -->
   <a href="/">
     <img
-      src="{% static 'assets/images/logos/logo.png' %}"
+      src="{% static 'assets/images/logos/logo.svg' %}"
       alt="Starchat"
       class="mb-4"
     />
   </a>
 
-  <h2 class="mb-3 fs-2">Bem‑vindo!</h2>
-  <p class="text-muted mb-4">Faça login para continuar no Starchat</p>
+  <h2 class="mb-3 fs-2">{% trans "Bem-vindo!" %}</h2>
+  <p class="text-muted mb-4">{% trans "Faça login para continuar no Starchat" %}</p>
 
   <form
     method="post"
@@ -25,7 +25,7 @@
   >
     {% csrf_token %}
 
-    {# non‑field errors #}
+    {# non-field errors #}
     {% if form.non_field_errors %}
       <div class="alert alert-danger">
         {{ form.non_field_errors|striptags }}
@@ -34,7 +34,7 @@
 
 <!-- Usuário (antes era standalone) -->
 <div class="mb-2 text-start">
-  <label for="id_username" class="form-label">Usuário</label>
+  <label for="id_username" class="form-label">{% trans "Email" %}</label>
   <div class="input-group">
     <span class="input-group-text bg-white border-end-0">
       <i class="fas fa-envelope"></i>
@@ -44,7 +44,7 @@
       name="{{ form.username.html_name }}"
       id="id_username"
       class="form-control ps-2 h-48 {% if form.username.errors %}is-invalid{% endif %}"
-      placeholder="Digite seu usuário"
+      placeholder="{% trans "Digite seu Email" %}"
       value="{{ form.username.value|default_if_none:'' }}"
       required
     />
@@ -58,7 +58,7 @@
 
 <!-- Senha -->
 <div class="mb-2 text-start">
-  <label for="id_password" class="form-label">Senha</label>
+  <label for="id_password" class="form-label">{% trans "Senha" %}</label>
   <div class="input-group position-relative">
     <span class="input-group-text bg-white border-end-0">
       <i class="fas fa-lock"></i>
@@ -81,22 +81,22 @@
     </div>
   {% endif %}
   <div class="form-text text-end">
-    <a href="{% url 'auth:password_reset' %}" class="read-more">Esqueceu sua senha?</a>
+    <a href="{% url 'auth:password_reset' %}" class="read-more">{% trans "Esqueceu sua senha?" %}</a>
   </div>
 </div>
 
     <!-- Submit -->
     <button type="submit" class="theme-btn style-six w-100 py-2 mb-3">
-      Entrar <i class="fas fa-arrow-right"></i>
+      {% trans "Entrar" %} <i class="fas fa-arrow-right"></i>
     </button>
   </form>
 
   <p class="small mb-2">
-    Ainda não tem conta?
-    <a href="{% url 'auth:register' %}" class="read-more">Cadastre‑se agora</a>
+    {% trans "Ainda não tem conta?" %}
+    <a href="{% url 'auth:register' %}" class="read-more">{% trans "Cadastre-se agora" %}</a>
   </p>
   <a class="read-more" href="{% url 'page:index' %}">
-     Voltar
+     {% trans "Voltar" %}
   </a>
 </div>
 
@@ -119,3 +119,4 @@
   });
 </script>
 {% endblock %}
+
