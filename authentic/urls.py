@@ -2,12 +2,13 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 
 app_name = 'auth'
 
 urlpatterns = [
     # page register and login
-    path('login/', views.custom_login, name='login'),
+    path('login/', lambda request: redirect('admin:login'), name='login'),
     path('register/', views.register, name='register'),
 
     # url logout

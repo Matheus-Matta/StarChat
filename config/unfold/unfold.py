@@ -1,11 +1,21 @@
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.templatetags.static import static
 
 UNFOLD = {
+    "SHOW_LANGUAGES":   True,
     "SITE_TITLE":       _("Starchat"),
     "SITE_HEADER":      _("Starchat"),
     "SITE_SUBHEADER":   _("Painel de Controle"),
-    "SHOW_LANGUAGES":   True,
+    "SITE_SYMBOL": "star",
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "href": lambda request: static("assets/images/favicon.svg"),
+        },
+    ],
     "SITE_URL":         reverse_lazy("page:index"),
     "SITE_DROPDOWN": [
         {
@@ -58,6 +68,12 @@ UNFOLD = {
                         "title":       _("Permissões"),
                         "icon":        "security",
                         "link":        reverse_lazy("admin:auth_permission_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title":       _("Configurações"),
+                        "icon":        "settings",
+                        "link":        reverse_lazy("admin:core_siteconfig_changelist"),
                         "permission": lambda request: request.user.is_superuser,
                     },
                 ],

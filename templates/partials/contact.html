@@ -21,8 +21,8 @@
             <div class="contact-info-content">
               <h3>{% trans "Email" %}</h3>
               <span
-                ><a href="mailto:suporte@starchat.com.br"
-                  >suporte@starchat.com.br</a
+                ><a href="mailto:{{ site_config.email }}"
+                  >{{ site_config.email }}</a
                 ></span
               >
             </div>
@@ -37,7 +37,7 @@
             <div class="contact-info-content">
               <h3>{% trans "WhatsApp" %}</h3>
               <span
-                ><a href="https://wa.me/5521999999999">(21) 99999-9999</a></span
+                ><a href="{{ site_config.whatsapp }}">{{ site_config.phone }}</a></span
               >
             </div>
           </div>
