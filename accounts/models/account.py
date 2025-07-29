@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 
 class Account(models.Model):
-    plan = models.ForeignKey(Plan, on_delete=models.PROTECT, verbose_name=_('Plano'))
+    plan = models.ForeignKey(Plan, on_delete=models.PROTECT, verbose_name=_('Plano'), null=True, blank=True)
     status = models.CharField(max_length=20, choices=[('active', _('Ativo')), ('inactive', _('Inativo'))], verbose_name=_('Status'))
     start_date = models.DateTimeField(verbose_name=_('Data de início'))
     end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Data de fim'))

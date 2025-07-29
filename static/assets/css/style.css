@@ -3662,3 +3662,31 @@ blockquote .name-designation .designation {
     }
 }
 
+
+
+.pricing-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 15px;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-list li {
+    margin-bottom: 0.8rem;
+    color: #6c757d;
+}
+
+.popular-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    border-radius: 20px;
+}
+
+.gradient-custom {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}

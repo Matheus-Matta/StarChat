@@ -42,7 +42,9 @@ def custom_login(request):
 @csrf_protect
 def register(request):
     next_url = request.GET.get('next') or reverse_lazy('admin:index')
-
+    if request.user.is_authenticated:
+        return redirect('admin:index')
+       
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():

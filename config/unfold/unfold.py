@@ -36,7 +36,6 @@ UNFOLD = {
         "navigation": [
             {
                 "title":       _("Navegação"),
-                "icon":        "menu",
                 "separator":   False,
                 "collapsible": False,
                 "items": [
@@ -71,6 +70,18 @@ UNFOLD = {
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
+                        "title":       _("Planos"),
+                        "icon":        "credit_card",
+                        "link":        reverse_lazy("admin:accounts_plan_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title":       _("Contas"),
+                        "icon":        "account_balance",
+                        "link":        reverse_lazy("admin:accounts_account_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
                         "title":       _("Configurações"),
                         "icon":        "settings",
                         "link":        reverse_lazy("admin:core_siteconfig_changelist"),
@@ -79,5 +90,36 @@ UNFOLD = {
                 ],
             },
         ],
+    },
+    "STYLES": [
+        lambda request: static("css/style.css"),
+    ],
+    "COLORS": {
+        "base": {
+            "50":  "250, 250, 250",   # #FAFAFA
+            "50":  "250, 250, 250",   # #FAFAFA
+            "200": "200, 200, 200",   # #C8C8C8
+            "300": "160, 160, 160",   # #A0A0A0
+            "400": "120, 120, 120",   # #787878
+            "500": " 90,  90,  90",   # #5A5A5A
+            "600": " 60,  60,  60",   # #3C3C3C
+            "700": " 40,  40,  40",   # #282828
+            "800": " 21,  21,  21",   # #151515
+            "900": " 15,  15,  15",   # #0F0F0F,
+            "950": " 5,  5,  5",      # #050505,
+        },
+        "primary": {
+             "50":  "241, 236, 254",  # #F1ECFE
+             "100": "233, 217, 252",  # #E9D9FC
+             "200": "216, 180, 254",  # #D8B4FE
+             "300": "192, 132, 252",  # #C084FC
+             "400": "168,  85, 247",  # #A855F7
+             "500": "81,  56, 238",   # #5138EE,
+             "600": "70,  48, 206",   # #4630CE,
+             "700": "58,  39, 175",   # #3A27AF,
+             "800": "47,  32, 144",   # #2F2090
+             "900": "36,  24, 112",   # #241870
+             "950": "23,  15,  75",   # #170F4B
+        },
     },
 }
