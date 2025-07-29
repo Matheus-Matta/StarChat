@@ -9,7 +9,7 @@ app_name = 'auth'
 urlpatterns = [
     # page register and login
     path('login/', lambda request: redirect('admin:login'), name='login'),
-    path('register/', views.register, name='register'),
+    path('register', views.register, name='register'),
 
     # url logout
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

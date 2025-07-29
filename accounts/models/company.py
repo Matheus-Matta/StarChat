@@ -39,7 +39,10 @@ class Company(models.Model):
         verbose_name=_('CNPJ')
     )
     billing_address = models.JSONField(
-        verbose_name=_('Endereço de cobrança')
+        verbose_name=_('Endereço de cobrança'),
+        help_text=_("Endereço de cobrança da empresa"),
+        null=True,
+        blank=True
     )
     company_type = models.CharField(
         max_length=20,

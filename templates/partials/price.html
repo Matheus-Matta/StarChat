@@ -1,0 +1,76 @@
+{% load static %}{% load i18n %}
+
+<!--====== Seção de Planos Início ======-->
+<section id="pricing" class="services-section-three bg-lighter rel z-1 pb-100 mt-50 rpb-70 bg-white" style="background-image: url('{% static 'assets/images/shapes/solutions-bg-dots.png' %}');">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col">
+        <h2 class="display-4 fw-bold">{% trans "Escolha Seu Plano" %}</h2>
+        <p class="text-muted">{% trans "Selecione o plano ideal para suas necessidades" %}</p>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for plan in plans %}
+        <div class="col">
+          <div style="border-radius: 1rem; visibility: visible; animation-name: fadeInUp;" class="card h-100 pricing-card shadow wow fadeInUp delay-0-6s {% if plan.is_favorite %} position-relative{% endif %}">
+            {% if plan.is_favorite %}
+              <span style='z-index: 2; border-radius: 2rem; margin-top: -1.3rem; margin-right: 1.5rem;' class="theme-btn style-six py-1 position-absolute top-0 end-0">
+                {% trans "Mais Popular" %}
+              </span>
+            {% endif %}
+            <div style="padding: 3rem;" class="card-body">
+              <h5 class="card-title text-uppercase mb-4 {% if plan.is_favorite %} text-primary{% else %} text-muted{% endif %}">
+                {{ plan.name }}
+              </h5>
+              <h1 class="display-6 mb-4">
+                R${{ plan.monthly_price|floatformat:0 }}
+                <small class="text-muted fw-light">/{% trans "mês" %}</small>
+              </h1>
+              <ul style="min-height: 120px" class="list-unstyled feature-list">
+                <li>
+                  <i class="bi bi-check2 text-primary me-2"></i>
+                  {{ plan.included_agents }} {% trans "Agentes" %}
+                </li>
+                <li>
+                  <i class="bi bi-check2 text-primary me-2"></i>
+                  {{ plan.included_inboxes }} {% trans "Canais de Atendimento" %}
+                </li>
+                {% if plan.extra_agent_price > 0 %}
+                  <li>
+                    <i class="bi bi-check2 text-primary me-2"></i>
+                    + R${{ plan.extra_agent_price|floatformat:2 }} {% trans "por agente extra" %}
+                  </li>
+                {% else  %}
+                  <li>
+                    <i class="bi bi-x text-danger me-2"></i>
+                    {% trans "Sem agente extra" %}
+                  </li>
+                {% endif %}
+                {% if plan.extra_inbox_price > 0 %}
+                  <li>
+                    <i class="bi bi-check2 text-primary me-2"></i>
+                    + R${{ plan.extra_inbox_price|floatformat:2 }} {% trans "por inbox extra" %}
+                  </li>
+
+                {% else %}
+                  <li>
+                    <i class="bi bi-x text-danger me-2"></i>
+                    {% trans "Sem inbox extra" %}
+                  </li>
+                {% endif %}
+              </ul>
+              <a href="{% url 'auth:register' %}"
+                 class="btn {% if plan.is_favorite %}btn-primary{% else %}btn-outline-primary{% endif %} btn-lg w-100 mt-4">
+                {% trans "Assinar" %}
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      {% empty %}
+        <p class="text-center">{{ _("Nenhum plano disponível no momento.") }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!--====== Seção de Planos Fim ======-->
