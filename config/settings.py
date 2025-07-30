@@ -68,7 +68,9 @@ EXTRA_APPS = [
     "import_export",             
     "simple_history",  
     'rosetta',
-    "guardian",
+    "guardian",    
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
@@ -190,3 +192,62 @@ AUTHENTICATION_BACKENDS = (
 
 from config.unfold.unfold import UNFOLD
 UNFOLD = UNFOLD
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'uploadimage',    # upload direto de imagem
+            'image2',         # float / alinhamento horizontal
+            'justify',        # alinhamento de parágrafos (texto)
+            'stylescombo',    # dropdown de estilos (usaremos para vertical-align)
+            'dialogadvtab',   # aba Avançado no diálogo de Imagem
+            'autogrow',       # expande conforme o conteúdo
+            'sourcearea',
+        ]),
+        'removePlugins': 'image',  # evita conflito com o plugin padrão
+   
+        'toolbar_Custom': [
+            {'name': 'clipboard',   'items': ['Undo','Redo']},
+            {'name': 'styles',      'items': ['Format','Styles','Font','FontSize']},
+            {'name': 'colors',      'items': ['TextColor','BGColor']},
+            {'name': 'basicstyles', 'items': ['Bold','Italic','Underline','Strike']},
+            {'name': 'paragraph',   'items': [
+                'NumberedList','BulletedList','-',
+                'Outdent','Indent','-',
+                'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'
+            ]},
+            {'name': 'insert',      'items': [
+                'Image','Table','HorizontalRule','SpecialChar'
+            ]},
+            {'name': 'tools',       
+             'items': [
+                'Maximize',
+                'Source'      # botão para alternar para o código-fonte
+            ]},
+        ],
+        # classes para alinhar automaticamente as imagens
+        'image2_alignClasses': [
+            'image-align-left', 
+            'image-align-center', 
+            'image-align-right',
+        ],
+
+        # estilos customizados para vertical-align
+        'stylesSet': [
+            # mantém outros estilos existentes...
+            { 'name': 'Alinhar Topo',    'element': 'img', 'attributes': {'style': 'vertical-align: top;'} },
+            { 'name': 'Alinhar Meio',    'element': 'img', 'attributes': {'style': 'vertical-align: middle;'} },
+            { 'name': 'Alinhar Inferior','element': 'img', 'attributes': {'style': 'vertical-align: bottom;'} },
+        ],
+
+        'autoGrow_minHeight': 200,
+        'autoGrow_maxHeight': 600,
+        'autoGrow_bottomSpace': 50,
+    }
+}

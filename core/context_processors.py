@@ -1,5 +1,5 @@
 # core/context_processors.py
-from .models import SiteConfig
+from .models import SiteConfig, Screenshot, SiteService
 
 def site_config(request):
     """
@@ -8,5 +8,6 @@ def site_config(request):
     """
     config = SiteConfig.objects.filter(is_active=True).first()
     return {
-        'site_config': config
+        'site_config': config,
+        'services': SiteService.objects.filter(is_active=True).order_by('order'),
     }

@@ -8,7 +8,10 @@ from django.urls import reverse
 from config.unfold.admin import BaseAdmin
 from unfold.admin import TabularInline
 from django import forms
-from .models import SiteConfig, Screenshot
+from .models import SiteConfig, Screenshot, SiteService
+from taggit.forms import TagWidget
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.db import models
 
 class ScreenshotAdminForm(forms.ModelForm):
     class Meta:
@@ -72,17 +75,32 @@ class SiteConfigAdmin(BaseAdmin):
     inlines = [ScreenshotInline]
     list_display = ["name", "is_active", "created_at"]
     search_fields = ["name", "email", "phone"]
-    fieldsets = (
-        (_("Informações Gerais"), {"fields": ("name", "is_active")}),
-        (_("Logos e Imagens"), {
-            "fields": (
-                "favicon","logo", "logo_footer",
-                "hero_image", "widget_image", "auto_image",
-            )
+    fieldsets = [
+        (_("Informações Gerais"), {"fields": ["name", "is_active"]}),
+        (_("SEO"), {
+            "fields": ["tags", "meta_title", "meta_description"],
+            "description": _("Palavras‑chave, título e descrição para SEO"),
         }),
-        (_("Contato e Endereço"), {"fields": ("phone", "email", "address")}),
-        (_("Redes Sociais"), {"fields": ("instagram", "whatsapp", "twitter", "linkedin")}),
-    )
+        (_("Logos e Imagens"), {
+            "fields": [
+                "favicon", "logo", "logo_footer",
+                "hero_image", "widget_image", "auto_image",
+            ],
+        }),
+        (_("Contato e Endereço"), {
+            "fields": ["phone", "email", "address"],
+        }),
+        (_("Redes Sociais"), {
+            "fields": ["instagram", "whatsapp", "twitter", "linkedin"],
+        }),
+        (_("Sobre Nós"), {
+            "fields": [
+                "about_body",
+            ],
+            "description": _("Conteúdo e imagens para a seção Sobre Nós do site"),
+        }),
+    ]
+
 
 
 @admin.register(Screenshot)
@@ -99,3 +117,11 @@ class ScreenshotAdmin(BaseAdmin):
             )
         return format_html('<span class="text-gray-400 italic">Sem imagem</span>')
     preview_button.short_description = _("Visualizar")
+
+@admin.register(SiteService)
+class SiteServiceAdmin(BaseAdmin):
+    list_display        = ('title','subtitle','is_active','order')
+    list_filter         = ('is_active',)
+    search_fields       = ('title','subtitle','tags__name')
+    ordering            = ('order',)
+    prepopulated_fields = {'slug': ('title',)}

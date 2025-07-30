@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo_meta %}
+    {% if service.excerpt %}
+    <meta name="description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.tags %}
+    <meta name="keywords"    content="{{ service.tags }}">
+    {% endif %}
+    <meta property="og:title"       content="{{ service.title }} | Starchat">
+    {% if service.excerpt %}
+    <meta property="og:description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.hero_image %}
+    <meta property="og:image"       content="{{ service.get_hero_image_url }}">
+    {% endif %}
+    <meta property="og:url"         content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="{{ service.title }} | Starchat">
+    {% if service.excerpt %}
+    <meta name="twitter:description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.hero_image %}
+    <meta name="twitter:image"       content="{{ service.get_hero_image_url }}">
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<!-- service -->
+{% include 'partials/service_details.html' %}
+
+{% include 'partials/price.html' %}
+
+<!-- Footer -->
+{% include 'partials/footer.html' %}
+
+{% endblock %}

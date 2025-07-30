@@ -25,8 +25,12 @@ urlpatterns = [
     path('', include('page.urls')),
     path('auth/', include('authentic.urls')),
     path('accounts/', include('accounts.urls')),
+    path('', include('core.urls')),
+    
+    
     path('i18n/', include('django.conf.urls.i18n')),
     path('rosetta/', include('rosetta.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

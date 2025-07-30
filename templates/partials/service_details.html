@@ -1,0 +1,58 @@
+{% load static %} {% load i18n %}
+<section class="page-banner bg-blue rel z-1" style="background-image: url({% static "assets/images/background/banner-bg.png" %});">
+    <div class="container">
+        <div class="banner-inner">
+            <h1 class="page-title wow fadeInUp delay-0-2s">{% trans "Pagina de Serviços" %}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s">
+                    <li class="breadcrumb-item"><a href="{% url 'page:index' %}">{% trans "Home" %}</a></li>
+                    <li class="breadcrumb-item active">{{ service.title }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <img class="dots-shape" src="{% static 'assets/images/shapes/white-dots-two.png' %}" alt="Shape">
+    <img class="tringle-shape slideLeftRight" src="{% static 'assets/images/shapes/white-tringle.png' %}" alt="Shape">
+    <img class="close-shape" src="{% static 'assets/images/shapes/white-close.png' %}" alt="Shape">
+    <img src="{% static 'assets/images/newsletter/circle.png' %}" alt="shape" class="banner-circle slideUpRight">
+    <img class="dots-shape-three slideUpDown delay-1-5s" src="{% static 'assets/images/shapes/white-dots-three.png' %}" alt="Shape">
+</section>
+
+<section class="single-servcie-section rel z-1 py-80 rpy-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-4 col-lg-5">
+        <div class="service-sidebar rmb-75">
+          <div
+            class="service-widget service-list wow fadeInUp delay-0-2s"
+            style="visibility: visible; animation-name: fadeInUp"
+          >
+            <ul>
+              {% for serv in services %}
+              <li class="{% if serv.id == service.id %}active{% endif %}">
+                <a href="{% url 'page:service_detail' serv.slug %}"
+                  >{{ serv.title }} <i class="{{ serv.icon_class }}"></i
+                ></a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <div class="single-service-content">
+          <!-- Título e subtítulo -->
+          <h2>{{ service.title }}</h2>
+          {% if service.subtitle %}
+          <h4 class="text-muted mb-4">{{ service.subtitle }}</h4>
+          {% endif %}
+
+          <!-- Body (HTML rico) -->
+          <div class="service-body wow fadeInUp delay-0-6s">
+            {{ service.body|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
