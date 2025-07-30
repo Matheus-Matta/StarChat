@@ -3,126 +3,30 @@
 
 <!--====== Serviços do StarChat Start ======-->
 <section id="servicos" class="services-section-three bg-lighter rel z-1 pt-250 pb-50 rpb-70">
-    <div class="container">
-       <div class="row justify-content-center text-center">
-           <div class="col-xl-7 col-lg-8 col-md-10">
-               <div class="section-title mt-100 rmt-70 mb-55">
-                    <span class="sub-title">{% trans "Recursos Poderosos" %}</span>
-                    <h2>{% trans "Tudo o que você precisa para um atendimento eficiente e inteligente" %}</h2>
-                </div>
-           </div>
-       </div>
-        <div class="row">
-            <!-- 1 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-0-2s">
-                    <i class="fas fa-project-diagram"></i>
-                    <div class="content">
-                        <h3>{% trans "Multicanal" %}</h3>
-                        <p>instagram, WhatsApp, Telegram, Email e Live Chat. e muito mais</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-0-4s">
-                    <i class="fas fa-clipboard-check"></i>
-                    <div class="content">
-                        <h3>{% trans "Funções e Auditoria" %}</h3>
-                        <p>Controle de funções e auditoria para monitorar cada ação no sistema..</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-0-6s">
-                    <i class="fas fa-users"></i>
-                    <div class="content">
-                        <h3>{% trans "Times e Agentes" %}</h3>
-                        <p>Organização de times e agentes para distribuir tarefas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-0-8s">
-                    <i class="fas fa-chart-bar"></i>
-                    <div class="content">
-                        <h3>{% trans "Relatórios" %}</h3>
-                        <p>Relatórios completos com gráficos e métricas de desempenho detalhadas</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-1-0s">
-                    <i class="fas fa-cogs"></i>
-                    <div class="content">
-                        <h3>{% trans "Automações" %}</h3>
-                        <p>Automações e macros inteligentes para agilizar processos.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-1-2s">
-                    <i class="fas fa-robot"></i>
-                    <div class="content">
-                        <h3>{% trans "Robôs com IA" %}</h3>
-                        <p>Robôs de atendimento com IA para respostas automáticas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-1-4s">
-                    <i class="fas fa-plug"></i>
-                    <div class="content">
-                        <h3>{% trans "Integrações" %}</h3>
-                        <p>ChatGPT, Dialogflow, Dyte e LeadSquared em um só lugar. </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-1-6s">
-                    <i class="fas fa-info-circle"></i>
-                    <div class="content">
-                        <h3>{% trans "HelperCenter" %}</h3>
-                        <p>HelperCenter para suporte e conhecimento em atendimentos.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 9 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-1-8s">
-                    <i class="fas fa-stopwatch"></i>
-                    <div class="content">
-                        <h3>{% trans "SLA e CSAT" %}</h3>
-                        <p>SLA e CSAT definidos para garantir qualidade e satisfação do cliente.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 10 -->
-            <div class="col-xl-4 col-md-6">
-                <div class="service-item wow fadeInUp delay-2-0s">
-                    <i class="fas fa-bullhorn"></i>
-                    <div class="content">
-                        <h3>{% trans "Campanhas" %}</h3>
-                        <p>SMS, Live Chat e WhatsApp para alcançar todos os canais.</p>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <div class="section-title mt-100 rmt-70 mb-55">
+          <span class="sub-title">{% trans "Recursos Poderosos" %}</span>
+          <h2>{% trans "Tudo o que você precisa para um atendimento eficiente e inteligente" %}</h2>
         </div>
+      </div>
     </div>
+    <div class="row">
+      {% for service in services %}
+      <div style="cursor: pointer;" class="col-xl-4 col-md-6">
+            <a href="{% url 'page:service_detail' service.slug %}">
+                <div class="service-item wow fadeInUp delay-{{ forloop.counter0|add:"0.2"|floatformat:1 }}s">
+                    <i class="{{ service.icon_class }}"></i>
+                    <div class="content">
+                    <h3>{% trans service.title %}</h3>
+                    <p>{{ service.excerpt }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 </section>
 <!--====== Serviços do StarChat End ======-->

@@ -46,9 +46,21 @@ UNFOLD = {
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
-                        "title": _("Traduções"),
-                        "icon":  "translate",
-                        "link":  reverse_lazy("rosetta-file-list", kwargs={"po_filter": "project"}),
+                        "title":       _("Planos"),
+                        "icon":        "credit_card",
+                        "link":        reverse_lazy("admin:accounts_plan_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title":       _("Serviços"),
+                        "icon":        "service_toolbox",
+                        "link":        reverse_lazy("admin:core_siteservice_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title":       _("Contas"),
+                        "icon":        "business_center",
+                        "link":        reverse_lazy("admin:accounts_account_changelist"),
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
@@ -70,15 +82,9 @@ UNFOLD = {
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
-                        "title":       _("Planos"),
-                        "icon":        "credit_card",
-                        "link":        reverse_lazy("admin:accounts_plan_changelist"),
-                        "permission": lambda request: request.user.is_superuser,
-                    },
-                    {
-                        "title":       _("Contas"),
-                        "icon":        "account_balance",
-                        "link":        reverse_lazy("admin:accounts_account_changelist"),
+                        "title": _("Traduções"),
+                        "icon":  "translate",
+                        "link":  reverse_lazy("rosetta-file-list", kwargs={"po_filter": "project"}),
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
@@ -91,9 +97,6 @@ UNFOLD = {
             },
         ],
     },
-    "STYLES": [
-        lambda request: static("css/style.css"),
-    ],
     "COLORS": {
         "base": {
             "50":  "250, 250, 250",   # #FAFAFA

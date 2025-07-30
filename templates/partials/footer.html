@@ -13,8 +13,8 @@
                 </div>
                 <div class="col-xl-5 col-lg-6">
                     <div class="call-to-action-btns text-xl-right mb-20">
-                        <a href="#" class="theme-btn style-two rmb-15">{% trans "Comece agora" %} <i class="fas fa-arrow-right"></i></a>
-                        <a href="#" class="theme-btn style-three rmb-15">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{% url 'auth:register' %}" class="theme-btn style-two rmb-15">{% trans "Comece agora" %} <i class="fas fa-arrow-right"></i></a>
+                        <a href="{% url 'page:sobre_nos' %}" class="theme-btn style-three rmb-15">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -32,35 +32,28 @@
                         </a>
                     </div>
                     <p><span>{% trans "Com o StarChat, você tem uma central inteligente de atendimento multicanal" %}</span></p>
-                    <a href="#" class="read-more">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
+                    <a href="{% url 'page:sobre_nos' %}" class="read-more">{% trans "Saiba mais" %} <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-xl-2 col-sm-4 col-5 col-small">
                 <div class="footer-widget link-widget">
-                    <h4 class="footer-title">{% trans "Sobre" %}</h4>
+                    <h4 class="footer-title">{% trans "Menu" %}</h4>
                     <ul class="list-style-two">
-                        <li><a href="#">{% trans "Nossa história" %}</a></li>
-                        <li><a href="#">{% trans "Equipe" %}</a></li>
-                        <li><a href="#">{% trans "Notícias" %}</a></li>
-                        <li><a href="#">{% trans "Carreiras" %}</a></li>
-                        <li><a href="#">{% trans "Funcionalidades" %}</a></li>
+                        <li><a href="#home">{% trans "Início" %}</a></li>
+                        <li><a href="#pricing">{% trans "Preços" %}</a></li>
+                        <li><a href="#solucoes">{% trans "Soluções" %}</a></li>
+                        <li><a href="#servicos">{% trans "Serviços" %}</a></li>
+                        <li><a href="#sistema">{% trans "Sistema" %}</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-xl-4 col-md-8">
                 <div class="footer-widget link-widget">
-                    <h4 class="footer-title">{% trans "Links rápidos" %}</h4>
+                    <h4 class="footer-title">{% trans "Serviços" %}</h4>
                     <ul class="list-style-two two-column">
-                        <li><a href="#">{% trans "Widget de Atendimento" %}</a></li>
-                        <li><a href="#">{% trans "Automatizações" %}</a></li>
-                        <li><a href="#">{% trans "Integrações" %}</a></li>
-                        <li><a href="#">{% trans "Relatórios e Métricas" %}</a></li>
-                        <li><a href="#">{% trans "Gestão de Equipes" %}</a></li>
-                        <li><a href="#">{% trans "Respostas Rápidas" %}</a></li>
-                        <li><a href="#">{% trans "Atalhos e Macros" %}</a></li>
-                        <li><a href="#">{% trans "Segurança de Dados" %}</a></li>
-                        <li><a href="#">{% trans "APIs Abertas" %}</a></li>
-                        <li><a href="#">{% trans "CRM Integrado" %}</a></li>
+                        {% for service in services %}
+                        <li><a href="{% url 'page:service_detail' service.slug %}">{{ service.title }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

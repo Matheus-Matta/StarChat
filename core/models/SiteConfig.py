@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 import os
+from ckeditor.fields import RichTextField
 
 class SiteConfig(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Nome"), unique=True)
@@ -34,7 +35,27 @@ class SiteConfig(models.Model):
     phone = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
-
+    
+    tags = models.CharField(
+        max_length=255, blank=True, default='',
+        verbose_name=_("Tags"),
+        help_text=_("Palavras‑chave separadas por vírgula para SEO")
+    )
+    meta_title = models.CharField(
+        max_length=60, blank=True, default='',
+        verbose_name=_("Meta Title"),
+        help_text=_("Título para title e Open Graph (até ~60 caracteres)")
+    )
+    meta_description = models.CharField(
+        max_length=160, blank=True, default='',
+        verbose_name=_("Meta Description"),
+        help_text=_("Descrição para meta description e OG (até ~160 caracteres)")
+    )
+    about_body = RichTextField(
+        blank=True, default='',
+        verbose_name=_("Corpo Sobre Nós"),
+        help_text=_("Texto livre (HTML simples) para a seção Sobre Nós")
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     history = HistoricalRecords()

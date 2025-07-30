@@ -7,5 +7,4 @@ from django.shortcuts import redirect
 app_name = 'core'
 
 urlpatterns = [
-
 ]
