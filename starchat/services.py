@@ -9,6 +9,8 @@ from .exceptions import ChatwootNotFoundError
 from accounts.models import Account
 from django.utils import timezone
 logger = logging.getLogger(__name__)
+    
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -84,6 +86,10 @@ class ChatwootAccountService:
             website_url=getattr(account, "website_url", None),
             features=self.get_enabled_features()
         )
+        if not chatwoot_id:
+            error_msg = f"Failed to create Chatwoot account for {account}"
+            logger.error(error_msg)
+            return False
         
         if not self._is_valid_account_id(chatwoot_id):
             error_msg = f"Invalid Chatwoot account id: {chatwoot_id}"
@@ -95,17 +101,22 @@ class ChatwootAccountService:
         return chatwoot_id
     
     
+
     def update_chatwoot_account(self, account: Account) -> None:
         """
         Updates an existing Chatwoot account.
-        
-        Args:
-            account: The Account instance to update.
         """
         try:
+            # tenta obter a instância relacionada
             chatwoot_account = account.chatwoot_account
-            logger.debug(f"Updating Chatwoot account {chatwoot_account.chatwoot_id} for {account}")
-            
+        except ObjectDoesNotExist:
+            logger.warning(f"Não foi possível encontrar ChatwootAccount para {account}")
+            return False
+
+        try:
+            logger.debug(
+                f"Updating Chatwoot account {chatwoot_account.chatwoot_id} for {account}"
+            )
             self.client.update_account(
                 account_id=chatwoot_account.chatwoot_id,
                 name=str(account.email),
@@ -113,16 +124,13 @@ class ChatwootAccountService:
                 limits=self._get_account_limits(account),
                 features=self.get_enabled_features(),
             )
-            
-            logger.info(f"Successfully updated Chatwoot account {chatwoot_account.chatwoot_id} for {account}")
-            
-        except ChatwootAccount.DoesNotExist:
-            logger.debug(f"No Chatwoot account found for {account}")
-            return
+            logger.info(
+                f"Successfully updated Chatwoot account {chatwoot_account.chatwoot_id} for {account}"
+            )
         except Exception as e:
             logger.error(f"Error updating Chatwoot account for {account}: {e}")
             raise
-    
+        
     def delete_chatwoot_account(self, account: Account) -> None:
         """
         Deletes a Chatwoot account.
@@ -138,9 +146,6 @@ class ChatwootAccountService:
             
             logger.info(f"Successfully deleted Chatwoot account {chatwoot_account.chatwoot_id} for {account}")
             
-        except ChatwootAccount.DoesNotExist:
-            logger.debug(f"No Chatwoot account found for {account}")
-            return
         except Exception as e:
             logger.error(f"Error deleting Chatwoot account for {account}: {e}")
             raise
@@ -150,7 +155,8 @@ class ChatwootAccountService:
         """Creates a user in Chatwoot and validates the response."""
         raw_pwd = getattr(user, "_raw_password", None)
         if not raw_pwd:
-            raise ValueError("Senha em texto-puro indisponível para criar o usuário no Chatwoot")
+            logger.error(f"User {user} does not have a raw password set.")
+            return False
         
         chatwoot_id = user.account.chatwoot_account.chatwoot_id
         user_data = self.client.create_user(

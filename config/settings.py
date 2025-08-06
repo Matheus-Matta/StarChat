@@ -40,12 +40,12 @@ ANONYMOUS_USER_NAME = None
 
 
 APPS = [
+    'starchat',
+    "djstripe",
     'core',
     'page',
     'accounts',
     'authentic',
-    'starchat',
-    "djstripe",
     
 ]   
 
@@ -77,7 +77,6 @@ EXTRA_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'colorfield',
-    "mathfilters",
 ]
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS

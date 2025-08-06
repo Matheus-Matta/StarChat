@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from accounts.models.account import Account
 from starchat.services import ChatwootAccountService
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 class ChatwootAccount(models.Model):
