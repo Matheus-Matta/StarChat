@@ -9,10 +9,14 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from pathlib import Path
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,8 +37,6 @@ LOGIN_REDIRECT_URL = reverse_lazy("admin:index")
 LOGOUT_REDIRECT_URL = reverse_lazy("admin:login")
 ANONYMOUS_USER_NAME = None
 
-CRISPY_TEMPLATE_PACK = "unfold_crispy"
-CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 
 APPS = [
@@ -42,6 +44,9 @@ APPS = [
     'page',
     'accounts',
     'authentic',
+    'starchat',
+    "djstripe",
+    
 ]   
 
 UNFOLD_APPS = [
@@ -71,9 +76,14 @@ EXTRA_APPS = [
     "guardian",    
     'ckeditor',
     'ckeditor_uploader',
+    'colorfield',
+    "mathfilters",
 ]
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
+
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -250,4 +260,51 @@ CKEDITOR_CONFIGS = {
         'autoGrow_maxHeight': 600,
         'autoGrow_bottomSpace': 50,
     }
+}
+
+STRIPE_LIVE_SECRET_KEY    = os.getenv("STRIPE_LIVE_SECRET_KEY", "")
+STRIPE_TEST_SECRET_KEY    = os.getenv("STRIPE_TEST_SECRET_KEY", "")
+STRIPE_LIVE_MODE          = os.getenv("STRIPE_LIVE_MODE", "False") == "True"
+DJSTRIPE_WEBHOOK_SECRET   = os.getenv("DJSTRIPE_WEBHOOK_SECRET", "")
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+
+
+CHATWOOT_URL = os.getenv("CHATWOOT_URL", "")
+CHATWOOT_API_TOKEN = os.getenv("CHATWOOT_API_TOKEN", "")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'simple': {
+            'format': '[{levelname}] {name}: {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }

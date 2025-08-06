@@ -6,6 +6,12 @@ from django.conf import settings
 from .forms import LoginForm, RegisterForm
 from django.views.decorators.csrf import csrf_protect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+import stripe
+from djstripe.models import Customer
+from .forms import RegisterForm
+stripe.api_key = settings.STRIPE_TEST_SECRET_KEY  # modo teste
 
 @csrf_protect
 def custom_login(request):
@@ -39,38 +45,57 @@ def custom_login(request):
 
     return render(request, 'auth/login.html', {'form': form, 'next': next_url})
 
+
+
+
 @csrf_protect
 def register(request):
-    next_url = request.GET.get('next') or reverse_lazy('admin:index')
+    # Se o usuário já estiver logado, manda pro admin
     if request.user.is_authenticated:
-        return redirect('admin:index')
-       
+        return redirect(reverse_lazy('admin:index'))
+
+    # Pega o next (se vier via GET ?next=...)
+    next_url = request.GET.get('next') or reverse_lazy('admin:index')
+
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            # cria user e account via form.save()
             user, account = form.save()
-            # Login automático após cadastro (opcional)
+
+            # 1) Criar Customer no Stripe (modo teste)
+            if not account.stripe_customer_id:
+                customer_data = stripe.Customer.create(
+                    email=user.email,
+                    metadata={'account_id': account.pk}
+                )
+                # 2) Salvar o ID na conta
+                account.stripe_customer_id = customer_data['id']
+                account.save(update_fields=['stripe_customer_id'])
+                # 3) Sincronizar com dj-stripe
+                Customer.sync_from_stripe_data(customer_data)
+
+            # Autentica e faz login automático
             auth_user = authenticate(
                 request,
-                username=user.username,      # ou o campo que você esteja usando como username
+                username=user.username,
                 password=form.cleaned_data['password']
             )
-            login(request, auth_user )
             if auth_user is not None:
                 login(request, auth_user)
-                if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+                # Garantir que next seja uma URL segura
+                if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
                     return redirect(next_url)
-                return redirect('admin:index')  # Página principal após cadastro
+                return redirect(reverse('admin:index'))
             else:
-                messages.error(request, "Não foi possível autenticar após cadastro.")
+                messages.error(request, "Erro ao autenticar após cadastro.")
         else:
-            messages.error(request, 'Erro ao realizar o cadastro. Verifique os campos.')
-            
-        return redirect('admin:login')
+            messages.error(request, "Corrija os erros do formulário antes de continuar.")
+
     else:
         form = RegisterForm()
 
     return render(request, 'auth/register.html', {
         'form': form,
-        'next': next_url
+        'next': next_url,
     })

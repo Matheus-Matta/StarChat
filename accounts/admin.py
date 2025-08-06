@@ -6,8 +6,15 @@ from config.unfold.admin import BaseAdmin
 from unfold.contrib.filters.admin import BooleanRadioFilter, ChoicesRadioFilter
 from django.urls import reverse
 from django.utils.html import format_html
-
+from django.urls import path
+from .views import UserProfileView
+from unfold.admin import ModelAdmin
 from .models import Plan, Account, Company
+from djstripe.models import Customer, Invoice
+import stripe
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
 User = get_user_model()
 
 
@@ -15,7 +22,7 @@ User = get_user_model()
 class PlanAdmin(BaseAdmin, SimpleHistoryAdmin):
     fieldsets = (
         ('Identificação', {
-            'fields': ('name', 'description'),
+            'fields': ('name', 'description','hex_color'),
         }),
         ('Agentes', {
             'fields': ('included_agents', 'extra_agent_price'),
@@ -24,7 +31,7 @@ class PlanAdmin(BaseAdmin, SimpleHistoryAdmin):
             'fields': ('included_inboxes', 'extra_inbox_price'),
         }),
         ('Assinatura', {
-            'fields': ('monthly_price', 'yearly_price'),
+            'fields': ('monthly_price', 'yearly_price', 'requires_payment', 'billing_price_id',),
         }),
         ('Status', {
             'fields': ('is_active','is_favorite', 'is_plan_staff'),
@@ -64,48 +71,97 @@ class CompanyAdmin(BaseAdmin, SimpleHistoryAdmin):
 
 @admin.register(Account)
 class AccountAdmin(BaseAdmin, SimpleHistoryAdmin):
-    # não usar mais CompanyInline
-    # inlines = [CompanyInline]
+    list_display = (
+        "email",
+        "plan",
+        "calculate_price",
+        "last_payment_amount_display",
+        "next_payment_amount_display",
+        "payment_difference_display",
+        "get_company_link",
+    )
+
+    readonly_fields = (
+        "calculate_price",
+        "last_payment_amount_display",
+        "next_payment_amount_display",
+        "payment_difference_display",
+        "created_at",
+        "updated_at",
+        "get_company_link",
+        "get_company_name",
+        "get_company_cnpj",
+        "get_billing_address",
+        "get_company_type",
+        "get_chatwoot_account",
+    )
 
     fieldsets = (
-        ('Dados da Conta', {
-            'fields': (
-                'email', 'plan', 'status',
-                ('start_date', 'trial_end_date'),
-                ('end_date', 'failed_payments'),
-            ),
+        (_("Cobrança"), {
+            "fields": (
+                "stripe_customer_id",
+                "plan",
+                "calculate_price",
+            )
         }),
-        ('Pagamento', {
-            'fields': (
-                'payment_method', 'customer_id_payment',
-                'payment_status', ('last_payment_date', 'next_payment_date'),
-            ),
+        (_("Contato"), {
+            "fields": (
+                "email",
+                "phone",
+            )
         }),
-        ('Empresa', {
-            'fields': (
-                'get_company_link',
-                'get_company_name',
-                'get_company_cnpj',
-                'get_billing_address',
-                'get_company_type',
-            ),
-            'description': 'Dados da empresa vinculada a esta conta',
+        (_("Extras"), {
+            "fields": (
+                "extra_agents",
+                "extra_inboxes",
+            )
         }),
-    )
-    readonly_fields = (
-        'get_company_link',
-        'get_company_name',
-        'get_company_cnpj',
-        'get_billing_address',
-        'get_company_type',
+        (_("Pagamentos Stripe"), {
+            "fields": (
+                "last_payment_amount_display",
+                "next_payment_amount_display",
+                "payment_difference_display",
+            )
+        }),
+        (_("Empresa"), {
+            "fields": (                
+                "get_company_link",
+                "get_company_name",
+                "get_company_cnpj",
+                "get_billing_address",
+                "get_company_type",
+            )
+        }),
+        (_("Metadados"), {
+            "fields": (
+                "created_at",
+                "updated_at",
+            )
+        }),
+        (_("Chatwoot"), {
+            "fields": (
+                "get_chatwoot_account",
+            )
+        }),
     )
 
-    list_display = (
-        'email', 'plan', 'status',
-        'start_date', 'next_payment_date',
-    )
-    # ... seus filtros, search, ordering ...
+    @admin.display(description=_("Último pagamento"))
+    def last_payment_amount_display(self, obj):
+        amt = obj.last_payment_amount
+        return f"R$ {amt:.2f}"  
 
+    @admin.display(description=_("Próximo pagamento (prévia)"))
+    def next_payment_amount_display(self, obj):
+        amt = obj.next_payment_amount
+        return f"R$ {amt:.2f}"  
+
+    @admin.display(description=_("Diferença"))
+    def payment_difference_display(self, obj):
+        diff = obj.payment_difference()
+        val = diff["difference"]
+        sign = "+" if diff["direction"] == "higher" else ("-" if diff["direction"] == "lower" else "")
+        return f"{sign}R$ {val:.2f}"
+    
     @admin.display(description='Empresa (clique para editar)')
     def get_company_link(self, obj):
         if hasattr(obj, 'company'):
@@ -128,6 +184,14 @@ class AccountAdmin(BaseAdmin, SimpleHistoryAdmin):
     @admin.display(description='Tipo de Empresa')
     def get_company_type(self, obj):
         return obj.company.get_company_type_display() if hasattr(obj, 'company') else '-'
+    
+    @admin.display(description='ID Conta do Chatwoot')
+    def get_chatwoot_account(self, obj):
+        """Retorna a conta do Chatwoot associada, se existir."""
+        if hasattr(obj, 'chatwoot_account'):
+            url = reverse('admin:starchat_chatwootaccount_change', args=[obj.chatwoot_account.pk])
+            return format_html('<a class="text-blue-600 underline hover:no-underline" href="{}">{}</a>', url, obj.chatwoot_account.pk)
+        return '-'
 
 
 @admin.register(User)
@@ -138,8 +202,8 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
         ('Usuário', {
             'classes': ('tab-user',),
             'fields': (
-                'username', 'password',
-                'first_name', 'last_name', 'email',
+                'username', 'password', 'user_chatwoot_id',
+                'first_name', 'last_name', 'email','role',
             )
         }),
         ('Permissões', {
@@ -180,6 +244,14 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
     search_fields = ('username','email',)
     ordering = ('username',)
 
+    def get_urls(self):
+        custom = self.admin_site.admin_view(
+            UserProfileView.as_view(model_admin=self)
+        )
+        return super().get_urls() + [
+          path("profile", custom, name="user_profile"),
+        ] 
+        
     @admin.display(description='Email da Conta')
     def get_account_email(self, obj):
         acct = getattr(obj, 'account', None)
@@ -210,3 +282,6 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
         acct = getattr(obj, 'account', None)
         comp = getattr(acct, 'company', None) if acct else None
         return comp.cnpj if comp else '-'
+
+
+

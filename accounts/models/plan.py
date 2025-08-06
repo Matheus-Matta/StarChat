@@ -2,6 +2,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
+from colorfield.fields import ColorField
+from datetime import date
+import os
 
 class Plan(models.Model):
     
@@ -56,17 +59,19 @@ class Plan(models.Model):
         help_text=_('Valor cobrado por inbox além das inclusas')
     )
 
-    # Assinatura
     monthly_price = models.DecimalField(
         max_digits=8, decimal_places=2,
         verbose_name=_('Preço Mensal'),
         help_text=_('Valor da assinatura mensal')
     )
+    
     yearly_price = models.DecimalField(
         max_digits=8, decimal_places=2,
         verbose_name=_('Preço Anual'),
         help_text=_('Valor da assinatura anual (geralmente com desconto)')
     )
+    
+
 
     is_active = models.BooleanField(
         default=True,
@@ -86,12 +91,26 @@ class Plan(models.Model):
         help_text=_('Marque se este plano é um plano favorito')
     )
 
-    history = HistoricalRecords()
+    hex_color = ColorField(
+        max_length=7,
+        verbose_name=_('Cor'),
+        help_text=_('Código de cor em hexadecimal (ex: #FF0000)'),
+        blank=True,
+        null=True,
+    )
 
+       
+    history = HistoricalRecords()
+    
+    @property
+    def is_free(self):
+        if self.monthly_price == 0 and self.yearly_price == 0:
+            return True
+        
     class Meta:
         verbose_name = _('Plano')
         verbose_name_plural = _('Planos')
-
+        
     def __str__(self):
         return f"{self.name}"
     

@@ -1,6 +1,20 @@
 {% extends 'auth/auth_base.html' %}
 {% load static i18n %}
 
+{% block extra_head %}
+    <style>
+      #fullLoader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+      }
+    </style>
+{% endblock %}
 {% block content %}
 <div
   style="max-width: 860px; min-width: 360px; min-height: 600px"
@@ -21,6 +35,7 @@
     method="post"
     action="{% url 'auth:register' %}"
     novalidate
+    onsubmit="document.getElementById('fullLoader').style.display='flex';"
   >
     {% csrf_token %}
 
@@ -87,7 +102,7 @@
             name="{{ form.password.html_name }}"
             id="id_password"
             class="form-control ps-2 h-48 {% if form.password.errors %}is-invalid{% endif %}"
-            placeholder="••••••••"
+            placeholder="{% trans 'Digite sua senha' %}"
             required
           />
           <span
@@ -121,7 +136,7 @@
             name="{{ form.confirm_password.html_name }}"
             id="id_confirm_password"
             class="form-control ps-2 h-48 {% if form.confirm_password.errors %}is-invalid{% endif %}"
-            placeholder="••••••••"
+            placeholder="{% trans 'Confirme sua senha' %}"
             required
           />
           <span
@@ -142,6 +157,7 @@
         <label for="id_company_name" class="form-label">{% trans "Nome da Empresa" %}</label>
         <input
           type="text"
+          placeholder="Digite o nome da empresa"
           name="{{ form.company_name.html_name }}"
           id="id_company_name"
           class="form-control ps-2 h-48 {% if form.company_name.errors %}is-invalid{% endif %}"
@@ -206,6 +222,11 @@
       <a class="read-more" href="{% url 'page:index' %}">{% trans "Voltar" %}</a>
     </div>
   </form>
+</div>
+<div id="fullLoader">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Carregando...</span>
+  </div>
 </div>
 {% endblock content %}
 

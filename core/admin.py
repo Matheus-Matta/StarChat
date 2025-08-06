@@ -12,6 +12,7 @@ from .models import SiteConfig, Screenshot, SiteService
 from taggit.forms import TagWidget
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import models
+import json
 
 class ScreenshotAdminForm(forms.ModelForm):
     class Meta:
@@ -125,3 +126,26 @@ class SiteServiceAdmin(BaseAdmin):
     search_fields       = ('title','subtitle','tags__name')
     ordering            = ('order',)
     prepopulated_fields = {'slug': ('title',)}
+    
+    
+
+def dashboard_context(request, context):
+    # 1) Dados do usuário
+    account = getattr(request.user, "account", None)
+    plan = account.plan if account else None
+
+    # 2) Montar labels e séries para o gráfico de cobranças do ano
+    #    aqui você deve puxar do seu modelo de cobranças reais;
+    #    pra demo vamos criar dados dummy:
+    meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]
+    pagas =   [120,150, 90,200,170,130,   0,  0,   0,  0,   0,   0]
+    a_vencer=[ 30, 50, 60,  0,  0,  0,  20, 40,  80,100,  90, 110]
+
+    context.update({
+        "account": account,
+        "plan": plan,
+        "chart_labels": json.dumps(meses),
+        "chart_paid":   json.dumps(pagas),
+        "chart_due":    json.dumps(a_vencer),
+    })
+    return context

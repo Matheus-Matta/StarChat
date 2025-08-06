@@ -6,3 +6,4 @@ class AccountsConfig(AppConfig):
     
     def ready(self):
         import accounts.signals
+        import accounts.stripe  # Importa o módulo de sincronização com Stripe

@@ -26,11 +26,11 @@ class RegisterForm(forms.Form):
     )
     password = forms.CharField(
         label=_("Senha"),
-        widget=forms.PasswordInput(attrs={'placeholder': '••••••••'})
+        widget=forms.PasswordInput(attrs={'placeholder': 'Digite sua senha'}),
     )
     confirm_password = forms.CharField(
         label=_("Confirmar Senha"),
-        widget=forms.PasswordInput(attrs={'placeholder': '••••••••'})
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha'}),
     )
 
     company_name = forms.CharField(
@@ -63,6 +63,10 @@ class RegisterForm(forms.Form):
         return c
 
     def clean(self):
+        email = self.cleaned_data.get('email')
+        if Account.objects.filter(email=email).exists():
+            return self.add_error('email', _('Já existe uma conta com este email.'))
+        
         cleaned = super().clean()
         pw = cleaned.get('password')
         cpw = cleaned.get('confirm_password')
@@ -73,33 +77,16 @@ class RegisterForm(forms.Form):
     def save(self):
         data = self.cleaned_data
         
-        plan_obj, _ = Plan.objects.get_or_create(
-            name='Free',
-            defaults={'price': 0, 'is_active': True}
-        )
+        plan_obj = Plan.objects.get(name='free')  # Assume 'free' is the default plan
+        if not plan_obj:
+            raise ValidationError(_('Plano "free" não encontrado.'))
         
         account = Account.objects.create(
             plan=plan_obj,
-            status='active',
-            start_date=timezone.now(),
-            payment_method='manual',
-            customer_id_payment='',
-            payment_status='free',
             phone=data['phone'],
             email=data['email'],
         )
-        
-        user = User.objects.create_user(
-            account=account,
-            username=data['email'],
-            email=data['email'],
-            password=data['password'],
-            is_staff=True,
-        )
-        
-        user.save()
 
-        # 4) cria a empresa (gera slug automaticamente e sem billing_address)
         Company.objects.create(
             account=account,
             name=data['company_name'],
@@ -107,5 +94,19 @@ class RegisterForm(forms.Form):
             billing_address={},
             company_type=data['company_type'],
         )
+        
+        raw_password = data['password']
+
+        user = User(
+            account=account,
+            first_name=data['company_name'],
+            username=data['email'],
+            email=data['email'],
+            role='administrator',
+            is_staff=True,
+        )
+        user.set_password(raw_password) 
+        user._raw_password = raw_password
+        user.save()
 
         return user, account

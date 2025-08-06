@@ -7,4 +7,5 @@ from django.shortcuts import redirect
 app_name = 'core'
 
 urlpatterns = [
+    path('', views.home_view, name='home'),
 ]

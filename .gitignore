@@ -1,0 +1,78 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+.env
+
+# Django local settings and database
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Logs and reports
+*.log
+*.pot
+*.po
+*.mo
+*.cover
+coverage.xml
+htmlcov/
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy cache
+.mypy_cache/
+.dmypy.json
+
+# Django migrations (if you prefer not to track)
+*/migrations/
+!*/migrations/__init__.py
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Node.js dependencies
+node_modules/
+
+# JetBrains
+*.iml
+
+# Miscellaneous
+*.sqlite3
+
+# Secret files
+*.key
+*.pem
+
+# Celery
+celerybeat-schedule
+\# End of .gitignore

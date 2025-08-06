@@ -8,6 +8,7 @@ UNFOLD = {
     "SITE_HEADER":      _("Starchat"),
     "SITE_SUBHEADER":   _("Painel de Controle"),
     "SITE_SYMBOL": "star",
+    "DASHBOARD_CALLBACK": "core.admin.dashboard_context",
     "SITE_FAVICONS": [
         {
             "rel": "icon",
@@ -43,7 +44,6 @@ UNFOLD = {
                         "title": _("Início"),
                         "icon":  "home",
                         "link":  reverse_lazy("admin:index"),
-                        "permission": lambda request: request.user.is_superuser,
                     },
                     {
                         "title":       _("Planos"),
@@ -124,5 +124,21 @@ UNFOLD = {
              "900": "36,  24, 112",   # #241870
              "950": "23,  15,  75",   # #170F4B
         },
+    },
+    "ACCOUNT": {
+        "navigation": [
+                {
+                    "title": _("Alterar senha"),
+                    "icon":  "lock",
+                    "link":  reverse_lazy("admin:password_change"),
+                    "permission": lambda request: request.user.has_usable_password(),
+                },  
+                {
+                    "title": _("Meu perfil"),
+                    "icon":  "person",
+                    "link": reverse_lazy("admin:user_profile"),
+                    "permission": lambda request: request.user.is_authenticated,
+                },   
+            ],
     },
 }

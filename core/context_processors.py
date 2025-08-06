@@ -1,5 +1,6 @@
 # core/context_processors.py
 from .models import SiteConfig, Screenshot, SiteService
+from django.conf import settings
 
 def site_config(request):
     """
@@ -9,5 +10,6 @@ def site_config(request):
     config = SiteConfig.objects.filter(is_active=True).first()
     return {
         'site_config': config,
+        'starchat_url': settings.CHATWOOT_URL,
         'services': SiteService.objects.filter(is_active=True).order_by('order'),
     }

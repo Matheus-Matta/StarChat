@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 
-{% load i18n %}
+{% load static i18n mathfilters %}
 
 {% block breadcrumbs %}{% endblock %}
 
@@ -12,4 +12,164 @@
 
 {% block content %}
 
+ <div class="mx-auto">
+    <div class="flex flex-col gap-8 mb-12">
+        <div class="flex flex-col gap-3">
+            <div class="bg-base-800 rounded-default flex flex-col overflow-hidden text-white lg:flex-row lg:items-center">
+                <span class="bg-white/[.06] p-3 flex flex-row">
+                    <span class="border-r border-white/40 flex items-center mr-3 pr-3">
+                        <span class="material-symbols-outlined" style="color: #eac54f">
+                            star
+                        </span>
+                    </span>
+
+                    <h2 style="width: 200px;" class="font-semibold">
+                        {% trans "Comece a usar o StarChat" %}
+                    </h2>
+                </span>
+
+                <div class="flex flex-row gap-3 grow p-3 dark:bg-base-600">
+                    <p>
+                    {% trans "Clique a aqui para começar a usar o StarChat" %}
+                    </p>
+
+                    <a href="{{ starchat_url }}" class="flex items-center group font-semibold ml-auto whitespace-nowrap" target="_blank">
+                        Ir para o StarChat
+
+                        <span class="material-symbols-outlined ml-2 relative right-0 transition-all text-sm group-hover:-right-1">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            {% if request.user.account.plan.is_free %}
+            <div class="bg-primary-500 rounded-default flex flex-col overflow-hidden text-white lg:flex-row lg:items-center">
+                    <span class="bg-white/[.06] p-3 flex flex-row">
+                        <span class="border-r border-white/40 flex items-center mr-3 pr-3">
+                            <span class="material-symbols-outlined">
+                                forum
+                            </span>
+                        </span>
+
+                        <h2 style="width: 200px;" class="font-semibold">
+                            Você está no plano Gratuito.  
+                        </h2>
+                    </span>
+
+                    <div class="flex flex-row gap-3 grow p-3">
+                        <p>
+                        Seu plano gratuito e limitado. Altere o plano e tenha mais atendimentos.
+                        </p>
+
+                        <a href="" class="flex items-center group font-semibold ml-auto whitespace-nowrap" target="_blank">
+                            Assinar
+
+                            <span class="material-symbols-outlined ml-2 relative right-0 transition-all text-sm group-hover:-right-1">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="flex flex-col gap-8 lg:flex-row">
+            <div class="bg-white block border border-base-200 flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800  lg:w-1/3">
+                <div class="grow relative">
+                    <p class="leading-relaxed mb-0 text-sm">{% trans "Valor a Pagar" %} </p>
+                    <div class="font-semibold text-2xl text-font-important-light tracking-tight dark:text-font-important-dark">R$ {{ request.user.account.calculate_price|floatformat:2 }}</div>
+                    <div class="absolute right-0 top-0">
+                    <span class="inline-block font-semibold leading-normal px-2 py-1 rounded-default text-[11px] uppercase whitespace-nowrap bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400">{{ request.user.account.days_until_next_payment }}</span>
+                    </div>
+                </div>
+                <div class="border-t border-base-200 flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800">
+                {% with diff=request.user.account.payment_difference %}
+                    {% if diff.direction == "higher" %}
+                    <strong class="text-green-700 dark:text-green-400">
+                        + R$ {{ diff.difference|floatformat:2 }}
+                    </strong>
+                    {% elif diff.direction == "lower" %}
+                    <strong class="text-red-600">
+                        - R$ {{ diff.difference|floatformat:2 }}
+                    </strong>
+                    {% else %}
+                    <strong class="text-gray-600">
+                        R$ {{ diff.difference|floatformat:2 }}
+                    </strong>
+                    {% endif %}
+                    &nbsp;{% trans "desde o último pagamento" %}
+                {% endwith %}
+                </div>
+            </div>
+            {% with info=request.user.account.agents_info %}
+            <div class="bg-white block border border-base-200 flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800  lg:w-1/3">
+                <div class="grow relative">
+                        <p class="leading-relaxed mb-0 text-sm">{% trans "Agentes" %}</p>
+                    <div class="flex items-center pt-2 font-semibold text-2xl text-font-important-light tracking-tight dark:text-font-important-dark">
+                        <span class="material-symbols-outlined text-2xl text-base-500 mr-2">
+                            headset_mic
+                        </span>
+                        {{ info.used }}
+                    </div>
+                    <div class="absolute right-0 top-0">
+                        <a class="flex justify-center items-center inline-block leading-normal px-2 py-1 rounded-default text-[11px] uppercase whitespace-nowrap cursor-pointer border border-base-200 bg-white text-font-important-light dark:border-base-700 dark:bg-transparent dark:text-font-important-dark">
+                            <div class="flex items-center gap-1">
+                                {% trans "Adicionar limite" %}
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-base-200 flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800">
+                    <span class="material-symbols-outlined mr-2">
+                        diamond
+                    </span>
+                    <strong class="font-semibold mr-2 {% if info.free <= 0 %}dark:text-font-important-dark{% else %} text-primary-600 dark:text-primary-400 {% endif %}">
+                        {{ info.free }} 
+                    </strong>
+                    {% trans "Agentes Disponíveis de " %}
+                    <strong class="font-semibold dark:text-font-important-dark ml-2">
+                        {{ info.max }}
+                    </strong>
+                </div>
+            </div>
+            {% endwith %}
+            {% with info=request.user.account.inboxes_info %}
+            <div class="bg-white block border border-base-200 flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800  lg:w-1/3">
+                <div class="grow relative">
+                        <p class="leading-relaxed mb-0 text-sm">{% trans "Canais de atendimentos" %}</p>
+                    <div class="flex items-center pt-2 font-semibold text-2xl text-font-important-light tracking-tight dark:text-font-important-dark">
+                        <span class="material-symbols-outlined text-2xl text-base-500 mr-2">
+                        inbox
+                        </span>
+                        {{ info.used }}
+                    </div>
+                    <div class="absolute right-0 top-0">
+                        <a class="flex justify-center items-center inline-block leading-normal px-2 py-1 rounded-default text-[11px] uppercase whitespace-nowrap cursor-pointer border border-base-200 bg-white text-font-important-light dark:border-base-700 dark:bg-transparent dark:text-font-important-dark">
+                            <div class="flex items-center gap-1">
+                                {% trans "Adicionar limite" %}
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-base-200 flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800">
+                    <span class="material-symbols-outlined mr-2">
+                        diamond
+                    </span>
+                    <strong class="font-semibold {% if info.free <= 0 %}dark:text-font-important-dark{% else %} text-primary-600 dark:text-primary-400 {% endif %} mr-2">
+                        {{ info.free }} 
+                    </strong>
+                    {% trans "Canais Disponíveis de " %}
+                    <strong class="font-semibold dark:text-font-important-dark ml-2">
+                        {{ info.max }}
+                    </strong>
+                </div>
+            </div>
+            {% endwith %}   
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
