@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <div class="col-xl-7 col-lg-6">
                 <div class="d-flex align-items-center justify-content-center about-image rmb-55 wow fadeInLeft delay-0-2s">
-                    <img style="width: 180%;" src="{{ site_config.widget_image.url }}" alt="{% trans 'Sobre o StarChat' %}">
+                    <img style="width: 180%;" src="{% if site_config.widget_image %}{{ site_config.widget_image.url }}{% else %}{% static 'assets/images/about/widget.png' %}{% endif %}" alt="{% trans 'Sobre o StarChat' %}">
                 </div>
             </div>
             <div class="col-xl-5 col-lg-6">

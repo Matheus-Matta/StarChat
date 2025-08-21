@@ -8,6 +8,7 @@ def site_config(request):
     para ficar disponível em todos os templates.
     """
     config = SiteConfig.objects.filter(is_active=True).first()
+    print(config)
     return {
         'site_config': config,
         'starchat_url': settings.CHATWOOT_URL,

@@ -7,7 +7,7 @@
                 <div class="logo-outer">
                     <div class="logo">
                         <a href="{% url 'page:index' %}">
-                            <img src="{{ site_config.logo.url }}" alt="Logo StarChat">
+                            <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% else %}{% static 'assets/images/logos/logo.png' %}{% endif %}" alt="Logo StarChat">
                         </a>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
 
                         <div class="navbar-collapse collapse clearfix" id="main-menu">
                             <ul class="navigation clearfix">
-                                <li><a href="#home">{% trans "Início" %}</a></li>
+                                <li><a href="{% url 'page:index' %}">{% trans "Início" %}</a></li>
                                 <li><a href="#pricing">{% trans "Preços" %}</a></li>
                                 <li><a href="#solucoes">{% trans "Soluções" %}</a></li>
                                 <li><a href="#servicos">{% trans "Serviços" %}</a></li>

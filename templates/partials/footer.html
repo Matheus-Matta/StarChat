@@ -28,7 +28,7 @@
                 <div class="footer-widget about-widget">
                     <div class="footer-logo mb-20">
                         <a href="#home">
-                            <img src="{{ site_config.logo_footer.url }}" alt="Logo">
+                            <img src="{% if site_config.logo_footer %}{{ site_config.logo_footer.url }}{% else %}{% static 'assets/images/logos/logo-footer.png' %}{% endif %}" alt="{% trans 'Logo StarChat' %}">
                         </a>
                     </div>
                     <p><span>{% trans "Com o StarChat, você tem uma central inteligente de atendimento multicanal" %}</span></p>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-4">
-                <div class="footer-widget contact-widget">
+                <div class="footer-widget contact-widget mb-0">
                     <h4 class="footer-title">{% trans "Fale Conosco" %}</h4>
                     <ul class="list-style-three">
                         <li><i class="fas fa-envelope-open"></i> <span><a href="mailto:{{ site_config.email }}">{{ site_config.email }}</a></span></li>
@@ -72,7 +72,15 @@
                         {% if site_config.whatsapp %}<a href="{{ site_config.whatsapp }}"><i class="fab fa-whatsapp"></i></a>{% endif %}
                     </div>
                 </div>
+                <div class="footer-widget contact-widget">
+                    <h4 class="footer-title">{% trans "Termos e condições" %}</h4>
+                    <ul class="list-style-three">
+                        <li><a href="{% url 'page:terms'  %}">{% trans "Termos de uso" %}</a></li>
+                        <li><a href="{% url 'page:policy'  %}">{% trans "Politicas de privacidade" %}</a></li>
+                    </ul>
+                </div>
             </div>
+            
         </div>
 
         <div class="copyright-area text-center">

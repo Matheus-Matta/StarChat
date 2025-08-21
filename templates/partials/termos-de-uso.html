@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo_meta %}
+    {% if service.excerpt %}
+    <meta name="description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.tags %}
+    <meta name="keywords"    content="{{ service.tags }}">
+    {% endif %}
+    <meta property="og:title"       content="{{ service.title }} | Starchat">
+    {% if service.excerpt %}
+    <meta property="og:description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.hero_image %}
+    <meta property="og:image"       content="{{ service.get_hero_image_url }}">
+    {% endif %}
+    <meta property="og:url"         content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="{{ service.title }} | Starchat">
+    {% if service.excerpt %}
+    <meta name="twitter:description" content="{{ service.excerpt|truncatechars:160 }}">
+    {% endif %}
+    {% if service.hero_image %}
+    <meta name="twitter:image"       content="{{ service.get_hero_image_url }}">
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+{% load static %} {% load i18n %}
+<section class="page-banner bg-blue rel z-1" style="background-image: url({% static "assets/images/background/banner-bg.png" %});">
+    <div class="container">
+        <div class="banner-inner">
+            <h1 class="page-title wow fadeInUp delay-0-2s">{% trans "Politicas de Privacidade" %}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s">
+                    <li class="breadcrumb-item"><a href="{% url 'page:index' %}">{% trans "Home" %}</a></li>
+                    <li class="breadcrumb-item active">{{ service.title }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <img class="dots-shape" src="{% static 'assets/images/shapes/white-dots-two.png' %}" alt="Shape">
+    <img class="tringle-shape slideLeftRight" src="{% static 'assets/images/shapes/white-tringle.png' %}" alt="Shape">
+    <img class="close-shape" src="{% static 'assets/images/shapes/white-close.png' %}" alt="Shape">
+    <img src="{% static 'assets/images/newsletter/circle.png' %}" alt="shape" class="banner-circle slideUpRight">
+    <img class="dots-shape-three slideUpDown delay-1-5s" src="{% static 'assets/images/shapes/white-dots-three.png' %}" alt="Shape">
+</section>
+
+<section class="single-servcie-section rel z-1 py-80 rpy-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 mb-4">
+        <div class="single-service-content">
+          <div class="service-body wow fadeInUp delay-0-6s">
+            {{ site_config.terms|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+{% include 'partials/footer.html' %}
+
+{% endblock %}

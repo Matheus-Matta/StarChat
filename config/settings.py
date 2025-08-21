@@ -20,7 +20,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+def _get_env_list(var_name: str) -> list[str]:
+    """
+    Retorna uma lista de strings a partir de uma variável de ambiente
+    separada por vírgulas, removendo espaços em branco e itens vazios.
+    """
+    return [
+        item.strip() 
+        for item in os.getenv(var_name, "").split(",") 
+        if item and item.strip()
+    ]
+    
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -30,7 +40,15 @@ SECRET_KEY = 'django-insecure-^+2@47@c*v$d!-se!&o(nk&e$@y7w6n&yspwzk&3qb_+(znk*6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = _get_env_list("ALLOWED_HOSTS")
+
+_origins = _get_env_list("ALLOWED_HOSTS")
+CORS_ALLOWED_ORIGINS = [
+    f"{scheme}://{origin}"
+    for origin in _origins
+    for scheme in ("http", "https")
+]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = reverse_lazy("admin:index")
@@ -120,14 +138,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'OPTIONS': {'timeout': 60},
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            'OPTIONS': {'timeout': 60},
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

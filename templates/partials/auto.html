@@ -31,7 +31,7 @@
 
             <div class="col-xl-7 col-lg-6">
                 <div class="browswr-support-image text-lg-right wow fadeInLeft delay-0-2s">
-                    <img src="{{ site_config.auto_image.url }}" alt="{% trans 'Automação no Navegador' %}">
+                    <img src="{% if site_config.auto_image %}{{ site_config.auto_image.url }} {% else %}{% static 'assets/images/browswr-support/browswr-support.png' %}{% endif %}" alt="{% trans 'Automação no Navegador' %}">
                 </div>
             </div>
         </div>
