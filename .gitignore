@@ -79,3 +79,6 @@ node_modules/
 # Celery
 celerybeat-schedule
 \# End of .gitignore
+
+theme.txt
+stripe.exe
