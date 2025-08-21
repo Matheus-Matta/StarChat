@@ -1,34 +1,31 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="pt-br" class="h-full">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>{% block title %}Starchat{% endblock %}</title>
-    {% include 'head.html' %}
-    {% block extra_head %}{% endblock %}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Starchat{% endblock %}</title>
 
-    <style>
-    html, body { height: 100%; }
-    .bg-image {
-      background: url('{% static 'assets\images\dashboard-screenshots\dashboard-screenshot6.png' %}') no-repeat center center;
-      background-size: contain;
-    }
+  {# Tailwind CDN #}
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  {# Material Symbols (ícones) #}
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+
+  <style>
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+     { height: 48px; } /* utilitária para inputs */
+    #fullLoader { position: fixed; inset: 0; background: rgba(255,255,255,.85); display: none;
+                  align-items:center; justify-content:center; z-index: 50; }
+    .dark #fullLoader { background: rgba(0,0,0,.55); }
   </style>
 </head>
-<body class="d-flex vh-100">
-    <div class="container h-100">
-        <div class="row justify-items-center g-0 h-100">
-            <div class="col-12 col-lg-12 d-flex align-items-center justify-content-center">
-            {% block content %}
+<body class="h-full  bg-gray-50 text-base-900 dark:bg-base-900 dark:text-base-100">
+    {% block content %}
 
-            {% endblock %}
-            </div>
-        </div>
-    </div>
+    {% endblock %}
 
-    {% include 'scripts.html' %}
+
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>

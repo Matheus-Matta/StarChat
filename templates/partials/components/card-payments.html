@@ -1,0 +1,93 @@
+{% load static i18n %}
+
+<section
+  class="border border-base-200 p-4 pb-3 rounded shadow dark:border-base-800"
+>
+  <h3 class="font-semibold mb-4 dark:text-white">
+    {% trans "Formas de Pagamento" %}
+  </h3>
+
+  <ul class="space-y-2">
+    {% for pm in payment_methods %}
+    <li
+      class="flex justify-between items-center p-3 bg-base-50 rounded shadow dark:bg-base-800 border border-base-200 dark:border-base-600"
+    >
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span class="uppercase font-semibold text-base-900 dark:text-base-100"
+            >{{ pm.brand }}</span
+          >
+        </div>
+        <div
+          class="flex flex-col text-sm text-base-700 dark:text-base-200 border-l-2 border-base-200 dark:border-base-600 pl-2"
+        >
+          <span class="dark:text-base-300 text-base-800"
+            >**** **** **** {{ pm.last4 }}</span
+          >
+          <span class="text-xs dark:text-base-500"
+            >{% trans "Expira" %} {{ pm.exp_month }}/{{ pm.exp_year }}</span
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        {% if pm.is_default %}
+        <span class="px-2 py-1 bg-base-300 text-base-800 rounded text-xs dark:bg-base-600 dark:text-base-200">
+          {% trans "Padrão" %}
+        </span>
+        {% endif %}
+        {% if not show_add_button %}
+          <div class="relative">
+            <details class="group">
+              <summary class="list-none flex items-center justify-center cursor-pointer select-none p-1 rounded hover:bg-base-100 dark:hover:bg-base-700">
+                <span class="material-symbols-outlined text-gray-600 group-open:text-primary-600">more_vert</span>
+              </summary>
+
+              <div class="absolute right-0 mt-2 w-48 rounded-md border bg-white shadow-lg
+                          dark:bg-base-900 dark:border-base-700 z-10">
+                {# Tornar padrão (PUT) #}
+                <form method="post" action="" class="block">
+                  {% csrf_token %}
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="hidden" name="payment_method_id" value="{{ pm.id }}">
+                  <button type="submit"
+                          class="w-full text-left px-3 py-2 text-sm flex items-center gap-2 cursor-pointer
+                                {% if pm.is_default %}opacity-60 cursor-not-allowed{% endif %}"
+                          {% if pm.is_default %}disabled aria-disabled="true"{% endif %}>
+                    <span class="material-symbols-outlined text-base">check_circle</span>
+                    {% trans "Tornar padrão" %}
+                  </button>
+                </form>
+
+                {# Excluir (DELETE) #}
+                <form method="post" action="" class="block">
+                  {% csrf_token %}
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="payment_method_id" value="{{ pm.id }}">
+                  <button type="submit"
+                          class="w-full text-left px-3 py-2 text-sm flex items-center gap-2
+                                hover:bg-red-100 text-red-600 dark:hover:bg-base-800 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">delete</span>
+                    {% trans "Excluir" %}
+                  </button>
+                </form>
+              </div>
+            </details>
+          </div>
+        {% endif %}
+      </div>
+    </li>
+    {% empty %}
+    <li class="p-3 bg-gray-50 rounded dark:bg-base-800 dark:text-white">
+      {% trans "Nenhum cartão cadastrado." %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% if show_add_button %}
+    <a href="{% url 'admin:account_payments' %}" class="pt-3 mt-3 flex items-center border-t border-base-200 dark:border-base-800 hover:text-primary-600">
+      <span class="material-symbols-outlined mr-2">add</span>
+      {% trans "Gerenciar formas de pagamento" %}
+    </a>
+  {% endif %}
+</section>
+

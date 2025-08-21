@@ -23,27 +23,25 @@ class Company(models.Model):
         ('logistics', _('Logística')),
         ('others', _('Outros')),
     ]
+    
     account = models.OneToOneField(
         Account,
         on_delete=models.CASCADE,
         related_name='company',
         verbose_name=_('Conta')
     )
+    
     name = models.CharField(
         max_length=255,
         verbose_name=_('Nome')
     )
+    
     cnpj = models.CharField(
         max_length=18,
         unique=True,
         verbose_name=_('CNPJ')
     )
-    billing_address = models.JSONField(
-        verbose_name=_('Endereço de cobrança'),
-        help_text=_("Endereço de cobrança da empresa"),
-        null=True,
-        blank=True
-    )
+    
     company_type = models.CharField(
         max_length=20,
         choices=COMPANY_TYPE_CHOICES,

@@ -8,4 +8,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('login/', lambda request: redirect('admin:login'), name='accounts_login'),
+    
+    
 ]
+

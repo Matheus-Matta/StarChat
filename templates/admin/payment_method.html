@@ -1,0 +1,228 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block title %}{% trans "Métodos de Pagamento" %} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+  {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto grid lg:grid-cols-2 gap-8 mt-6">
+
+  <!-- Adicionar cartão via Payment Element -->
+  <div class="border border-base-200 rounded p-4 dark:bg-base-900 dark:border-base-800">
+    <div class="flex items-start mb-4">
+        <div class="rounded-full flex items-center justify-center mr-2">
+            <span class="material-symbols-outlined text-5xl text-base-500 dark:text-base-300">credit_card</span>
+        </div>
+        <div>
+            <h2 class="text-xl font-semibold">{% trans "Adicionar Cartão" %}</h2>
+            <p class="text-sm text-base-400">{% trans "Seus dados são processados com segurança pela Stripe." %}</p>
+        </div>
+    </div>
+
+    <form id="payment-form" class="space-y-4">
+    {% csrf_token %}
+
+    <div id="payment-element" class="mb-3"></div>
+
+    <label class="flex items-center mb-2">
+        <input id="make-default" type="checkbox" class="h-4 w-4" checked>
+        <span class="ml-2 text-sm">{% trans "Definir como cartão principal" %}</span>
+    </label>
+
+    <!-- Mensagens -->
+    <div id="form-message" class="text-sm hidden" role="alert" aria-live="polite"></div>
+
+    <button id="submit" type="submit"
+            class="flex items-center justify-center w-full px-4 py-2 bg-primary-600 text-white rounded
+                    hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer">
+        <span class="material-symbols-outlined spinner-circle hidden mr-2" id="btn-spinner">progress_activity</span>
+        <span id="btn-label">{% trans "Salvar cartão" %}</span>
+    </button>
+    </form>
+
+  </div>
+
+  <!-- Lista de cartões -->
+  <div>
+        {% include "partials/components/card-payments.html" with payment_methods=request.user.account.list_payment_methods show_add_button=False %}
+  </div>
+
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+(function () {
+const stripe = Stripe("{{ stripe_publishable_key }}", { locale: "pt-BR" });
+
+  // lê uma CSS var com fallback
+  const cssVar = (name, fb) =>
+    getComputedStyle(document.documentElement).getPropertyValue(name)?.trim() || fb;
+
+  // detecta se o site está em dark
+  const isDark = () =>
+    document.documentElement.classList.contains('dark') ||
+    document.body.classList.contains('dark') ||
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // monta o "appearance" para dark; no claro, usa o tema padrão do Stripe
+  const makeAppearance = (dark) => {
+    if (!dark) return { theme: 'stripe' }; // ou 'flat' se preferir
+
+    const tokens = {
+      bg:       cssVar('--base-900', '#0b0b0f'),
+      bgElev:   cssVar('--base-800', '#111318'),
+      border:   cssVar('--base-700', '#374151'),
+      borderHv: cssVar('--base-600', '#4b5563'),
+      text:     cssVar('--font-default-dark', '#e5e7eb'),
+      subtle:   cssVar('--font-subtle-dark', '#9ca3af'),
+      primary:  cssVar('--primary-600', '#2563eb'),
+      danger:   cssVar('--red-600', '#dc2626'),
+      icon:     cssVar('--base-300', '#a3a3a3'),
+    };
+
+    return {
+      theme: 'night',
+      variables: {
+        colorBackground:        tokens.bg,
+        colorPrimary:           tokens.primary,
+        colorText:              tokens.text,
+        colorTextSecondary:     tokens.subtle,
+        colorTextPlaceholder:   tokens.subtle,
+        colorDanger:            tokens.danger,
+        colorIcon:              tokens.icon,
+        borderRadius:           '8px',
+        spacingUnit:            '4px',
+        fontFamily:             'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
+      },
+      rules: {
+        '.Input':        { backgroundColor: tokens.bg,   border: `1px solid ${tokens.border}` },
+        '.Input:hover':  { borderColor: tokens.borderHv },
+        '.Input:focus':  { borderColor: tokens.primary, boxShadow: `0 0 0 2px ${tokens.primary}33` },
+        '.Label':        { color: tokens.subtle },
+        '.Error':        { color: tokens.danger },
+        '.Tab':          { backgroundColor: tokens.bgElev, border: `1px solid ${tokens.border}` },
+        '.Tab:hover':    { borderColor: tokens.borderHv },
+        '.Tab--selected':{ borderColor: tokens.primary },
+        '.Link':         { color: tokens.primary },
+      }
+    };
+  };
+
+  // cria Elements com o tema certo
+  const elements = stripe.elements({
+    clientSecret: "{{ setup_intent_client_secret }}",
+    appearance: makeAppearance(isDark()),
+  });
+
+  const paymentElement = elements.create("payment", { layout: "tabs" });
+  paymentElement.mount("#payment-element");
+
+  // ------ opcional: reagir à troca de tema em tempo real ------
+  // se seu toggle adiciona/remove a classe 'dark', isso atualiza o iframe do Stripe sem recriar o elemento
+  const updateAppearance = () => elements.update({ appearance: makeAppearance(isDark()) });
+
+  // observa mudanças na classe do <html> (ou troque para body se for o seu caso)
+  new MutationObserver(updateAppearance).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['class']
+  });
+
+  // também reage ao sistema operacional mudar o scheme
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+  if (mql.addEventListener) mql.addEventListener('change', updateAppearance);
+  else mql.addListener(updateAppearance); // fallback browsers antigos
+
+  const form        = document.getElementById("payment-form");
+  const makeDefault = document.getElementById("make-default");
+  const msgEl       = document.getElementById("form-message");
+  const btn         = document.getElementById("submit");
+  const btnSpinner  = document.getElementById("btn-spinner");
+  const btnLabel    = document.getElementById("btn-label");
+
+  function setBusy(busy) {
+    btn.disabled = busy;
+    btnSpinner.classList.toggle("hidden", !busy);
+    btnLabel.textContent = busy ? "{{ _('Processando...') }}" : "{{ _('Salvar cartão') }}";
+  }
+
+  function showMessage(text, type = "error") {
+    // type: "error" | "success" | "info"
+    const classes = {
+      error:  "text-red-600",
+      success:"text-green-700",
+      info:   "text-gray-700"
+    };
+    msgEl.className = "text-sm " + classes[type];
+    msgEl.textContent = text || "";
+    msgEl.classList.toggle("hidden", !text);
+  }
+
+  async function finalize(pmId, makeDefaultChecked) {
+    const csrf = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    const res = await fetch("", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+      body: JSON.stringify({ payment_method_id: pmId, make_default: !!makeDefaultChecked })
+    });
+    if (!res.ok) throw new Error("Falha ao salvar o cartão no servidor.");
+    // limpa querystring e recarrega a lista
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+    window.location.reload();
+  }
+
+  // Trata retorno de 3DS (redirect)
+  (async function handleReturnFromRedirect() {
+    const params = new URLSearchParams(window.location.search);
+    const clientSecret = params.get("setup_intent_client_secret");
+    if (!clientSecret) return;
+
+    try {
+      setBusy(true);
+      const { setupIntent, error } = await stripe.retrieveSetupIntent(clientSecret);
+      if (error) throw new Error(error.message || "Falha ao confirmar o cartão (retorno).");
+      if (setupIntent && setupIntent.status === "succeeded") {
+        await finalize(setupIntent.payment_method, makeDefault ? makeDefault.checked : true);
+      } else {
+        showMessage("Confirmação não concluída. Tente novamente.", "error");
+      }
+    } catch (err) {
+      showMessage(err.message || "Erro inesperado ao processar retorno.", "error");
+    } finally {
+      setBusy(false);
+    }
+  })();
+
+  // Submit normal (sem 3DS) ou com redirect se necessário
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    showMessage("");
+    setBusy(true);
+
+    try {
+      const { error, setupIntent } = await stripe.confirmSetup({
+        elements,
+        confirmParams: { return_url: window.location.href }, // necessário para 3DS
+        redirect: "if_required"
+      });
+
+      if (error) throw new Error(error.message || "Falha ao confirmar o cartão.");
+
+      if (setupIntent && setupIntent.status === "succeeded") {
+        await finalize(setupIntent.payment_method, makeDefault ? makeDefault.checked : true);
+      } else {
+        // quando há redirect, o fluxo continua no handleReturnFromRedirect
+        showMessage("Redirecionando para autenticação…", "info");
+      }
+    } catch (err) {
+      showMessage(err.message || "Erro inesperado ao salvar o cartão.", "error");
+    } finally {
+      setBusy(false);
+    }
+  });
+})();
+</script>
+{% endblock %}

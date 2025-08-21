@@ -1,301 +1,231 @@
 {% extends 'auth/auth_base.html' %}
 {% load static i18n %}
 
-{% block extra_head %}
-    <style>
-      #fullLoader {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(255,255,255,0.8);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1050;
-      }
-    </style>
-{% endblock %}
 {% block content %}
-<div
-  style="max-width: 860px; min-width: 360px; min-height: 600px"
-  class="text-center p-4 shadow rounded bg-white mx-auto mt-5"
->
-  <!-- Logo -->
-  <a href="/">
-    <img
-      src="{% static 'assets/images/logos/logo.svg' %}"
-      alt="Starchat"
-      class="mb-4"
-    />
-  </a>
-
-  <p class="text-muted mb-4">{% trans "Crie sua conta grátis e teste sem limites." %}</p>
-
-  <form
-    method="post"
-    action="{% url 'auth:register' %}"
-    novalidate
-    onsubmit="document.getElementById('fullLoader').style.display='flex';"
-  >
-    {% csrf_token %}
-
-    {# Mensagens gerais #}
-    {% if messages %}
-      {% for msg in messages %}
-        <div class="alert alert-danger">{{ msg }}</div>
-      {% endfor %}
-    {% endif %}
-
-    <div class="row g-3">
-      {# Email #}
-      <div class="col-md-6 text-start">
-        <label for="id_email" class="form-label">{% trans "Email" %}</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-envelope"></i>
-          </span>
-          <input
-            type="email"
-            name="{{ form.email.html_name }}"
-            id="id_email"
-            class="form-control ps-2 h-48 {% if form.email.errors %}is-invalid{% endif %}"
-            placeholder="{% trans 'seu@email.com' %}"
-            value="{{ form.email.value|default_if_none:'' }}"
-            required
-          />
-        </div>
-        {% if form.email.errors %}
-          <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
-        {% endif %}
+  <div class="min-h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-4xl">
+      <!-- Logo -->
+      <div class="bg-white text-center pt-6">
+        <a href="/">
+          <img src="/static/assets/images/logos/logo.svg" alt="Starchat" class="inline-block h-12 mb-3">
+        </a>
+        <p class="text-slate-600 dark:text-slate-300">Crie sua conta grátis e teste sem limites.</p>
       </div>
 
-      
-      {# Tipo de Empresa #}
-      <div class="col-md-6 text-start">
-        <label for="id_company_type" class="form-label">{% trans "Tipo de Empresa" %}</label>
-        <select
-          name="{{ form.company_type.html_name }}"
-          id="id_company_type"
-          class="form-select h-48 pt-1 {% if form.company_type.errors %}is-invalid{% endif %}"
-          required
-        >
-          {% for val,label in form.company_type.field.choices %}
-            <option value="{{ val }}" {% if form.company_type.value == val %}selected{% endif %}>
-              {{ label }}
-            </option>
-          {% endfor %}
-        </select>
-        {% if form.company_type.errors %}
-          <div class="invalid-feedback d-block">{{ form.company_type.errors.0 }}</div>
-        {% endif %}
-      </div>
+      <!-- Card -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 md:p-8">
+        <form method="post" action="{% url 'auth:register' %}" novalidate
+              onsubmit="document.getElementById('fullLoader').style.display='flex';" class="space-y-6">
+          {% csrf_token %}
 
-      {# Senha #}
-      <div class="col-md-6 text-start">
-        <label for="id_password" class="form-label">{% trans "Senha" %}</label>
-        <div class="input-group position-relative">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-lock"></i>
-          </span>
-          <input
-            type="password"
-            name="{{ form.password.html_name }}"
-            id="id_password"
-            class="form-control ps-2 h-48 {% if form.password.errors %}is-invalid{% endif %}"
-            placeholder="{% trans 'Digite sua senha' %}"
-            required
-          />
-          <span
-            class="input-group-text bg-white border-start-0"
-            id="togglePassword"
-            style="cursor: pointer;"
-          >
-            <i class="fas fa-eye"></i>
-          </span>
-        </div>
-        {% if form.password.errors %}
-          <div class="invalid-feedback d-block">{{ form.password.errors.0 }}</div>
-        {% endif %}
-        <!-- barra de força -->
-        <div style="height:12px;" class="w-100 bg-gray-200 rounded mt-2">
-          <div id="password-strength-bar" class="h-100 rounded transition-all" style="width:0">
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="rounded-md px-4 py-3 text-sm bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-200">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <!-- E-mail -->
+            <div>
+              <label for="id_email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "E‑mail" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900 focus-within:ring-indigo-600">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">mail</span></span>
+                <input type="email" id="id_email" name="{{ form.email.html_name }}"
+                       class="w-full rounded-r-xl bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="{% trans 'seu@email.com' %}"
+                       value="{{ form.email.value|default_if_none:'' }}" required/>
+              </div>
+              {% if form.email.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.email.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Tipo de Empresa -->
+            <div>
+              <label for="id_company_type" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "Tipo de Empresa" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">storefront</span></span>
+                <select id="id_company_type" name="{{ form.company_type.html_name }}"
+                        class="w-full rounded-r-xl bg-transparent outline-none p-2 mr-2"
+                        required>
+                  {% for val,label in form.company_type.field.choices %}
+                    <option value="{{ val }}" {% if form.company_type.value == val %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              {% if form.company_type.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.company_type.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Senha -->
+            <div>
+              <label for="id_password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "Senha" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">lock</span></span>
+                <input type="password" id="id_password" name="{{ form.password.html_name }}"
+                       class="w-full bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="{% trans 'Digite sua senha' %}" required/>
+                <button type="button" id="togglePassword"
+                        class="px-3 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+                  <span class="pt-2 material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+              {% if form.password.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.password.errors.0 }}</p>
+              {% endif %}
+              <div class="w-full mt-2 h-2 rounded bg-slate-200 dark:bg-slate-800">
+                <div id="password-strength-bar" class="h-2 rounded transition-all" style="width:0%"></div>
+              </div>
+              <p id="password-strength-text" class="mt-1 text-xs text-slate-500 dark:text-slate-400"></p>
+            </div>
+
+            <!-- Confirmar Senha -->
+            <div>
+              <label for="id_confirm_password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "Confirmar Senha" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">lock</span></span>
+                <input type="password" id="id_confirm_password" name="{{ form.confirm_password.html_name }}"
+                       class="w-full bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="{% trans 'Confirme sua senha' %}" required/>
+                <button type="button" id="toggleConfirmPassword"
+                        class="px-3 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+                  <span class="pt-2 material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+              {% if form.confirm_password.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.confirm_password.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Nome da Empresa -->
+            <div>
+              <label for="id_company_name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "Nome da Empresa" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">business</span></span>
+                <input type="text" id="id_company_name" name="{{ form.company_name.html_name }}"
+                       class="w-full bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="{% trans 'Digite o nome da empresa' %}"
+                       value="{{ form.company_name.value|default_if_none:'' }}" required/>
+              </div>
+              {% if form.company_name.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.company_name.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- CNPJ -->
+            <div>
+              <label for="id_cnpj" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "CNPJ" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">badge</span></span>
+                <input type="text" id="id_cnpj" name="{{ form.cnpj.html_name }}"
+                       class="w-full bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="00.000.000/0000-00"
+                       value="{{ form.cnpj.value|default_if_none:'' }}" required/>
+              </div>
+              {% if form.cnpj.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.cnpj.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Telefone -->
+            <div>
+              <label for="id_phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "Telefone" %}</label>
+              <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 dark:ring-slate-700 bg-white dark:bg-slate-900">
+                <span class="px-3 flex items-center text-slate-400"><span class="material-symbols-outlined">call</span></span>
+                <input type="text" id="id_phone" name="{{ form.phone.html_name }}"
+                       class="w-full bg-transparent outline-none p-2 placeholder-slate-400 dark:placeholder-slate-500"
+                       placeholder="(00) 00000-0000"
+                       value="{{ form.phone.value|default_if_none:'' }}" required/>
+              </div>
+              {% if form.phone.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.phone.errors.0 }}</p>
+              {% endif %}
+            </div>
           </div>
-       
-        </div>
-      </div>
 
-      {# Confirmar Senha #}
-      <div class="col-md-6 text-start">
-        <label for="id_confirm_password" class="form-label">{% trans "Confirmar Senha" %}</label>
-        <div class="input-group position-relative">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-lock"></i>
-          </span>
-          <input
-            type="password"
-            name="{{ form.confirm_password.html_name }}"
-            id="id_confirm_password"
-            class="form-control ps-2 h-48 {% if form.confirm_password.errors %}is-invalid{% endif %}"
-            placeholder="{% trans 'Confirme sua senha' %}"
-            required
-          />
-          <span
-            class="input-group-text bg-white border-start-0"
-            id="toggleConfirmPassword"
-            style="cursor: pointer;"
-          >
-            <i class="fas fa-eye"></i>
-          </span>
-        </div>
-        {% if form.confirm_password.errors %}
-          <div class="invalid-feedback d-block">{{ form.confirm_password.errors.0 }}</div>
-        {% endif %}
-      </div>
+          <!-- Ações -->
+          <div class="text-center">
+            <button type="submit"
+                    class="w-72 inline-flex items-center justify-center gap-1 px-6 py-2.5 rounded-xl
+                           bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
+              {% trans "Inscrever‑se" %}
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
 
-      {# Nome da Empresa #}
-      <div class="col-md-6 text-start">
-        <label for="id_company_name" class="form-label">{% trans "Nome da Empresa" %}</label>
-        <input
-          type="text"
-          placeholder="Digite o nome da empresa"
-          name="{{ form.company_name.html_name }}"
-          id="id_company_name"
-          class="form-control ps-2 h-48 {% if form.company_name.errors %}is-invalid{% endif %}"
-          value="{{ form.company_name.value|default_if_none:'' }}"
-          required
-        />
-        {% if form.company_name.errors %}
-          <div class="invalid-feedback d-block">{{ form.company_name.errors.0 }}</div>
-        {% endif %}
+            <div class="mt-3 text-sm">
+              <span class="text-slate-600 dark:text-slate-400">{% trans "Já tem uma conta?" %}</span>
+              <a href="{% url 'admin:login' %}" class="text-indigo-600 hover:text-indigo-700 ml-1">{% trans "Entrar" %}</a>
+            </div>
+            <div class="mt-2">
+              <a href="{% url 'page:index' %}" class="text-sm text-slate-700 hover:text-slate-900 underline dark:text-slate-300 dark:hover:text-slate-100">
+                {% trans "Voltar" %}
+              </a>
+            </div>
+          </div>
+        </form>
       </div>
-
-      {# CNPJ #}
-      <div class="col-md-6 text-start">
-        <label for="id_cnpj" class="form-label">{% trans "CNPJ" %}</label>
-        <input
-          type="text"
-          name="{{ form.cnpj.html_name }}"
-          id="id_cnpj"
-          class="form-control ps-2 h-48 {% if form.cnpj.errors %}is-invalid{% endif %}"
-          value="{{ form.cnpj.value|default_if_none:'' }}"
-          required
-        />
-        {% if form.cnpj.errors %}
-          <div class="invalid-feedback d-block">{{ form.cnpj.errors.0 }}</div>
-        {% endif %}
-      </div>
-
-      {# Telefone #}
-      <div class="col-md-6 text-start">
-        <label for="id_phone" class="form-label">{% trans "Telefone" %}</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-phone"></i>
-          </span>
-          <input
-            type="text"
-            name="{{ form.phone.html_name }}"
-            id="id_phone"
-            class="form-control ps-2 h-48 {% if form.phone.errors %}is-invalid{% endif %}"
-            placeholder="(00) 00000-0000"
-            value="{{ form.phone.value|default_if_none:'' }}"
-            required
-          />
-        </div>
-        {% if form.phone.errors %}
-          <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
-        {% endif %}
-      </div>
-
     </div>
-
-    {# Botão de submit #}
-    <div class="mt-4">
-      <button style="width: 300px;" type="submit" class="theme-btn style-six py-2 mb-3">
-        {% trans "Inscrever‑se" %} <i class="fas fa-arrow-right"></i>
-      </button>
-
-      <p class="small mb-2">
-        {% trans "Já tem uma conta?" %}
-        <a href="{% url 'admin:login' %}" class="read-more">{% trans "Entrar" %}</a>
-      </p>
-      <a class="read-more" href="{% url 'page:index' %}">{% trans "Voltar" %}</a>
-    </div>
-  </form>
-</div>
-<div id="fullLoader">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Carregando...</span>
   </div>
-</div>
+
+  <!-- Loader -->
+  <div id="fullLoader">
+    <div class="px-4 py-3 rounded-xl bg-white shadow text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+      {% trans "Carregando..." %}
+    </div>
+  </div>
+
+
 {% endblock content %}
 
 {% block extra_scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  function setupToggle(inputId, toggleId) {
-    const pw = document.getElementById(inputId);
-    const tp = document.getElementById(toggleId);
-    if (!pw || !tp) return;
-    tp.addEventListener('click', () => {
-      const isPwd = pw.type === 'password';
-      pw.type = isPwd ? 'text' : 'password';
-      tp.querySelector('i')
-        .classList.toggle('fa-eye-slash', isPwd);
-      tp.querySelector('i')
-        .classList.toggle('fa-eye', !isPwd);
-    });
-  }
-  setupToggle('id_password', 'togglePassword');
-  setupToggle('id_confirm_password', 'toggleConfirmPassword');
-
-  $('#id_phone').mask('(00) 00000-0000', {
-    placeholder: '(00) 00000-0000'
-  });
-  $('#id_cnpj').mask('00.000.000/0000-00', {
-    placeholder: '00.000.000/0000-00'
-  });
-
-  // **Barra de força de senha**
-  const pwdInput = document.getElementById('id_password');
-  const strengthBar = document.getElementById('password-strength-bar');
-  const strengthText = document.getElementById('password-strength-text');
-
-  pwdInput.addEventListener('input', () => {
-    const val = pwdInput.value;
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-    const pct = (score / 4) * 100;
-    strengthBar.style.width = pct + '%';
-
-    // cores: vermelho<50%, amarelo<75%, verde ≥75%
-    if (pct < 50) {
-      strengthBar.style.backgroundColor = '#dc2626';
-    } else if (pct < 75) {
-      strengthBar.style.backgroundColor = '#f59e0b';
-    } else {
-      strengthBar.style.backgroundColor = '#16a34a';
+  <script>
+    // Toggle de senha
+    function wireToggle(btnId, inputId) {
+      const btn = document.getElementById(btnId);
+      const el  = document.getElementById(inputId);
+      if (!btn || !el) return;
+      btn.addEventListener('click', () => {
+        const show = el.type === 'password';
+        el.type = show ? 'text' : 'password';
+        btn.querySelector('.material-symbols-outlined').textContent = show ? 'visibility_off' : 'visibility';
+      });
     }
+    wireToggle('togglePassword', 'id_password');
+    wireToggle('toggleConfirmPassword', 'id_confirm_password');
 
-    if (pct === 100) {
-      strengthText.textContent = 'Senha forte!';
-      strengthText.classList.remove('text-muted');
-      strengthText.classList.add('text-success');
-    } else {
-      // lista o que falta
-      const needs = [];
-      if (val.length < 8) needs.push('8 caracteres');
-      if (!/[A-Z]/.test(val)) needs.push('letra maiúscula');
-      if (!/[0-9]/.test(val)) needs.push('número');
-      if (!/[^A-Za-z0-9]/.test(val)) needs.push('caractere especial');
-      strengthText.textContent = 'Faltam: ' + needs.join(', ');
-      strengthText.classList.remove('text-success');
-      strengthText.classList.add('text-muted');
-    }
-  });
-});
-</script>
+    // Barra de força da senha
+    (function () {
+      const input = document.getElementById('id_password');
+      const bar   = document.getElementById('password-strength-bar');
+      const text  = document.getElementById('password-strength-text');
+      if (!input || !bar) return;
+
+      input.addEventListener('input', () => {
+        const v = input.value || '';
+        let s = 0;
+        if (v.length >= 8) s++;
+        if (/[A-Z]/.test(v)) s++;
+        if (/[0-9]/.test(v)) s++;
+        if (/[^A-Za-z0-9]/.test(v)) s++;
+        const pct = (s / 4) * 100;
+        bar.style.width = pct + '%';
+        bar.style.backgroundColor = pct < 50 ? '#dc2626' : (pct < 75 ? '#f59e0b' : '#16a34a');
+
+        if (!text) return;
+        if (pct === 100) {
+          text.textContent = '{{ _("Senha forte!") }}';
+          text.className = 'mt-1 text-xs text-green-600';
+        } else {
+          const needs = [];
+          if (v.length < 8) needs.push('{{ _("8 caracteres") }}');
+          if (!/[A-Z]/.test(v)) needs.push('{{ _("letra maiúscula") }}');
+          if (!/[0-9]/.test(v)) needs.push('{{ _("número") }}');
+          if (!/[^A-Za-z0-9]/.test(v)) needs.push('{{ _("caractere especial") }}');
+          text.textContent = '{{ _("Faltam:") }} ' + needs.join(', ');
+          text.className = 'mt-1 text-xs text-slate-500';
+        }
+      });
+    })();
+  </script>
 {% endblock extra_scripts %}

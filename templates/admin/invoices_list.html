@@ -1,0 +1,137 @@
+{% extends 'admin/base.html' %}
+
+{% load static i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="changelist-form-container flex flex-row grow gap-6 min-w-0 px-4">
+  <div class="grow min-w-0" x-resize="changeListWidth = $width">
+    <div class="flex flex-col gap-4 mb-4 sm:flex-row lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+      <div id="toolbar" class="flex w-full items-center gap-3">
+        <form id="changelist-search" method="get" role="search" class="flex-1">
+          <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 lg:w-96 dark:bg-base-900 dark:border-base-700">
+            <button type="submit" class="flex items-center focus:outline-hidden" id="searchbar-submit">
+              <span class="material-symbols-outlined md-18 text-base-400 dark:text-base-500">search</span>
+            </button>
+            <input type="text" class="grow font-medium min-w-0 p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                   name="q" value="{{ search_q }}" id="searchbar" placeholder="{% trans 'Digite para pesquisar' %}">
+          </div>
+        </form>
+
+        <form method="get" class="flex items-center gap-2">
+          <input type="hidden" name="q" value="{{ search_q }}">
+        </form>
+      </div>
+    </div>
+
+    <div class="lg:rounded-b-default -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 simplebar-scrollable-x">
+      <table class="block border-base-200 border-spacing-none border-separate w-full lg:table">
+        <thead>
+          <tr>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Fatura" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Total" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Status" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Moeda" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Número" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Criado" %}</th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700"></th>
+            <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700"></th>
+          </tr>
+        </thead>
+
+        {% if object_list %}
+          <tbody>
+            {% for inv in object_list %}
+              <tr class="border-b border-base-200 dark:border-base-800 p-2 {% cycle 'bg-white dark:bg-base-900' 'bg-base-100 dark:bg-base-800' %} ">
+                <td class="p-3">
+                  <span class="text-font-important-light dark:text-font-important-dark">
+                    {% if inv.number %}{% trans 'Fatura' %} #{{ inv.number }}{% else %}{% trans 'Fatura' %}{% endif %}
+                  </span>
+                </td>
+                <td class="px-3 py-2">
+                  {{ inv.total|default:inv.amount_due|floatformat:2 }} {{ inv.currency|upper }}
+                </td>
+                <td class="px-3 py-2">
+                  <span class="px-2 py-1 rounded text-xs
+                    {% if inv.status == 'paid' %} bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-base-200
+                    {% elif inv.status == 'open' %} bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300
+                    {% elif inv.status == 'draft' %} bg-base-100 text-base-800 dark:bg-base-600/30 dark:text-base-200
+                    {% elif inv.status == 'void' %} bg-gray-100 text-gray-700 dark:bg-gray-500/20 dark:text-gray-300
+                    {% else %} bg-base-100 text-base-800 dark:bg-base-600/30 dark:text-base-200 {% endif %}">
+                    {% if inv.status == 'paid' %}{% trans "Pago" %}
+                    {% elif inv.status == 'open' %}{% trans "Aberto" %}
+                    {% elif inv.status == 'draft' %}{% trans "Rascunho" %}
+                    {% elif inv.status == 'void' %}{% trans "Anulado" %}
+                    {% else %}{{ inv.status|title }}{% endif %}
+                  </span>
+                </td>
+                <td class="px-3 py-2 text-sm uppercase">{{ inv.currency }}</td>
+                <td class="px-3 py-2 text-sm">{{ inv.number|default:"—" }}</td>
+                <td class="px-3 py-2 text-sm">
+                  {% if inv.created %}{{ inv.created|date:"d \\d\\e F \\d\\e Y \\à\\s H:i" }}{% else %}—{% endif %}
+                </td>
+                <td class="px-3 py-2">
+                  {% if inv.invoice_pdf %}
+                    <a href="{{ inv.hosted_invoice_url }}" target="_blank" class="hover:text-primary-600 flex items-center" title="{% trans 'baixar PDF' %}">
+                      <span class="material-symbols-outlined mr-1">visibility</span>
+                      {% trans "Ver Fatura" %}
+                    </a>
+                  {% else %}—{% endif %}
+                </td>
+                <td class="px-3 py-2">
+                  {% if inv.invoice_pdf %}
+                    <a href="{{ inv.invoice_pdf }}" target="_blank" class="hover:text-primary-600 flex items-center" title="{% trans 'baixar PDF' %}">
+                      <span class="material-symbols-outlined mr-1">download</span>
+                      {% trans "Baixar" %}
+                    </a>
+                  {% else %}—{% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        {% else %}
+          <tbody>
+            <tr>
+              <td colspan="10" class="px-3 py-6 text-center text-base-600 dark:text-base-300">
+                {% trans "Nenhuma fatura encontrada." %}
+              </td>
+            </tr>
+          </tbody>
+        {% endif %}
+      </table>
+    </div>
+
+    {# paginação #}
+    {% if paginator.num_pages > 1 %}
+      <div class="flex items-center justify-between mt-4">
+        <div class="text-sm text-base-600 dark:text-base-300">
+         {% trans "Pagina" %} {{ page_obj.number }} {% trans "de" %} {{ paginator.num_pages }}
+        </div>
+        <div class="flex gap-2">
+          {% if page_obj.has_previous %}
+            <a class="px-3 py-2 border border-base-200 rounded-default dark:border-base-700 hover:text-primary-600"
+               href="?q={{ search_q }}&status={{ filter_status }}&paid={{ filter_paid }}&page={{ page_obj.previous_page_number }}">
+              ‹ {% trans "Anterior" %}
+            </a>
+          {% endif %}
+          {% if page_obj.has_next %}
+            <a class="px-3 py-2 border border-base-200 rounded-default dark:border-base-700 hover:text-primary-600"
+               href="?q={{ search_q }}&status={{ filter_status }}&paid={{ filter_paid }}&page={{ page_obj.next_page_number }}">
+              {% trans "Próxima" %} ›
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

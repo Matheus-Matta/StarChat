@@ -1,0 +1,423 @@
+{% extends 'admin/base.html' %}
+{% load i18n static %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+  {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="changelist-form-container flex flex-row grow gap-6 min-w-0 px-4">
+  <div class="grow min-w-0" x-resize="changeListWidth = $width">
+
+    <!-- ====== ABA LISTA DE INBOXES ====== -->
+    <div id="tab-inboxes">
+      <!-- Toolbar / Filtros -->
+      <div class="flex flex-col gap-4 mb-4 sm:flex-row lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+        <div id="toolbar" class="flex w-full items-center gap-3">
+          <form method="get" role="search" class="flex-1 flex flex-col sm:flex-row gap-3">
+            <!-- Busca -->
+            <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 lg:w-96 dark:bg-base-900 dark:border-base-700">
+              <button type="submit" class="flex items-center focus:outline-hidden" id="searchbar-submit">
+                <span class="material-symbols-outlined md-18 text-base-400 dark:text-base-500">search</span>
+              </button>
+              <input type="text" class="grow font-medium min-w-0 p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                     name="q" value="{{ search_q }}" id="searchbar" placeholder="{% trans 'Digite para pesquisar' %}">
+            </div>
+
+            <!-- Select de Channel Type -->
+            <div class="bg-white border border-base-200 rounded-default shadow-xs px-2 dark:bg-base-900 dark:border-base-700">
+              <select id="channel" name="channel" class="p-2 pr-4 rounded-default bg-transparent focus:outline-hidden">
+                <option value="">{% trans "Todos os canais" %}</option>
+                {% for ch in channels %}
+                  <option value="{{ ch }}" {% if filter_channel == ch %}selected{% endif %}>{{ ch|title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Select de Provider (opcional) -->
+            <div class="bg-white border border-base-200 rounded-default shadow-xs px-2 dark:bg-base-900 dark:border-base-700">
+              <select id="provider" name="provider" class="p-2 pr-4 rounded-default bg-transparent focus:outline-hidden">
+                <option value="">{% trans "Todos os provedores" %}</option>
+                {% for p in providers %}
+                  <option value="{{ p }}" {% if filter_provider == p %}selected{% endif %}>{{ p|title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Limpar / Aplicar -->
+            {% if search_q or filter_channel or filter_provider %}
+              <a href="?" class="flex items-center gap-1 px-3 py-2 rounded-default border border-base-200 dark:border-base-700 hover:border-primary-600 hover:text-primary-600 cursor-pointer">
+                {% trans "Limpar" %}
+              </a>
+            {% endif %}
+            <input type="submit" value="{% trans 'Aplicar' %}" class="flex items-center gap-1 px-3 py-2 rounded-default border border-base-200 dark:border-base-700 hover:border-primary-600 hover:text-primary-600 cursor-pointer">
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabela -->
+      <div class="lg:rounded-b-default -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 simplebar-scrollable-x">
+        <table class="block border-base-200 border-spacing-none border-separate w-full lg:table">
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700 w-10">
+                <label class="inline-flex items-center">
+                  <input id="select-all" type="checkbox"
+                    class="appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['done'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-sm! after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600">
+                </label>
+              </th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Inbox" %}</th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Canal" %}</th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Website" %}</th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Auto Assign" %}</th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">CSAT</th>
+              <th class="px-3 py-2 text-left border-b border-base-200 dark:border-base-700">{% trans "Expediente" %}</th>
+            </tr>
+          </thead>
+
+          {% if object_list %}
+            <tbody>
+              {% for ib in object_list %}
+                <tr class="border-b border-base-200 dark:border-base-800 p-2 {% cycle 'bg-white dark:bg-base-900' 'bg-base-100 dark:bg-base-800' %}">
+                  <!-- Checkbox -->
+                  <td class="px-3 py-2 align-middle">
+                    <input
+                      type="checkbox"
+                      name="select_inboxes"
+                      value="{{ ib.id }}"
+                      data-name="{{ ib.display_name|escapejs }}"
+                      data-channel="{{ ib.channel_type|default_if_none:''|escapejs }}"
+                      data-website="{{ ib.website_url|default_if_none:''|escapejs }}"
+                      class="appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['done'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-sm! after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600">
+                  </td>
+
+                  <!-- Avatar + Nome -->
+                  <td class="px-3 py-2">
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center justify-center rounded-full overflow-hidden w-10 h-10 border-2 border-base-200 dark:border-base-700">
+                          <span class="font-semibold text-sm uppercase">{{ ib.initials }}</span>
+                        </div>
+                      <div class="min-w-0">
+                        <div class="text-font-important-light dark:text-font-important-dark truncate">{{ ib.display_name }}</div>
+                        <div class="text-xs text-base-500 dark:text-base-400 truncate">ID: {{ ib.id }}</div>
+                      </div>
+                    </div>
+                  </td>
+                    
+                  <!-- Canal -->
+                  <td class="px-3 py-2 text-sm">
+                    <span class="bg-primary-50 dark:bg-base-700 text-primary-700 dark:text-base-200 px-3 py-1 rounded-full text-sm">
+                      {{ ib.channel_type|default:"—"|title }}{% if ib.provider %} · {{ ib.provider|title }}{% endif %}{% if ib.medium %} · {{ ib.medium|upper }}{% endif %}
+                    </span>
+                  </td>
+
+                  <!-- Website -->
+                  <td class="px-3 py-2 text-sm">
+                    {% if ib.website_url %}
+                      <a href="{{ ib.website_url }}" target="_blank" class="hover:text-primary-600 truncate max-w-[240px] inline-block align-middle">{{ ib.website_url }}</a>
+                    {% else %}---{% endif %}
+                  </td>
+
+                  <!-- Auto assignment -->
+                  <td class="px-3 py-2">
+                    {% if ib.enable_auto_assignment %}
+                      <span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-base-200">{% trans "Ativo" %}</span>
+                    {% else %}
+                      <span class="px-2 py-1 rounded text-xs bg-base-200 text-base-700 dark:bg-base-700 dark:text-base-200">{% trans "Desabilitado" %}</span>
+                    {% endif %}
+                  </td>
+
+                  <!-- CSAT -->
+                  <td class="px-3 py-2">
+                    {% if ib.csat_survey_enabled %}
+                      <span class="px-2 py-1 rounded text-xs px-2 py-1 rounded text-xs bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-base-200">{% trans "Ativo" %}</span>
+                    {% else %}
+                      <span class="px-2 py-1 rounded text-xs bg-base-200 text-base-700 dark:bg-base-700 dark:text-base-200">{% trans "Desabilitado" %}</span>
+                    {% endif %}
+                  </td>
+
+                  <!-- Working hours -->
+                  <td class="px-3 py-2">
+                    {% if ib.working_hours_enabled %}
+                      <span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-base-200">{% trans "Ativo" %}</span>
+                    {% else %}
+                      <span class="px-2 py-1 rounded text-xs bg-base-200 text-base-700 dark:bg-base-700 dark:text-base-200">{% trans "Desabilitado" %}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <tbody id="tbody-empty"> 
+            <tr>
+                <td colspan="10" class="px-3 py-6 text-center text-base-600 dark:text-base-300">
+                {% trans "Nenhuma inbox encontrada." %}
+                </td>
+            </tr>
+            </tbody>
+          {% endif %}
+        </table>
+      </div>
+
+      <!-- Paginação -->
+      {% if paginator.num_pages > 1 %}
+        <div id="pagination-bar" class="flex items-center justify-between mt-4">
+          <div class="text-sm text-base-600 dark:text-base-300">
+            {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ paginator.num_pages }}
+          </div>
+          <div class="flex gap-2">
+            {% if page_obj.has_previous %}
+              <a class="px-3 py-2 border border-base-200 rounded-default dark:border-base-700 hover:text-primary-600"
+                href="?q={{ search_q }}&channel={{ filter_channel }}&provider={{ filter_provider }}&page={{ page_obj.previous_page_number }}">‹ {% trans "Anterior" %}</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a class="px-3 py-2 border border-base-200 rounded-default dark:border-base-700 hover:text-primary-600"
+                href="?q={{ search_q }}&channel={{ filter_channel }}&provider={{ filter_provider }}&page={{ page_obj.next_page_number }}">{% trans "Próxima" %} ›</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div> <!-- /#tab-inboxes -->
+
+    <!-- ====== ABA DE CONFIRMAÇÃO ====== -->
+    <div id="tab-confirm" class="hidden">
+      <div class="border border-base-200 rounded-default shadow-xs dark:border-base-800">
+        <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
+          {% trans "Tem certeza de que deseja remover as inboxes selecionadas? Os seguintes objetos serão removidos:" %}
+        </p>
+
+        <!-- Lista dos selecionados -->
+        <div class="border-t border-base-200 p-4 dark:border-base-800">
+          <h2 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">
+            {% trans "Selecionados" %}
+          </h2>
+          <ul id="confirm-list" class="leading-relaxed max-h-64 overflow-auto pr-2">
+            <!-- preenchido via JS -->
+          </ul>
+        </div>
+
+        <!-- Resumo -->
+        <div class="border-t border-base-200 p-4 dark:border-base-800">
+          <h2 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">Summary</h2>
+          <ul class="leading-relaxed">
+            <li>{% trans "Inboxes" %}: <span id="sum-inboxes">0</span></li>
+          </ul>
+        </div>
+
+        <!-- Ações -->
+        <div class="border-t border-base-200 px-4 py-3 dark:border-base-800">
+          <div class="flex flex-col gap-3 items-center w-full lg:flex-row">
+            <a href="#" id="btn-cancel-delete"
+               class="border border-base-200 cancel-link flex items-center justify-center font-medium px-3 py-2 rounded-default w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
+              {% trans "Não, voltar" %}
+            </a>
+            <button id="btn-confirm-delete" type="button"
+                    class="bg-red-600 cursor-pointer flex items-center justify-center font-medium h-[38px] px-3 py-2 rounded-default text-white w-full lg:ml-auto lg:w-auto dark:bg-red-500/20 dark:text-red-500">
+            <span id='btn-confirm-delete-text'>{% trans "Sim, tenho certeza" %}</span>
+            <span id='btn-confirm-delete-load' class="hidden flex items-center"><span class="material-symbols-outlined spinner-circle mr-2" id="btn-spinner">progress_activity</span>{% trans "Removendo..." %}</span>
+            
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ====== /ABA DE CONFIRMAÇÃO ====== -->
+
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="sticky bottom-0 left-0 right-0 bg-white/80 dark:bg-base-900/80 backdrop-blur border-t border-base-200 dark:border-base-800 px-4 py-3">
+  <!-- CSRF oculto p/ JS -->
+  <form id="csrf-form" class="hidden">{% csrf_token %}</form>
+
+  <div class="max-w-screen-2xl mx-auto flex items-center justify-between gap-3">
+    <div class="text-sm text-base-500 dark:text-base-400">
+      {% trans "Selecione uma ou mais inboxes para ações em massa." %}
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button id="btn-remove-selected" type="button" 
+        class="flex items-center gap-2 px-4 py-2 rounded-default bg-red-600 text-white cursor-pointer">
+        <span class="material-symbols-outlined">delete</span>
+        {% trans "Remover selecionados" %}
+      </button>
+
+      <a href="{% url 'admin:index' %}"
+        class="flex items-center gap-2 px-4 py-2 rounded-default border border-base-200 hover:text-primary-600 hover:border-primary-600 dark:border-base-700">
+        <span class="material-symbols-outlined">arrow_back</span>
+        {% trans "Voltar ao início" %}
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const deleteBtn   = document.getElementById('btn-remove-selected');
+  const selectAll   = document.getElementById('select-all');
+  const tabInboxes  = document.getElementById('tab-inboxes');
+  const tabConfirm  = document.getElementById('tab-confirm');
+  const listEl      = document.getElementById('confirm-list');
+  const sumInboxes  = document.getElementById('sum-inboxes');
+  const btnCancel   = document.getElementById('btn-cancel-delete');
+  const btnConfirm  = document.getElementById('btn-confirm-delete');
+
+  const getCbs = () => Array.from(document.querySelectorAll('input[name="select_inboxes"]:checked'));
+  const getIds = () => getCbs().map(cb => cb.value);
+
+  const getCSRF = () => document.querySelector('#csrf-form input[name="csrfmiddlewaretoken"]')?.value || '';
+
+  const setBtnState = (isDisabled) => {
+    deleteBtn.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
+    if (isDisabled) {
+      deleteBtn.classList.add('opacity-50', 'pointer-events-none');
+    } else {
+      deleteBtn.classList.remove('opacity-50', 'pointer-events-none');
+    }
+  };
+
+  const syncSelectAll = () => {
+    const all = document.querySelectorAll('input[name="select_inboxes"]');
+    const total = all.length;
+    const checked = getIds().length;
+    if (selectAll) {
+      selectAll.checked = total > 0 && checked === total;
+      selectAll.indeterminate = checked > 0 && checked < total;
+    }
+    setBtnState(checked === 0);
+  };
+
+  document.addEventListener('change', e => {
+    if (e.target && e.target.name === 'select_inboxes') syncSelectAll();
+  });
+
+  if (selectAll) {
+    selectAll.addEventListener('change', () => {
+      const all = document.querySelectorAll('input[name="select_inboxes"]');
+      all.forEach(cb => { cb.checked = selectAll.checked; });
+      syncSelectAll();
+    });
+  }
+
+  // Inicial
+  syncSelectAll();
+
+  // URL do endpoint de bulk delete (namespace admin)
+  const DELETE_URL = "{% url 'admin:account_inboxes' %}";
+
+  // Abre aba de confirmação
+  deleteBtn.addEventListener('click', () => {
+    const cbs = getCbs();
+    if (!cbs.length) return;
+
+    listEl.innerHTML = '';
+    cbs.forEach(cb => {
+      const id  = cb.value;
+      const nm  = cb.dataset.name || '';
+      const ch  = cb.dataset.channel || '';
+      const www = cb.dataset.website || '';
+      const li = document.createElement('li');
+      li.className = 'py-1';
+      li.textContent = `#${id} — ${nm}${ch ? ' · '+ch : ''}${www ? ' · '+www : ''}`;
+      listEl.appendChild(li);
+    });
+
+    sumInboxes.textContent = String(cbs.length);
+    tabInboxes.classList.add('hidden');
+    tabConfirm.classList.remove('hidden');
+  });
+
+  // Cancelar
+  btnCancel.addEventListener('click', (e) => {
+    e.preventDefault();
+    tabConfirm.classList.add('hidden');
+    tabInboxes.classList.remove('hidden');
+  });
+
+  // Confirmar remoção
+  btnConfirm.addEventListener('click', async () => {
+    const ids = getIds();
+    if (!ids.length) return;
+
+    btnConfirm.classList.add('opacity-80');
+    btnConfirm.querySelector('#btn-confirm-delete-load').classList.remove('hidden');
+    btnConfirm.querySelector('#btn-confirm-delete-text').classList.add('hidden');
+
+    try {
+      const resp = await fetch(DELETE_URL, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCSRF(),
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: JSON.stringify({ ids }),
+      });
+        const data = await resp.json();
+        if (!resp.ok || !data.ok) throw new Error(data.error || resp.statusText);
+        const respIdsRaw = data.deleted_ids || data.deleted || ids;
+        const failed = (data.failed || []).map(f => String(f.id));
+        const deletedIds = Array.isArray(respIdsRaw)
+        ? respIdsRaw
+        : ids.filter(id => !failed.includes(String(id)));
+
+        // remove as linhas correspondentes
+        deletedIds.forEach(id => {
+        const cb = document.querySelector(`input[name="select_inboxes"][value="${id}"]`);
+        if (cb) {
+            const tr = cb.closest('tr');
+            if (tr) tr.remove();
+        }
+        });
+
+        // se não sobrou nenhuma linha na lista, mostra o estado vazio e esconde paginação
+        const tbodyList  = document.getElementById('tbody-inboxes');
+        const tbodyEmpty = document.getElementById('tbody-empty');
+        const pagBar     = document.getElementById('pagination-bar');
+
+        // cria tbody vazio se ainda não existir (caso use o IF do template)
+        if (!tbodyEmpty) {
+        const table = document.querySelector('table');
+        const newEmpty = document.createElement('tbody');
+        newEmpty.id = 'tbody-empty';
+        newEmpty.innerHTML = `
+            <tr>
+            <td colspan="10" class="px-3 py-6 text-center text-base-600 dark:text-base-300">
+                {{ _('Nenhuma inbox encontrada.') }}
+            </td>
+            </tr>`;
+        table.appendChild(newEmpty);
+        }
+
+        const hasRows = !!document.querySelector('#tbody-inboxes tr');
+        if (!hasRows) {
+        // esconde a lista, mostra o vazio
+        if (tbodyList) tbodyList.classList.add('hidden');
+        document.getElementById('tbody-empty')?.classList.remove('hidden');
+        // esconde paginação se existir
+        pagBar?.classList.add('hidden');
+        }
+
+        // restaura UI da aba de confirmação
+        btnConfirm.querySelector('#btn-confirm-delete-load')?.classList.add('hidden');
+        btnConfirm.querySelector('#btn-confirm-delete-text')?.classList.remove('hidden');
+        btnConfirm.classList.remove('opacity-80');
+        tabConfirm.classList.add('hidden');
+        tabInboxes.classList.remove('hidden');
+
+        // ressincroniza “selecionar todos” e estado do botão remover
+        syncSelectAll();
+    } catch (err) {
+      alert(err?.message || 'Erro ao remover.');
+      btnConfirm.classList.remove('opacity-80');
+      btnConfirm.textContent = '{% trans "Sim, tenho certeza" %}';
+    }
+  });
+})();
+</script>
+{% endblock %}

@@ -1,6 +1,29 @@
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.templatetags.static import static
+from django.conf import settings  # <- para decidir test/live do Stripe
+import os 
+
+def _stripe_customers_url(request) -> str:
+    """
+    Monta a URL do Customer no Stripe Dashboard para o usuário atual.
+    - Não importa nada de apps; usa apenas request.user.*.
+    - Ajusta test/live com base em uma flag nas settings (ex.: STRIPE_LIVE_MODE).
+    """
+    # Descobre o ID do customer da forma mais segura possível sem imports
+    account = getattr(request.user, "account", None)
+    customer_id = getattr(account, "stripe_customer_id", None)
+
+    # Test/live — ajuste a lógica à sua realidade:
+    # True -> live, False/None -> test
+    is_live_mode = bool(getattr(settings, "STRIPE_LIVE_MODE", False))
+    base = "https://dashboard.stripe.com" if is_live_mode else "https://dashboard.stripe.com/test"
+
+    # Se não tem customer_id, manda para o dashboard principal (ou retorne '' para desabilitar)
+    if not customer_id:
+        return f"{base}"
+
+    return f"{base}/customers/{customer_id}"
 
 UNFOLD = {
     "SHOW_LANGUAGES":   True,
@@ -93,23 +116,73 @@ UNFOLD = {
                         "link":        reverse_lazy("admin:core_siteconfig_changelist"),
                         "permission": lambda request: request.user.is_superuser,
                     },
+                    {
+                        "title":       _("Agentes"),
+                        "icon":        "headset_mic",
+                        "link":        reverse_lazy("admin:account_agents"),
+                    },
+                    {
+                        "title":       _("Canais"),
+                        "icon":        "inbox",
+                        "link":        reverse_lazy("admin:account_inboxes"),
+                    },
+                    {
+                        "title":       _("Faturas"),
+                        "icon":        "receipt",
+                        "link":        reverse_lazy("admin:account_invoices"),
+                    },
+                    {
+                        "title":       _("Assinatura"),
+                        "icon":        "credit_card",
+                        "link":        reverse_lazy("admin:plan_subscribed"),
+                    },
+                    {
+                        "title":       _("Formas de pagamento"),
+                        "icon":        "payments",
+                        "link":        reverse_lazy("admin:account_payments"),
+                    },
+                ],
+            },
+            {
+                "title":       _("Links"),
+                "icon":        "link",
+                "separator":   False,
+                "collapsible": False,
+                "items": [
+                    {
+                        "title": _("Página do cliente (Stripe)"),
+                        "icon": "link",
+                        "link": reverse_lazy("stripe_customer_portal"),
+                        "permission": lambda request: (
+                            hasattr(request.user, "is_authenticated") and request.user.is_authenticated
+                            and hasattr(request.user, "account")
+                            and getattr(getattr(request.user, "account", None), "stripe_customer_id", None) is not None
+                        ),
+                        "attrs": {"target": "_blank"},
+                    },
+                    {
+                        "title": _("Starchat Dashboard"),
+                        "icon":  "analytics",
+                        "attrs": {"target": "_blank"},
+                        "link":  getattr(settings, "CHATWOOT_URL",  os.getenv("CHATWOOT_URL")),
+                        "permission": lambda request: request.user.is_authenticated,
+                    },
                 ],
             },
         ],
     },
     "COLORS": {
         "base": {
-            "50":  "250, 250, 250",   # #FAFAFA
-            "50":  "250, 250, 250",   # #FAFAFA
-            "200": "200, 200, 200",   # #C8C8C8
-            "300": "160, 160, 160",   # #A0A0A0
-            "400": "120, 120, 120",   # #787878
-            "500": " 90,  90,  90",   # #5A5A5A
-            "600": " 60,  60,  60",   # #3C3C3C
-            "700": " 40,  40,  40",   # #282828
-            "800": " 21,  21,  21",   # #151515
-            "900": " 15,  15,  15",   # #0F0F0F,
-            "950": " 5,  5,  5",      # #050505,
+            "50":  "249, 250, 251",   # #F9FAFB
+            "100": "243, 244, 246",   # #F3F4F6
+            "200": "229, 231, 235",   # #E5E7EB
+            "300": "209, 213, 219",   # #D1D5DB
+            "400": "156, 163, 175",   # #9CA3AF
+            "500": "107, 114, 128",   # #6B7280
+            "600": "75,  85,  99",    # #4B5563
+            "700": "55,  69,  77",    # #374151
+            "800": "31,  41,  55",    # #1F2937
+            "900": "17,  18,  27",    # #111827
         },
         "primary": {
              "50":  "241, 236, 254",  # #F1ECFE

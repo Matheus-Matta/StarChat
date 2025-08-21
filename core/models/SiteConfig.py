@@ -31,6 +31,17 @@ class SiteConfig(models.Model):
     whatsapp = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
     linkedin = models.URLField(blank=True, null=True)
+    
+    terms = RichTextField(
+        blank=True, null=True,
+        verbose_name=_("Termos de Serviço"),
+        help_text=_("Texto para os termos de serviço")
+    )
+    policy = RichTextField(
+        blank=True, null=True,
+        verbose_name=_("Política de Privacidade"),
+        help_text=_("Texto para a política de privacidade")
+    )
 
     phone = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)

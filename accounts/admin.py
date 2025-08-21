@@ -7,19 +7,19 @@ from unfold.contrib.filters.admin import BooleanRadioFilter, ChoicesRadioFilter
 from django.urls import reverse
 from django.utils.html import format_html
 from django.urls import path
-from .views import UserProfileView
+from .views import *
 from unfold.admin import ModelAdmin
-from .models import Plan, Account, Company
+from .models import Plan, Account, Company, Address
 from djstripe.models import Customer, Invoice
 import stripe
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-
 User = get_user_model()
 
 
 @admin.register(Plan)
-class PlanAdmin(BaseAdmin, SimpleHistoryAdmin):
+class PlanAdmin(BaseAdmin, admin.ModelAdmin):
+    
     fieldsets = (
         ('Identificação', {
             'fields': ('name', 'description','hex_color'),
@@ -31,11 +31,19 @@ class PlanAdmin(BaseAdmin, SimpleHistoryAdmin):
             'fields': ('included_inboxes', 'extra_inbox_price'),
         }),
         ('Assinatura', {
-            'fields': ('monthly_price', 'yearly_price', 'requires_payment', 'billing_price_id',),
+            'fields': ('monthly_price', 'yearly_price', 'requires_payment', ),
         }),
         ('Status', {
             'fields': ('is_active','is_favorite', 'is_plan_staff'),
         }),
+        ('Stripe', {
+            'fields': ('stripe_product_id', 'billing_monthly_price_id', 'billing_yearly_price_id', 'billing_extra_agent_price_id', 'billing_extra_inbox_price_id'),
+        }),
+    )
+
+    readonly_fields = (
+        'stripe_product_id', 'billing_monthly_price_id', 'billing_yearly_price_id',
+        'billing_extra_agent_price_id', 'billing_extra_inbox_price_id'
     )
     list_display = (
         'name',
@@ -46,7 +54,29 @@ class PlanAdmin(BaseAdmin, SimpleHistoryAdmin):
     list_filter = ('is_active', 'name')
     search_fields = ('name', 'description')
     ordering = ('-is_active', 'name')
-
+    
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path("subscribed/", self.admin_site.admin_view( 
+                PlanSubscribed.as_view(model_admin=self)
+                ),
+                name="plan_subscribed",
+            ),
+            path("subscribe/<int:plan_id>/", self.admin_site.admin_view( 
+                PlanSubscribe.as_view(model_admin=self)
+                ),
+                name="plan_subscribe",
+            ),
+            path("canceled/", self.admin_site.admin_view( 
+                PlanCanceled.as_view(model_admin=self)
+                ),
+                name="plan_canceled",
+            ),
+        ]
+        return custom + urls  
+        
+    
 @admin.register(Company)
 class CompanyAdmin(BaseAdmin, SimpleHistoryAdmin):
     fieldsets = (
@@ -54,7 +84,6 @@ class CompanyAdmin(BaseAdmin, SimpleHistoryAdmin):
             'fields': (
                 'account',                  
                 ('name', 'cnpj'),
-                'billing_address',
                 'company_type',
             )
         }),
@@ -75,9 +104,9 @@ class AccountAdmin(BaseAdmin, SimpleHistoryAdmin):
         "email",
         "plan",
         "calculate_price",
-        "last_payment_amount_display",
-        "next_payment_amount_display",
-        "payment_difference_display",
+        "extra_agents",
+        "extra_inboxes",
+        "status",
         "get_company_link",
     )
 
@@ -141,6 +170,7 @@ class AccountAdmin(BaseAdmin, SimpleHistoryAdmin):
         (_("Chatwoot"), {
             "fields": (
                 "get_chatwoot_account",
+                'status',
             )
         }),
     )
@@ -177,9 +207,31 @@ class AccountAdmin(BaseAdmin, SimpleHistoryAdmin):
     def get_company_cnpj(self, obj):
         return obj.company.cnpj if hasattr(obj, 'company') else '-'
 
-    @admin.display(description='Endereço de Cobrança')
+    @admin.display(description=_("Endereço de Cobrança"))
     def get_billing_address(self, obj):
-        return obj.company.billing_address if hasattr(obj, 'company') else '-'
+        company = getattr(obj, "company", None)
+        addr = getattr(company, "billing_address", None) if company else None
+
+        app_label = Address._meta.app_label
+        model_name = Address._meta.model_name
+
+        try:
+            if addr:
+                url = reverse(f"admin:{app_label}_{model_name}_change", args=[addr.pk])
+                label = f"{addr.line1} {addr.number or ''}, {addr.city} - {addr.postal_code}"
+                return format_html(
+                    '<a class="text-blue-600 underline hover:no-underline" href="{}">{}</a>',
+                    url, label.strip()
+                )
+            else:
+                add_url = reverse(f"admin:{app_label}_{model_name}_add")
+                return format_html(
+                    '<a class="text-blue-600 underline hover:no-underline" href="{}">{}</a>',
+                    add_url, _("Adicionar endereço")
+                )
+        except NoReverseMatch:
+            # Caso o model não esteja registrado no admin
+            return _("(Endereço não registrado no admin)")
 
     @admin.display(description='Tipo de Empresa')
     def get_company_type(self, obj):
@@ -245,13 +297,42 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
     ordering = ('username',)
 
     def get_urls(self):
-        custom = self.admin_site.admin_view(
-            UserProfileView.as_view(model_admin=self)
-        )
-        return super().get_urls() + [
-          path("profile", custom, name="user_profile"),
-        ] 
-        
+        urls = super().get_urls()
+        custom = [
+            path("profile/", self.admin_site.admin_view( 
+                UserProfileView.as_view(model_admin=self)
+                ),
+                name="user_profile",
+            ),
+            path("capacity/", self.admin_site.admin_view( 
+                AccountCapacity.as_view(model_admin=self)
+                ),
+                name="account_capacity",
+            ),
+            path("payments/", self.admin_site.admin_view( 
+                PaymentMethod.as_view(model_admin=self)
+                ),
+                name="account_payments",
+            ),
+            path("invoices/", self.admin_site.admin_view( 
+                InvoiceList.as_view(model_admin=self)
+                ),
+                name="account_invoices",
+            ),  
+            path("agents/", self.admin_site.admin_view( 
+                AgentsList.as_view(model_admin=self)
+                ),
+                name="account_agents",
+            ), 
+            path("inboxes/", self.admin_site.admin_view( 
+                InboxesList.as_view(model_admin=self)
+                ),
+                name="account_inboxes",
+            ), 
+        ]
+        return custom + urls   
+    
+           
     @admin.display(description='Email da Conta')
     def get_account_email(self, obj):
         acct = getattr(obj, 'account', None)
@@ -283,5 +364,30 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
         comp = getattr(acct, 'company', None) if acct else None
         return comp.cnpj if comp else '-'
 
-
-
+@admin.register(Address)
+class AddressAdmin(BaseAdmin, admin.ModelAdmin):
+    fieldsets = (
+        (_("Identificação"), {
+            "fields": ("type", "is_default", "name"),
+        }),
+        (_("Endereço"), {
+            "fields": (("line1", "number"), "line2", "neighborhood"),
+        }),
+        (_("Localização"), {
+            "fields": (("city", "state"), ("postal_code", "country")),
+        }),
+        (_("Contato/Documento"), {
+            "fields": ("phone", "tax_id"),
+        }),
+        (_("Metadados"), {
+            "fields": ("created_at", "updated_at"),
+        }),
+    )
+    readonly_fields = ("created_at", "updated_at")
+    list_display = (
+        "type", "is_default", "name", "line1", "number",
+        "city", "state", "postal_code", "country", "updated_at",
+    )
+    list_filter = ("type", "is_default", "country")
+    search_fields = ("name", "line1", "postal_code", "city", "state")
+    ordering = ("-updated_at",)

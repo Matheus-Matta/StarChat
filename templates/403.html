@@ -1,0 +1,29 @@
+{% extends "base_erros.html" %}
+
+{% block title %}Parece que algum erro aconteceu{% endblock %}
+
+{% block content %}
+ <main class="min-h-screen flex items-center justify-center p-6">
+    <section class="w-full max-w-lg bg-white/80 backdrop-blur rounded-2xl shadow-xl p-8 text-center">
+      <div class="mx-auto mb-6 h-14 w-14 rounded-full bg-rose-50 flex items-center justify-center">
+        <!-- ícone -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-500 text-9xl" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+                d="M12 9v4m0 4h.01M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9Z" />
+        </svg>
+      </div>
+
+      <h1 class="text-2xl font-semibold">Opss, algo deu errado</h1>
+      <p class="mt-2 text-sm text-slate-600">
+        Parece que algo não saiu como esperado. Tente novamente mais tarde.
+      </p>
+
+      <div class="mt-8">
+        <a href="{% url 'admin:login' %}"
+           class="inline-flex items-center justify-center bg-gray-500 text-white text-sm font-semibold h-10 px-4 rounded-default rounded">
+          Voltar ao início
+        </a>
+      </div>
+    </section>
+  </main>
+{% endblock %}

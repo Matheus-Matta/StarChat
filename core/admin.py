@@ -100,8 +100,13 @@ class SiteConfigAdmin(BaseAdmin):
             ],
             "description": _("Conteúdo e imagens para a seção Sobre Nós do site"),
         }),
+        (_("Termos e politicas"), {
+            "fields": [
+                "terms", "policy",
+            ],
+            "description": _("Conteúdo e imagens para a seção Termos e Políticas do site"),
+        }),
     ]
-
 
 
 @admin.register(Screenshot)

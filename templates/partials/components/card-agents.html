@@ -1,0 +1,39 @@
+{% load i18n static %}
+
+{% with info=agents %}
+  <div class="grow relative">
+    <p class="leading-relaxed mb-0 text-sm">{% trans "Agentes" %}</p>
+    <div
+      class="flex items-center pt-2 font-semibold text-2xl text-font-important-light tracking-tight dark:text-font-important-dark"
+    >
+      <span class="material-symbols-outlined text-2xl text-base-500 mr-2">
+        headset_mic
+      </span>
+      {{ info.used }}
+    </div>
+    <div class="absolute right-0 top-0">
+      <a href="{% url 'admin:plan_subscribe' plan_id %}"
+        class="flex justify-center items-center inline-block leading-normal px-2 py-1 rounded-default text-[11px] uppercase whitespace-nowrap cursor-pointer border border-base-200 bg-white text-font-important-light dark:border-base-700 dark:bg-transparent dark:text-font-important-dark"
+      >
+        <div class="flex items-center gap-1">
+          {% trans "Adicionar limite" %}
+          <span class="material-symbols-outlined"> add </span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div
+    class="border-t border-base-200 flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800"
+  >
+    <span class="material-symbols-outlined mr-2"> diamond </span>
+    <strong
+      class="font-semibold mr-2 {% if info.free <= 0 %}dark:text-font-important-dark{% else %} text-primary-600 dark:text-primary-400 {% endif %}"
+    >
+      {{ info.free }}
+    </strong>
+    {% if info.free <= 1 %} {% trans "agente disponível de " %} {% else %} {%trans "Agentes Disponíveis de " %} {% endif %}
+    <strong class="font-semibold dark:text-font-important-dark ml-2">
+      {{ info.max }}
+    </strong>
+  </div>
+{% endwith %}

@@ -1,122 +1,150 @@
 {% extends 'auth/auth_base.html' %}
 {% load static i18n %}
+
+{% block extra_head %}
+  {# Tailwind CDN #}
+  <script src="https://cdn.tailwindcss.com"></script>
+  {# Material Symbols (Google) #}
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+
+  <style>
+    .material-symbols-outlined{font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24}
+    #fullLoader{position:fixed;inset:0;background:rgba(255,255,255,.85);display:none;align-items:center;justify-content:center;z-index:50}
+    .dark #fullLoader{background:rgba(0,0,0,.55)}
+  </style>
+{% endblock %}
+
 {% block content %}
+<div class="mx-auto flex items-center h-full w-full max-w-md">
+  <!-- Card -->
+  <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800 w-full max-w-4xl">
+    <!-- Logo -->
+    <div class="text-center mb-5">
+      <a href="/">
+        <img src="{% static 'assets/images/logos/logo.svg' %}" alt="Starchat" class="mx-auto h-12" />
+      </a>
+    </div>
 
-<div
-  style="max-width: 460px; min-width: 460px"
-  class="text-center p-4 shadow rounded bg-white mx-auto mt-5"
->
-  <!-- Logo -->
-  <a href="/">
-    <img
-      src="{% static 'assets/images/logos/logo.svg' %}"
-      alt="Starchat"
-      class="mb-4"
-    />
-  </a>
+    <h2 class="mb-1 text-center text-2xl font-semibold text-slate-900 dark:text-slate-100">
+      {% trans "Bem‑vindo!" %}
+    </h2>
+    <p class="mb-6 text-center text-sm text-slate-600 dark:text-slate-300">
+      {% trans "Faça login para continuar no Starchat" %}
+    </p>
 
-  <h2 class="mb-3 fs-2">{% trans "Bem-vindo!" %}</h2>
-  <p class="text-muted mb-4">{% trans "Faça login para continuar no Starchat" %}</p>
+    <form method="post" action="{% url 'admin:login' %}" novalidate
+          onsubmit="document.getElementById('fullLoader').style.display='flex';" class="space-y-4">
+      {% csrf_token %}
 
-  <form
-    method="post"
-    action="{% url 'admin:login' %}"
-    novalidate
-  >
-    {% csrf_token %}
+      {# non-field errors #}
+      {% if form.non_field_errors %}
+        <div class="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-200">
+          {{ form.non_field_errors|striptags }}
+        </div>
+      {% endif %}
 
-    {# non-field errors #}
-    {% if form.non_field_errors %}
-      <div class="alert alert-danger">
-        {{ form.non_field_errors|striptags }}
+      <!-- Email -->
+      <div>
+        <label for="id_username" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          {% trans "E‑mail" %}
+        </label>
+        <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 bg-white focus-within:ring-indigo-600 dark:bg-slate-900 dark:ring-slate-700">
+          <span class="flex items-center px-3 text-slate-400">
+            <span class="material-symbols-outlined">mail</span>
+          </span>
+          <input
+            type="text"
+            name="{{ form.username.html_name }}"
+            id="id_username"
+            class="w-full rounded-r-xl bg-transparent p-2 outline-none placeholder-slate-400 dark:placeholder-slate-500"
+            placeholder="{% trans 'Digite seu Email' %}"
+            value="{{ form.username.value|default_if_none:'' }}"
+            required
+          />
+        </div>
+        {% if form.username.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.username.errors.0 }}</p>
+        {% endif %}
       </div>
-    {% endif %}
 
-<!-- Usuário (antes era standalone) -->
-<div class="mb-2 text-start">
-  <label for="id_username" class="form-label">{% trans "Email" %}</label>
-  <div class="input-group">
-    <span class="input-group-text bg-white border-end-0">
-      <i class="fas fa-envelope"></i>
-    </span>
-    <input
-      type="text"
-      name="{{ form.username.html_name }}"
-      id="id_username"
-      class="form-control ps-2 h-48 {% if form.username.errors %}is-invalid{% endif %}"
-      placeholder="{% trans "Digite seu Email" %}"
-      value="{{ form.username.value|default_if_none:'' }}"
-      required
-    />
-  </div>
-  {% if form.username.errors %}
-    <div class="invalid-feedback d-block">
-      {{ form.username.errors.0 }}
+      <!-- Senha -->
+      <div>
+        <label for="id_password" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          {% trans "Senha" %}
+        </label>
+        <div class="flex items-stretch rounded-xl ring-1 ring-slate-300 bg-white dark:bg-slate-900 dark:ring-slate-700">
+          <span class="flex items-center px-3 text-slate-400">
+            <span class="material-symbols-outlined">lock</span>
+          </span>
+          <input
+            type="password"
+            name="{{ form.password.html_name }}"
+            id="id_password"
+            class="w-full bg-transparent p-2 outline-none placeholder-slate-400 dark:placeholder-slate-500"
+            placeholder="••••••••"
+            required
+          />
+          <button type="button" id="togglePassword"
+                  class="px-3 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+            <span class="material-symbols-outlined">visibility</span>
+          </button>
+        </div>
+        {% if form.password.errors %}
+          <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.password.errors.0 }}</p>
+        {% endif %}
+
+        <div class="mt-1 text-right">
+          <a href="{% url 'auth:password_reset' %}" class="text-sm text-indigo-600 hover:text-indigo-700">
+            {% trans "Esqueceu sua senha?" %}
+          </a>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+              class="mt-2 inline-flex w-full items-center justify-center gap-1 rounded-xl bg-indigo-600 px-4 py-2.5
+                     text-white shadow-sm transition hover:bg-indigo-700">
+        {% trans "Entrar" %}
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </form>
+
+    <div class="mt-4 text-center text-sm">
+      <span class="text-slate-600 dark:text-slate-400">{% trans "Ainda não tem conta?" %}</span>
+      <a href="{% url 'auth:register' %}" class="ml-1 text-indigo-600 hover:text-indigo-700">
+        {% trans "Cadastre-se agora" %}
+      </a>
     </div>
-  {% endif %}
-</div>
-
-<!-- Senha -->
-<div class="mb-2 text-start">
-  <label for="id_password" class="form-label">{% trans "Senha" %}</label>
-  <div class="input-group position-relative">
-    <span class="input-group-text bg-white border-end-0">
-      <i class="fas fa-lock"></i>
-    </span>
-    <input
-      type="password"
-      name="{{ form.password.html_name }}"
-      id="id_password"
-      class="form-control ps-2 h-48 {% if form.password.errors %}is-invalid{% endif %}"
-      placeholder="••••••••"
-      required
-    />
-    <span class="input-group-text bg-white border-start-0" style="cursor:pointer" id="togglePassword">
-      <i class="fas fa-eye"></i>
-    </span>
-  </div>
-  {% if form.password.errors %}
-    <div class="invalid-feedback d-block">
-      {{ form.password.errors.0 }}
+    <div class="mt-2 text-center">
+      <a class="text-sm text-slate-700 underline hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
+         href="{% url 'page:index' %}">
+         {% trans "Voltar" %}
+      </a>
     </div>
-  {% endif %}
-  <div class="form-text text-end">
-    <a href="{% url 'auth:password_reset' %}" class="read-more">{% trans "Esqueceu sua senha?" %}</a>
   </div>
 </div>
 
-    <!-- Submit -->
-    <button type="submit" class="theme-btn style-six w-100 py-2 mb-3">
-      {% trans "Entrar" %} <i class="fas fa-arrow-right"></i>
-    </button>
-  </form>
-
-  <p class="small mb-2">
-    {% trans "Ainda não tem conta?" %}
-    <a href="{% url 'auth:register' %}" class="read-more">{% trans "Cadastre-se agora" %}</a>
-  </p>
-  <a class="read-more" href="{% url 'page:index' %}">
-     {% trans "Voltar" %}
-  </a>
+<!-- Loader -->
+<div id="fullLoader">
+  <div class="rounded-xl bg-white px-4 py-3 text-slate-700 shadow dark:bg-slate-800 dark:text-slate-200">
+    {% trans "Carregando..." %}
+  </div>
 </div>
-
 {% endblock %}
 
 {% block extra_scripts %}
-  {# toggle eye script #}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  // Toggle de visibilidade da senha
+  document.addEventListener('DOMContentLoaded', function () {
     const pwd = document.getElementById('id_password');
-    const toggle = document.getElementById('togglePassword');
-    toggle.addEventListener('click', ()=> {
-      const isPwd = pwd.type === 'password';
-      pwd.type = isPwd ? 'text' : 'password';
-      toggle.querySelector('i')
-            .classList.toggle('fa-eye-slash', isPwd);
-      toggle.querySelector('i')
-            .classList.toggle('fa-eye', !isPwd);
-    });
+    const btn = document.getElementById('togglePassword');
+    if (pwd && btn) {
+      btn.addEventListener('click', () => {
+        const show = pwd.type === 'password';
+        pwd.type = show ? 'text' : 'password';
+        btn.querySelector('.material-symbols-outlined').textContent = show ? 'visibility_off' : 'visibility';
+      });
+    }
   });
 </script>
 {% endblock %}
-

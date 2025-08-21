@@ -1,0 +1,183 @@
+{% extends 'admin/base.html' %}
+{% load static i18n %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block title %}{% trans "Cancelar Assinatura" %} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+  {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto my-12" style="max-width:600px;min-width:600px">
+  <!-- Contêiner principal (sem borda) -->
+  <div class="p-6 bg-white dark:bg-base-900 rounded-lg shadow-sm">
+
+    <!-- topo: ícone + título + subtítulo -->
+    <div class="flex flex-col items-center text-center mb-6">
+      <div class="h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-red-600 dark:text-red-400 md-18">warning</span>
+      </div>
+      <h1 class="text-2xl font-semibold text-base-900 dark:text-base-100 mb-1">
+        {% trans "Cancelar Assinatura" %}
+      </h1>
+      <p class="text-base-600 dark:text-base-400">
+        {% trans "Tem certeza de que deseja cancelar sua assinatura?" %}
+      </p>
+    </div>
+
+    <!-- Avisos -->
+    <div class="bg-amber-100 dark:bg-base-800 border border-base-600 dark:border-amber-800 rounded-md p-5 mb-6">
+      <div class="flex items-center mb-3">
+        <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 mr-2">info</span>
+        <h2 class="text-base-900 dark:text-base-100 font-semibold">
+          {% trans "Importante - Leia antes de cancelar" %}
+        </h2>
+      </div>
+      <ul class="space-y-2 text-sm text-base-700 dark:text-base-300">
+        <li class="flex items-start">
+          <span class="mt-1 mr-2 h-2 w-2 rounded-full bg-base-300 dark:bg-base-600"></span>
+          {% trans "Você perderá acesso a todos os recursos premium imediatamente." %}
+        </li>
+        <li class="flex items-start">
+          <span class="mt-1 mr-2 h-2 w-2 rounded-full bg-base-300 dark:bg-base-600"></span>
+          {% trans "Seus dados e configurações serão mantidos por 30 dias." %}
+        </li>
+        <li class="flex items-start">
+          <span class="mt-1 mr-2 h-2 w-2 rounded-full bg-base-300 dark:bg-base-600"></span>
+          {% trans "Você pode reativar sua conta a qualquer momento." %}
+        </li>
+        <li class="flex items-start">
+          <span class="mt-1 mr-2 h-2 w-2 rounded-full bg-base-300 dark:bg-base-600"></span>
+          {% trans "Não haverá reembolso proporcional do período atual." %}
+        </li>
+      </ul>
+    </div>
+
+    {% with account=request.user.account %}
+    <!-- Detalhes da assinatura -->
+    <div class="bg-white dark:bg-base-900 border border-base-200 dark:border-base-700 rounded-md p-5 mb-6">
+      <h3 class="text-base-900 dark:text-base-100 font-semibold mb-4">
+        {% trans "Detalhes da sua assinatura atual" %}
+      </h3>
+      <dl class="grid grid-cols-2 gap-3 text-sm">
+        <dt class="text-base-600 dark:text-base-400">{% trans "Plano:" %}</dt>
+        <dd class="text-base-900 dark:text-base-100 font-semibold">
+          {{ account.plan.name }}
+        </dd>
+
+        <dt class="text-base-600 dark:text-base-400">{% trans "Valor mensal:" %}</dt>
+        <dd class="text-base-900 dark:text-base-100 font-semibold">
+          {{ account.calculate_price|floatformat:2 }}
+        </dd>
+
+        <dt class="text-base-600 dark:text-base-400">{% trans "Próxima cobrança:" %}</dt>
+        <dd class="text-base-900 dark:text-base-100 font-semibold">
+          {{ account.days_until_next_payment|default:"—" }}
+        </dd>
+      </dl>
+    </div>
+    {% endwith %}
+
+    <!-- Formulário -->
+    <form method="post" action="">
+      {% csrf_token %}
+      <input type="hidden" name="when" value="now">
+
+      <!-- Motivo (opcional) -->
+      <div class="mb-4">
+        <label for="cancel_reason" class="block text-sm font-semibold text-base-700 dark:text-base-300 mb-1">
+          {% trans "Motivo do cancelamento (opcional)" %}
+        </label>
+        <select id="cancel_reason" name="reason"
+                class="w-full rounded-md p-2 border border-base-300 dark:border-base-600
+                       bg-white dark:bg-base-800 text-base-900 dark:text-base-100
+                       outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600">
+          <option value="">{% trans "Selecione um motivo" %}</option>
+          <option value="price">{% trans "Preço/valor" %}</option>
+          <option value="missing-feature">{% trans "Faltam recursos que preciso" %}</option>
+          <option value="low-usage">{% trans "Uso pouco o produto" %}</option>
+          <option value="support">{% trans "Suporte/experiência" %}</option>
+          <option value="other">{% trans "Outro" %}</option>
+        </select>
+      </div>
+
+      <!-- Confirmação -->
+      <div class="flex items-center mb-6">
+        <input id="confirm_box" type="checkbox"
+               class="h-4 w-4 rounded border-base-300 dark:border-base-600
+                      text-primary-600 dark:text-primary-500 focus:outline-primary-600 dark:focus:outline-primary-500
+                      bg-white dark:bg-base-800">
+        <label for="confirm_box" class="ml-2 text-sm text-base-700 dark:text-base-300">
+          {% trans "Entendo as consequências do cancelamento da minha assinatura" %}
+        </label>
+      </div>
+
+      <!-- Ações -->
+      <div class="flex flex-col gap-3 items-center">
+        <button id="confirm_btn" type="submit" disabled
+                class="w-80 inline-flex justify-center items-center px-4 py-2.5 rounded-md
+                       bg-base-200 dark:bg-base-800 text-base-600 dark:text-base-300
+                       cursor-not-allowed transition">
+          {% trans "Confirmar Cancelamento" %}
+        </button>
+
+        <a href="{% url 'admin:plan_subscribed' %}"
+           class="w-80 flex justify-center items-center px-4 py-2.5 rounded-md
+                  border border-base-300 dark:border-base-600
+                  text-base-700 dark:text-base-300
+                  hover:bg-base-50 dark:hover:bg-base-800 transition">
+          <span class="material-symbols-outlined mr-1">arrow_back</span>
+          {% trans "Voltar para Assinatura" %}
+        </a>
+      </div>
+    </form>
+
+    <!-- CTA secundário -->
+    <div class="mt-8 border border-base-200 dark:border-base-700 rounded-md p-4 bg-base-50 dark:bg-base-800">
+      <div class="flex items-start gap-3">
+        <span class="material-symbols-outlined text-base-600 dark:text-base-300">lightbulb</span>
+        <div class="text-sm text-base-700 dark:text-base-300">
+          <p class="mb-2">{% trans "Que tal uma pausa?" %}</p>
+          <p class="text-base-600 dark:text-base-400">
+            {% trans "Se você está insatisfeito, podemos oferecer um desconto ou pausar sua assinatura por alguns meses." %}
+            <a href="" class="text-primary-600 dark:text-primary-500 hover:text-primary-700 dark:hover:text-primary-400 underline">
+              {% trans "Falar com suporte" %}
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    const box = document.getElementById('confirm_box');
+    const btn = document.getElementById('confirm_btn');
+
+    function enable() {
+      btn.disabled = false;
+      btn.className =
+        "w-80 inline-flex justify-center items-center px-4 py-2.5 rounded-md " +
+        "bg-red-600 text-white hover:bg-red-700 cursor-pointer transition";
+    }
+
+    function disable() {
+      btn.disabled = true;
+      btn.className =
+        "w-80 inline-flex justify-center items-center px-4 py-2.5 rounded-md " +
+        "bg-base-200 dark:bg-base-800 text-base-600 dark:text-base-300 cursor-not-allowed transition";
+    }
+
+    function toggle() { box.checked ? enable() : disable(); }
+    box.addEventListener('change', toggle);
+    disable();
+  })();
+</script>
+{% endblock %}

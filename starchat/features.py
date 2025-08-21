@@ -1,3 +1,5 @@
+from django.utils.translation import gettext as _
+
 CHATWOOT_FEATURES = {
     "features": {
         "agent_bots": True,
@@ -51,5 +53,41 @@ CHATWOOT_FEATURES = {
         "custom_roles": True,
         "disable_branding": True,
         "sla": True
+    },
+    'labels': {
+        "agent_bots":                    _("Bots de Agente"),
+        "agent_management":              _("Gerenciamento de Agentes"),
+        "auto_resolve_conversations":    _("Resolução Automática de Conversas"),
+        "automations":                   _("Automatizações"),
+        "crm":                           _("CRM"),
+        "crm_integration":               _("Integração com CRM"),
+        "campaigns":                     _("Campanhas"),
+        "canned_responses":              _("Respostas Prontas"),
+        "custom_attributes":             _("Atributos Personalizados"),
+        "custom_reply_domain":           _("Domínio de Resposta Customizado"),
+        "custom_reply_email":            _("E-mail de Resposta Customizado"),
+        "channel_email":                 _("E-mail como Canal"),
+        "email_continuity_on_api_channel": _("Continuidade de E-mail em Canal API"),
+        "channel_facebook":              _("Canal Facebook"),
+        "help_center":                   _("Central de Ajuda"),
+        "ip_lookup":                     _("Busca de IP"),
+        "inbound_emails":                _("E-mails Recebidos"),
+        "inbox_management":              _("Gerenciamento de Inboxes"),
+        "channel_instagram":             _("Canal Instagram"),
+        "integrations":                  _("Integrações"),
+        "labels":                        _("Etiquetas"),
+        "linear_integration":            _("Integração Linear"),
+        "macros":                        _("Macros"),
+        "notion_integration":            _("Integração Notion"),
+        "reports":                       _("Relatórios"),
+        "team_management":               _("Gerenciamento de Equipes"),
+        "voice_recorder":                _("Gravador de Voz"),
+        "channel_website":               _("Canal Website"),
+        "whatsapp_campaign":             _("Campanhas WhatsApp"),
+        "whatsapp_embedded_signup":      _("Cadastro Embedded WhatsApp"),
+        "audit_logs":                    _("Logs de Auditoria"),
+        "captain_integration":           _("Integração Captain"),
+        "custom_roles":                  _("Funções Customizadas"),
+        "sla":                           _("Acordo de Nível de Serviço"),
     }
 }

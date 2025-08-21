@@ -1,0 +1,132 @@
+{% extends 'admin/base.html' %}
+
+{% load static i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<main id="main-content" class="py-8">
+  {# Plano Atual #}
+  <section id="current-plan" class="p-4 mb-4 border border-base-200 rounded shadow-lg dark:bg-base-900 dark:border-base-800 bg-white">
+    <div class="flex justify-between items-start">
+      <div>
+        <h2 class="text-2xl font-semibold mb-1 dark:text-white">{% trans "Assinatura Atual" %}</h2>
+        <p class="text-base-400 mb-4">{% trans "Detalhes do seu plano atual e status da assinatura" %}</p>
+      </div>
+      <div class="bg-primary-50 dark:bg-base-700 px-3 py-1 rounded-full">
+        <span class="text-primary-700 dark:text-base-200">{% trans "Ativo" %}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mt-4 ">
+      <div class="border border-base-200 rounded shadow-sm dark:bg-base-900 dark:border-base-800 bg-white p-4">
+        <p class=" mb-1 flex items-center"><span class="material-symbols-outlined mr-2">credit_card</span> {% trans "Plano atual" %}</p>
+        <h3 class="text-xl dark:text-white">{{ current_plan.name|title }}</h3>
+      </div>
+      <div class="border border-base-200 rounded shadow-sm dark:bg-base-900 dark:border-base-800 bg-white p-4">
+        <p class=" mb-1 flex items-center"><span class="material-symbols-outlined mr-2">payments</span> {% trans "Valor mensal" %}</p>
+        <h3 class="text-xl text-base-900 dark:text-white">R$ {{ current_plan.monthly_price }}</h3>
+      </div>
+      <div class="border border-base-200 rounded shadow-sm dark:bg-base-900 dark:border-base-800 bg-white p-4">
+        <p class=" mb-1 flex items-center"><span class="material-symbols-outlined mr-2">payments</span> {% trans "Valor anual" %}</p>
+        <h3 class="text-xl text-base-900 dark:text-white">R$ {{ current_plan.yearly_price }}</h3>
+      </div>
+      <div class="border border-base-200 rounded shadow-sm dark:bg-base-900 dark:border-base-800 bg-white p-4">
+        <p class=" mb-1 flex items-center"><span class="material-symbols-outlined mr-2">headset_mic</span> {% trans "Limite de agentes" %}</p>
+        <h3 class="text-xl text-base-900 dark:text-white">{{ current_plan.included_agents }}</h3>
+      </div>
+       <div class="border border-base-200 rounded shadow-sm dark:bg-base-900 dark:border-base-800 bg-white p-4">
+        <p class=" mb-1 flex items-center"><span class="material-symbols-outlined mr-2">inbox</span> {% trans "Limite de Canais" %}</p>
+        <h3 class="text-xl text-base-900 dark:text-white">{{ current_plan.included_inboxes }}</h3>
+       </div>
+    </div>
+
+    <div class="mt-4 pt-4 border-t border-base-200 dark:border-base-800">
+      <div class="flex flex-wrap items-center gap-4">
+        <h4 class="font-semibold dark:text-base-100">{% trans "Recursos incluídos:" %}</h4>
+        <div class="flex flex-wrap gap-2">
+          {% for feature in features %}
+            <span class="bg-primary-50 dark:bg-base-800 text-primary-700 dark:text-base-400 px-3 py-1 rounded-full text-sm">{{ feature }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <div class="flex justify-start gap-4 mb-4">
+      {% if not request.user.account.plan.is_free %}
+      <a href="{% url 'admin:plan_subscribe' request.user.account.plan.id %}" class="flex justify-center px-4 py-2 rounded border border-base-200">
+          <span class="material-symbols-outlined mr-1">
+              edit_square
+          </span>
+          {% trans "Modificar Assinatura Atual" %}
+      </a>
+      {% endif %}
+      <a href="{% url 'admin:plan_canceled' %}" class="flex justify-center px-4 py-2 rounded border border-base-200">
+          <span class="material-symbols-outlined mr-1">
+              close
+          </span>
+          {% trans "Cancelar Assinatura" %}
+      </a>
+  </div>
+
+  {# Outros Planos #}
+  <section id="other-plans" class="p-4 mb-8 border border-base-200 rounded shadow-lg dark:bg-base-900 dark:border-base-800 bg-white">
+    <h2 class="font-semibold mb-4 dark:text-white">{% trans "Outros Planos Disponíveis" %}</h2>
+    <div class="rounded-lg shadow overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-base-100 dark:bg-base-800">
+          <tr>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200 rounded-l">{% trans "Nome do Plano" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200">{% trans "Descrição" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200">{% trans "Preço Mensal" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200">{% trans "Preço Anual" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200">{% trans "Agentes" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200">{% trans "Canais" %}</th>
+            <th class="p-4 py-2 text-left font-semibold text-base-600 dark:text-base-200 rounded-r"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-base-200">
+          {% for plan in other_plans %}
+          {% if plan.is_active and not plan.is_free %}
+          <tr>
+            <td class="p-4 py-2 text-left text-base-700 font-semibold border-b border-base-200 dark:border-base-700 dark:text-base-200">{{ plan.name|title }}</td>
+            <td class="p-4 py-2 text-left text-base-600 border-b border-base-200 dark:border-base-700 dark:text-base-300">{{ plan.description }}</td>
+            <td class="p-4 py-2 text-left text-base-700 font-semibold border-b border-base-200 dark:border-base-700 dark:text-base-200">R$ {{ plan.monthly_price }}</td>
+            <td class="p-4 py-2 text-left text-base-700 font-semibold border-b border-base-200 dark:border-base-700 dark:text-base-200 ">R$ {{ plan.yearly_price }}</td>
+            <td class="p-4 py-2 text-left text-base-700 font-semibold border-b border-base-200 dark:border-base-700 dark:text-base-200 ">
+              {{ plan.included_agents }}
+                {% if plan.extra_agent_price > 0  %}
+                + R$ {{ plan.extra_agent_price }} {% trans "Por extra" %}
+                {% endif %}
+            </td>
+            <td class="p-4 py-2 text-left text-base-700 font-semibold border-b border-base-200 dark:border-base-700 dark:text-base-200 ">
+              {{ plan.included_inboxes }} 
+                {% if plan.extra_inbox_price > 0  %} 
+                + R$ {{ plan.extra_inbox_price }} {% trans "Por extra" %}
+                {% endif %}
+            </td>
+
+            <td class="p-4 py-2 flex justify-end border-b border-base-200 dark:border-base-700">
+              <a href="{% url 'admin:plan_subscribe' plan.pk %}"
+                 class="flex items-center px-4 py-2 rounded-md border border-base-200 dark:border-base-400 dark:text-base-200">
+                 <span class="material-symbols-outlined mr-2">cached</span>
+                {% trans "Alterar para este plano" %}
+              </a>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

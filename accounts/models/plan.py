@@ -26,19 +26,51 @@ class Plan(models.Model):
         verbose_name=_("Requer Cobrança"),
         help_text=_("Desmarque para planos gratuitos, sem cobrança automática")
     )
-    
-    billing_price_id = models.CharField(
-        max_length=255, blank=True, null=True,
-        verbose_name=_("ID de Preço (Stripe/PSP)"),
-        help_text=_("Use no gateway para criar/iniciar assinaturas; vazio=pago manual")
+
+    stripe_product_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name=_("Stripe Product ID"),
     )
     
+    billing_monthly_price_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name=_("Stripe Monthly Price ID"),
+    )
+    
+    billing_yearly_price_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name=_("Stripe Yearly Price ID"),
+    )
+    
+    billing_extra_agent_price_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name=_("Stripe Extra Agent Price ID"),
+    )
+    
+    billing_extra_inbox_price_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name=_("Stripe Extra Inbox Price ID"),
+    )
+    
+    billing_extra_agent_price_id_yearly = models.CharField(
+        max_length=255, 
+        blank=True, null=True,
+        verbose_name=_("Stripe Extra Agent Price ID Yearly"),
+    )
+    
+    billing_extra_inbox_price_id_yearly = models.CharField(
+        max_length=255,
+        blank=True, null=True,
+        verbose_name=_("Stripe Extra Inbox Price ID Yearly"),
+    )
+
     # Agentes
     included_agents = models.PositiveIntegerField(
         default=0,
         verbose_name=_('Agentes Incluídos'),
         help_text=_('Quantidade de agentes inclusos no plano')
     )
+    
     extra_agent_price = models.DecimalField(
         max_digits=8, decimal_places=2,
         default=0,
@@ -52,6 +84,7 @@ class Plan(models.Model):
         verbose_name=_('Inboxes Incluídas'),
         help_text=_('Quantidade de inboxes inclusas no plano')
     )
+    
     extra_inbox_price = models.DecimalField(
         max_digits=8, decimal_places=2,
         default=0,
@@ -71,8 +104,6 @@ class Plan(models.Model):
         help_text=_('Valor da assinatura anual (geralmente com desconto)')
     )
     
-
-
     is_active = models.BooleanField(
         default=True,
         verbose_name=_('Ativo'),

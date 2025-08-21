@@ -20,17 +20,31 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+
+from accounts.views import StripeCustomerPortalView
+
 urlpatterns = [
+    path('stripe/', include("djstripe.urls", namespace="djstripe")),
+    
     path('app/', admin.site.urls),
-    path('', include('page.urls')),
+
+    # Primeiro trate as URLs específicas do Stripe
+
+    # Depois suas rotas de app principais
     path('auth/', include('authentic.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', include('core.urls')),
     
     path('i18n/', include('django.conf.urls.i18n')),
     path('rosetta/', include('rosetta.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path("stripe/", include("djstripe.urls", namespace="djstripe")),
+    
+    # Por fim, os catch-all
+    path('', include('page.urls')),
+    path('', include('core.urls')),
+    
+    
+    path("stripe/portal/", StripeCustomerPortalView.as_view(), name="stripe_customer_portal"),
+
 ]
 
 if settings.DEBUG:

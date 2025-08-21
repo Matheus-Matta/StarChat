@@ -75,7 +75,7 @@ class ChatwootClient:
         
         try:
             headers = self._build_headers(access_token) if access_token else self.headers
-            print("HEADERS",headers)
+            print(f"Starchat[API]: {method.upper()} {url}: Headers: {headers}, Payload: {payload}")
             response = requests.request(
                 method=method.upper(),
                 url=url,
@@ -114,10 +114,10 @@ class ChatwootClient:
     def create_account(
         self, 
         name: str, 
+        status: str = DEFAULT_STATUS,
         website_url: Optional[str] = None, 
         features: Optional[Dict[str, Any]] = None,
         locale: str = DEFAULT_LOCALE,
-        status: str = DEFAULT_STATUS
     ) -> Optional[int]:
         """
         Cria uma nova conta no Chatwoot.
@@ -157,6 +157,7 @@ class ChatwootClient:
         self, 
         account_id: int, 
         name: Optional[str] = None, 
+        status: Optional[str] = None,
         website_url: Optional[str] = None,
         limits: Optional[Dict[str, int]] = None, 
         features: Optional[Dict[str, Any]] = None
@@ -409,7 +410,8 @@ class ChatwootClient:
     def delete_agent(
         self,
         account_id: int,
-        agent_id: int
+        agent_id: int,
+        access_token: Optional[str] = None,
     ) -> bool:
         """
         Remove um agente da conta.
@@ -418,8 +420,9 @@ class ChatwootClient:
         if not account_id or not agent_id:
             return False
 
-        endpoint = f"/platform/api/v1/accounts/{account_id}/agents/{agent_id}"
-        resp = self._make_request("DELETE", endpoint)
+        endpoint = f"/api/v1/accounts/{account_id}/agents/{agent_id}"
+        
+        resp = self._make_request(method="DELETE", endpoint=endpoint, access_token=access_token)
         return bool(resp and resp.get("success", False))
     
     def list_inboxes(

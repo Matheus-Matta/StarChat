@@ -1,0 +1,546 @@
+
+{% extends 'admin/base.html' %}
+
+{% load static i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<form
+  method="post"
+  action=""
+  id="plan-change-form"
+  class="max-w-4xl mx-auto py-10 px-4"
+>
+  {% csrf_token %}
+
+  {# ----- SEÇÃO: PLANO ATUAL ----- #}
+  <div class="rounded-lg border border-base-200 dark:border-base-700 shadow-lg p-6 mb-8" id="current-plan-section">
+    <h2 class="text-xl font-semibold text-base-800 dark:text-base-200 mb-4">Seu Plano Atual</h2>
+    <div class="bg-gray-50 dark:bg-base-800 rounded-lg p-5">
+      <div class="flex flex-col md:flex-row justify-between">
+        <div>
+          <h3 class="text-base text-base-700 dark:text-base-200 font-medium mb-2">
+            Plano {{ current_plan.name|title }} ({{ request.user.account.payment_interval }})
+          </h3>
+          <p class="text-xl font-bold mb-1">
+            R$
+            {% if current_plan.interval == 'year' %}{{ current_plan.yearly_price }}{% else %}{{ current_plan.monthly_price }}{% endif %}
+            <span class="text-sm font-normal">
+              {% if request.user.account.payment_interval == 'anual' %}por ano{% else %}por mês{% endif %}
+            </span>
+          </p>
+          {{ request.user.account.days_until_next_payment }}
+        </div>
+        <div class="mt-4 md:mt-0">
+          <h4 class="text-sm font-medium mb-2 dark:text-base-500">Incluído no plano</h4>
+          <ul class="list-none space-y-2">
+            <li class="flex items-center text-primary-600 dark:text-base-100">
+              <span class="material-symbols-outlined mr-2">headset_mic</span>
+              <span class="text-sm font-semibold">
+                {{ current_plan.included_agents }} {% trans "Agentes" %}
+              </span>
+            </li>
+            <li class="flex items-center text-primary-600 dark:text-base-100">
+              <span class="material-symbols-outlined mr-2">inbox</span>
+              <span class="text-sm font-semibold">
+                {{ current_plan.included_inboxes }} {% trans "Canais" %}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ----- SEÇÃO: PERSONALIZAR PLANO ----- #}
+  <div
+    class="border border-base-200 dark:border-base-700 rounded-lg shadow-lg p-6 mb-8"
+    id="new-plan-section"
+    data-monthly="{{ next_plan.monthly_price|default:0 }}"
+    data-yearly="{{ next_plan.yearly_price|default:0 }}"
+    data-extra-agent="{{ next_plan.extra_agent_price|default:0 }}"
+    data-extra-inbox="{{ next_plan.extra_inbox_price|default:0 }}"
+  >
+    <h2 class="text-xl font-semibold text-base-800 dark:text-base-200 mb-4">Personalizar Plano</h2>
+    <input type="hidden" name="plan_id" value="{{ next_plan.id }}" />
+
+    {# Escolha de ciclo de cobrança #}
+    <div id="billing-choice" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <!-- Card Mensal -->
+      <label
+        id="card-month"
+        data-interval="month"
+        class="block cursor-pointer rounded-lg border border-base-400 p-5 shadow-sm hover:shadow transition ring-0 focus:outline-none"
+      >
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-base-500 dark:text-base-200">Mensal<span class="ml-1 text-xs">1x</span></p>
+          </div>
+          <input type="radio" name="interval" value="month" class="sr-only hidden"/>
+        </div>
+        <div class="mt-2">
+          <p class="text-2xl font-bold text-base-900 dark:text-base-100">
+            <span id="price-month">R$ {{ next_plan.monthly_price|default:0 }}</span>
+            <span class="ml-1 text-sm font-normal text-base-600 dark:text-base-300">/ mês</span>
+          </p>
+          <p class="mt-2 text-sm text-base-600 dark:text-base-300">
+            Próxima cobrança: <span id="next-month-date" class="font-medium"></span>
+          </p>
+        </div>
+      </label>
+
+      <!-- Card Anual -->
+      <label
+        id="card-year"
+        data-interval="year"
+        class="block cursor-pointer rounded-lg border border-base-400 p-5 shadow-sm hover:shadow transition ring-0 focus:outline-none"
+      >
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-base-500 dark:text-base-400">Anual<span class="ml-1 text-xs">12x</span></p>
+          </div>
+          <input type="radio" name="interval" value="year" class="sr-only hidden"/>
+        </div>
+        <div class="mt-2">
+          <p class="text-2xl font-bold text-base-900 dark:text-base-100">
+            <span id="price-year-monthly">R$ {{ next_plan.yearly_price|default:0 }}</span>
+            <span class="ml-1 text-sm font-normal text-base-600 dark:text-base-300">/ anual</span>
+          </p>
+          <p class="mt-2 text-sm text-base-600 dark:text-base-300">
+            Próxima cobrança: <span id="next-year-date" class="font-medium"></span>
+          </p>
+        </div>
+      </label>
+    </div>
+
+    {# Informações básicas do plano #}
+    <ul class="list-none space-y-2 mb-6">
+      <li class="flex items-center text-primary-600 dark:text-base-100">
+        <span class="material-symbols-outlined mr-2">headset_mic</span>
+        <span class="text-sm font-semibold">{{ next_plan.included_agents }} {% trans "Agentes já incluídos" %}</span>
+      </li>
+      <li class="flex items-center text-primary-600 dark:text-base-100">
+        <span class="material-symbols-outlined mr-2">inbox</span>
+        <span class="text-sm font-semibold">{{ next_plan.included_inboxes }} {% trans "Canais já incluídos" %}</span>
+      </li>
+    </ul>
+
+    {# Seção de personalização de extras em cards #}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Card para Agentes Extras -->
+      <div class="border border-base-300 dark:border-base-700 rounded-lg p-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-medium text-base-700 dark:text-base-300">Agentes Extras</h3>
+            <p class="text-xs text-base-500 dark:text-base-500">R$ {{ next_plan.extra_agent_price|default:0 }} por agente/mês</p>
+          </div>
+          <span class="material-symbols-outlined text-base-600 dark:text-base-400">person_add</span>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <button
+              type="button"
+              id="dec-agents"
+              class="w-8 h-8 flex items-center justify-center border border-base-300 dark:border-base-700 dark:bg-base-800 bg-base-50 text-base-600 cursor-pointer rounded-full"
+            >–</button>
+            <span class="mx-3 font-semibold text-xl text-base-700 dark:text-base-300" id="display-extra-agents">{{ request.user.account.extra_agents|default:0 }}</span>
+            <button
+              type="button"
+              id="inc-agents"
+              class="w-8 h-8 flex items-center justify-center border border-base-300 dark:border-base-700 dark:bg-base-800 bg-base-50 text-base-600 cursor-pointer rounded-full"
+            >+</button>
+          </div>
+          <p class="text-sm text-base-600 dark:text-base-400">
+            Total: R$ <span id="total-agents">0,00</span>
+          </p>
+        </div>
+        <input
+          id="extra_agents"
+          name="extra_agents"
+          type="hidden"
+          price="{{ next_plan.extra_agent_price|default:0 }}"
+          value="{{ request.user.account.extra_agents|default:0 }}"
+        />
+      </div>
+
+      <!-- Card para Inboxes Extras -->
+      <div class="border border-base-300 dark:border-base-700 rounded-lg p-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-medium text-base-700 dark:text-base-300">Inboxes Extras</h3>
+            <p class="text-xs text-base-500 dark:text-base-500">R$ {{ next_plan.extra_inbox_price|default:0 }} por inbox/mês</p>
+          </div>
+          <span class="material-symbols-outlined text-base-600 dark:text-base-400">inbox</span>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <button
+              type="button"
+              id="dec-inboxes"
+              class="w-8 h-8 flex items-center justify-center border border-base-300 dark:border-base-700 dark:bg-base-800 bg-base-50 text-base-600 cursor-pointer rounded-full"
+            >–</button>
+            <span class="mx-3 font-semibold text-xl text-base-700 dark:text-base-300" id="display-extra-inboxes">{{ request.user.account.extra_inboxes|default:0 }}</span>
+            <button
+              type="button"
+              id="inc-inboxes"
+              class="w-8 h-8 flex items-center justify-center border border-base-300 dark:border-base-700 dark:bg-base-800 bg-base-50 text-base-600 cursor-pointer rounded-full"
+            >+</button>
+          </div>
+          <p class="text-sm text-base-600 dark:text-base-400">
+            Total: R$ <span id="total-inboxes">0,00</span>
+          </p>
+        </div>
+        <input
+          id="extra_inboxes"
+          name="extra_inboxes"
+          type="hidden"
+          price="{{ next_plan.extra_inbox_price|default:0 }}"
+          value="{{ request.user.account.extra_inboxes|default:0 }}"
+        />
+      </div>
+    </div>
+  </div>
+
+  {# ----- SEÇÃO: FORMA DE PAGAMENTO ----- #}
+  <div style="display: none;" class="border border-base-200 dark:border-base-700 rounded-lg shadow-lg p-6 mb-8" id="payment-section">
+    <h2 class="text-xl font-semibold text-base-800 dark:text-base-200 mb-4">Forma de pagamento</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+      <label class="flex flex-col items-center gap-1 cursor-pointer border rounded-lg px-4 py-4 hover:shadow">
+        <input type="radio" name="pay_mode" value="card" class="hidden peer sr-only" checked />
+        <span class="material-symbols-outlined text-2xl dark:text-white">credit_card</span>
+        <span class="text-sm font-medium mt-1 dark:text-white">Cartão</span>
+      </label>
+      <label {% if not supports_pix %}style="pointer-events: none; opacity: 0.5"{% endif %} class="flex flex-col items-center gap-1 cursor-pointer border rounded-lg px-4 py-4 hover:shadow" {% if supports_pix %} {% else %} aria-disabled="true" {% endif %}>
+        <input type="radio" name="pay_mode" value="pix" class="hidden peer sr-only" {% if not supports_pix %}disabled{% endif %}>
+        <span class="material-symbols-outlined text-2xl dark:text-white">qr_code</span>
+        <span class="text-sm font-medium mt-1 dark:text-white" >PIX{% if not supports_pix %} Indisponível{% endif %}</span>
+      </label>
+      <label{% if not supports_boleto %}style="pointer-events: none; opacity: 0.5"{% endif %} class="flex flex-col items-center gap-1 cursor-pointer border rounded-lg px-4 py-4 hover:shadow" {% if not supports_boleto %}aria-disabled="true"{% endif %}>
+        <input type="radio" name="pay_mode" value="boleto" class="hidden peer sr-only" {% if not supports_boleto %}disabled{% endif %}/>
+        <span class="material-symbols-outlined text-2xl dark:text-white">receipt_long</span>
+        <span class="text-sm font-medium mt-1 dark:text-white">Boleto{% if not supports_boleto %} Indisponível{% endif %}</span>
+      </label>
+    </div>
+
+    {# Lista de cartões (aparece só quando "Cartão" estiver selecionado) #}
+    <div style="display: none;" id="card-list" class="mt-4">
+      {% if saved_cards %}
+        <h3 class="text-sm font-medium mb-2 text-base-700 dark:text-base-300">Selecione um cartão</h3>
+        <ul class="space-y-2">
+          {% for pm in saved_cards %}
+            <li>
+              <label class="flex items-center justify-between gap-3 border dark:border-base-700 rounded-lg px-4 py-3 hover:shadow cursor-pointer">
+                <span class="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="pm_choice"
+                    value="{{ pm.id }}"
+                    {% if pm.is_default %}checked{% endif %}
+                  />
+                  <span class="text-sm">
+                    <span class="font-medium">{{ pm.brand|upper }}</span>
+                    •••• {{ pm.last4 }}
+                    <span class="text-xs text-base-500">exp {{ pm.exp_month }}/{{ pm.exp_year }}</span>
+                  </span>
+                </span>
+                {% if pm.is_default %}
+                  <span class="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded dark:bg-base-800 dark:text-base-200">Padrão</span>
+                {% endif %}
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'admin:account_payments' %}" class="block text-sm text-primary-600 hover:underline mt-2 dark:text-primary-500">+ Adicionar novo cartão</a>
+      {% else %}
+        <div class="text-sm text-base-600">
+          Nenhum cartão salvo. Você poderá informar um cartão no próximo passo seguro do Stripe.
+        </div>
+        <a href="#" class="block text-sm text-primary-600 hover:underline mt-">+ Adicionar novo cartão</a>
+      {% endif %}
+    </div>
+    {# campo hidden para enviar o Payment Method selecionado #}
+    <input type="hidden" name="pm_id" id="pm_id" value="{{ default_pm_id|default:'' }}" />
+  </div>
+
+  {# ----- RESUMO DO PAGAMENTO ----- #}
+  <div class="border border-base-200 dark:border-base-700 rounded-lg shadow-lg p-6 mb-8" id="summary-section">
+    <h2 class="text-base-800 font-semibold text-xl mb-4 dark:text-base-100">Resumo do Pagamento</h2>
+    <div class="border border-base-200 dark:border-base-700 p-4 mb-8 text-sm bg-gray-50 dark:bg-base-800 rounded-lg">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-base-700 dark:text-base-200">{{ next_plan.name }}</span>
+        <span class="text-base-800 dark:text-base-300 font-medium">R$ <span id="sum-base">0,00</span></span>
+      </div>
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-base-700 dark:text-base-200">
+          Agentes extras (<span id="qty-agents-summary">0x</span>)
+        </span>
+        <span class="text-base-800 font-medium dark:text-base-300">R$ <span id="sum-agents">0,00</span></span>
+      </div>
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-base-700 dark:text-base-200">
+          Inboxes extras (<span id="qty-inboxes-summary">0x</span>)
+        </span>
+        <span class="text-base-800 font-medium dark:text-base-300">R$ <span id="sum-inboxes">0,00</span></span>
+      </div>
+      <div class="flex justify-between items-center pt-2 border-t border-base-300 text-base">
+        <span class="text-base-800 font-semibold dark:text-base-200">Total</span>
+        <span class="text-primary-600 font-bold text-xl dark:text-base-100">R$ <span id="sum-total">0,00</span></span>
+      </div>
+    </div>
+    {% if has_active_subscription %}
+        <div class="bg-amber-100 dark:bg-base-500 rounded-md p-4 mb-6 text-sm">
+          <div class="flex">
+            <div>
+              <h4 class="flex items-center font-medium text-base-800 dark:text-base-100 mb-1">
+                <span class="material-symbols-outlined mr-1 text-yellow-300">info</span>
+                Alteração de assinatura ativa
+              </h4>
+              <p class="text-base-600 dark:text-base-300">
+                Sua alteração entra em vigor imediatamente e a cobrança é feita automaticamente no
+                <strong>cartão padrão da assinatura</strong> (Stripe).
+                <br>• <strong>Upgrades</strong>: cobramos apenas o adicional proporcional neste ciclo.
+                <br>• <strong>Downgrades</strong>: geramos crédito proporcional para abater na próxima fatura.
+                <br>A <strong>data de renovação</strong> do seu ciclo permanece a mesma.
+              </p>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="bg-amber-100 dark:bg-base-500 rounded-md p-4 mb-6 text-sm">
+          <div class="flex">
+            <div>
+              <h4 class="flex items-center font-medium text-base-800 dark:text-base-100 mb-1">
+                <span class="material-symbols-outlined mr-1 text-yellow-300">info</span>
+                Nova assinatura
+              </h4>
+              <p class="text-base-600 dark:text-base-300">
+                Você será redirecionado ao Checkout seguro da Stripe para informar/confirmar um cartão.
+                A <strong>primeira cobrança</strong> é feita imediatamente e a assinatura se
+                <strong>renova automaticamente</strong> no ciclo escolhido (mensal/anual).
+                Você pode alterar ou cancelar pelo Portal do Cliente a qualquer momento.
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-xs text-base-500 mb-4 md:mb-0 md:mr-4">
+        Ao assinar, você concorda com os
+        <a href="{% url 'page:terms' %}"  target="_blank" class="text-primary-600 hover:underline dark:text-primary-500">Termos de Serviço,</a>
+        <a href="{% url 'page:policy' %}" target="_blank" class="text-primary-600 hover:underline dark:text-primary-500">Política de Privacidade</a>.
+      </p>
+      <div class="flex gap-3">
+        <a
+          href="{{ cancel_url|default:'/' }}"
+          class="px-5 py-2.5 border border-base-300 text-base-700 font-medium rounded-md dark:border-base-600 dark:text-base-600"
+        >
+          Cancelar
+        </a>
+        <button
+          type="submit"
+          id="confirm-btn"
+          class="px-5 py-2.5 bg-primary-600 text-base-100 font-medium rounded-md hover:bg-primary-700 cursor-pointer"
+        >
+          Confirmar Pagamento
+        </button>
+      </div>
+    </div>
+
+    {# notas de segurança e criptografia #}
+    <div class="mt-4 flex items-center justify-center text-xs text-base-500">
+      <span class="material-symbols-outlined mr-1">lock</span>
+      Seguro e criptografado via Stripe
+    </div>
+  </div>
+</form>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const section = $("new-plan-section");
+  if (!section) return;
+
+  // --- Helpers ---
+  const fmtBR = (n) =>
+    new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+
+  const parseBR = (v) => {
+    if (typeof v === "number") return v;
+    v = (v || "").toString().trim();
+    return Number(v.replace(/\./g, "").replace(",", ".")) || 0;
+  };
+
+  const addMonths = (date, months) => {
+    const d = new Date(date.getTime());
+    const day = d.getDate();
+    d.setMonth(d.getMonth() + months);
+    if (d.getDate() < day) d.setDate(0);
+    return d;
+  };
+  const formatDateBR = (d) => d.toLocaleDateString("pt-BR");
+
+  // --- Valores vindos do dataset ---
+  const monthlyBase = parseBR(section.dataset.monthly) || 0;
+  const yearlyTotal = parseBR(section.dataset.yearly) || 0;
+  const agentUnit = parseBR(section.dataset.extraAgent) || 0;
+  const inboxUnit = parseBR(section.dataset.extraInbox) || 0;
+
+  // --- Elementos ---
+  const radios = Array.from(document.querySelectorAll('input[name="interval"]'));
+  const cardMonth = $("card-month");
+  const cardYear = $("card-year");
+  const inputAgents = $("extra_agents");
+  const inputInboxes = $("extra_inboxes");
+  const sumBaseEl = $("sum-base");
+  const sumAgentsEl = $("sum-agents");
+  const sumInboxesEl = $("sum-inboxes");
+  const sumTotalEl = $("sum-total");
+  const priceMonthEl = $("price-month");
+  const priceYearEl = $("price-year-monthly");
+
+  // Novos elementos para mostrar quantidades e totais individuais
+  const displayExtraAgents = $("display-extra-agents");
+  const displayExtraInboxes = $("display-extra-inboxes");
+  const totalAgentsEl = $("total-agents");
+  const totalInboxesEl = $("total-inboxes");
+  const qtyAgentsSummary = $("qty-agents-summary");
+  const qtyInboxesSummary = $("qty-inboxes-summary");
+
+  // Próximas datas
+  const now = new Date();
+  const nextMonth = addMonths(now, 1);
+  const nextYear = addMonths(now, 12);
+  const nextMonthDateEl = $("next-month-date");
+  const nextYearDateEl = $("next-year-date");
+  if (nextMonthDateEl) nextMonthDateEl.textContent = formatDateBR(nextMonth);
+  if (nextYearDateEl) nextYearDateEl.textContent = formatDateBR(nextYear);
+
+  // Preenche preços dos cards (formatação)
+  if (priceMonthEl) priceMonthEl.textContent = "R$ " + fmtBR(monthlyBase);
+  if (priceYearEl) priceYearEl.textContent = "R$ " + fmtBR(yearlyTotal);
+
+  // --- UI: seleção de intervalo via cards + radios ---
+  const activeClasses = ["border-primary-600", "bg-primary-50", "text-primary-600", 'dark:bg-base-500', 'dark:border-base-300'];
+  const clearActive = () => {
+    [cardMonth, cardYear].forEach((el) => el && el.classList.remove(...activeClasses));
+  };
+  const setActive = (interval) => {
+    const r = radios.find((x) => x.value === interval);
+    if (r) r.checked = true;
+    clearActive();
+    (interval === "month" ? cardMonth : cardYear)?.classList.add(...activeClasses);
+    compute();
+  };
+
+  // --- Cálculo principal ---
+  function compute() {
+    const interval = radios.find((r) => r.checked)?.value || "month";
+    const minAgents = parseInt(inputAgents?.min || "0", 10);
+    const minInboxes = parseInt(inputInboxes?.min || "0", 10);
+    let qtyAgents = Math.max(parseInt(inputAgents?.value || "0", 10), minAgents);
+    let qtyInboxes = Math.max(parseInt(inputInboxes?.value || "0", 10), minInboxes);
+    if (inputAgents) inputAgents.value = qtyAgents;
+    if (inputInboxes) inputInboxes.value = qtyInboxes;
+    const base = interval === "month" ? monthlyBase : yearlyTotal;
+    const factor = interval === "month" ? 1 : 12;
+    const agentsTotal = qtyAgents * agentUnit * factor;
+    const inboxesTotal = qtyInboxes * inboxUnit * factor;
+    const total = base + agentsTotal + inboxesTotal;
+    if (sumBaseEl) sumBaseEl.textContent = fmtBR(base);
+    if (sumAgentsEl) sumAgentsEl.textContent = fmtBR(agentsTotal);
+    if (sumInboxesEl) sumInboxesEl.textContent = fmtBR(inboxesTotal);
+    if (sumTotalEl) sumTotalEl.textContent = fmtBR(total);
+
+    // Atualiza quantidades e totais individuais nos cards
+    if (displayExtraAgents) displayExtraAgents.textContent = qtyAgents;
+    if (displayExtraInboxes) displayExtraInboxes.textContent = qtyInboxes;
+    if (totalAgentsEl) totalAgentsEl.textContent = fmtBR(agentsTotal);
+    if (totalInboxesEl) totalInboxesEl.textContent = fmtBR(inboxesTotal);
+    // Atualiza quantidade no resumo
+    if (qtyAgentsSummary) qtyAgentsSummary.textContent = qtyAgents + "x";
+    if (qtyInboxesSummary) qtyInboxesSummary.textContent = qtyInboxes + "x";
+  }
+
+  // --- Handlers dos cards ---
+  cardMonth?.addEventListener("click", () => setActive("month"));
+  cardYear?.addEventListener("click", () => setActive("year"));
+  radios.forEach((r) => r.addEventListener("change", (e) => setActive(e.target.value)));
+
+  // --- Botões +/- e inputs numéricos ---
+  const bindStepper = (decId, incId, inputEl) => {
+    const dec = $(decId);
+    const inc = $(incId);
+    dec?.addEventListener("click", () => {
+      const min = parseInt(inputEl.min || "0", 10);
+      const val = Math.max(min, parseInt(inputEl.value || "0", 10) - 1);
+      inputEl.value = val;
+      compute();
+    });
+    inc?.addEventListener("click", () => {
+      inputEl.value = parseInt(inputEl.value || "0", 10) + 1;
+      compute();
+    });
+    inputEl?.addEventListener("input", compute);
+  };
+
+  bindStepper("dec-agents", "inc-agents", inputAgents);
+  bindStepper("dec-inboxes", "inc-inboxes", inputInboxes);
+
+  // --- Forma de pagamento & cartões ---
+  const payRadios = Array.from(document.querySelectorAll('input[name="pay_mode"]'));
+  const cardList = document.getElementById("card-list");
+  const pmHidden = document.getElementById("pm_id");
+  function setPayModeUI(mode) {
+    if (!cardList) return;
+    if (mode === "card") {
+      cardList.style.display = "";
+      // Se nenhum PM está selecionado, seleciona o primeiro como padrão
+      if (pmHidden && !pmHidden.value) {
+        const first = document.querySelector('input[name="pm_choice"]');
+        if (first) {
+          first.checked = true;
+          pmHidden.value = first.value;
+        }
+      }
+    } else {
+      cardList.style.display = "none";
+      if (pmHidden) pmHidden.value = "";
+    }
+  }
+  // classes para destacar o método de pagamento selecionado
+  const activePayClasses = ["border-primary-600", "bg-primary-50", "text-primary-600", 'dark:bg-base-500', 'dark:border-base-300'];
+  function updatePayModeHighlight(value) {
+    payRadios.forEach((input) => {
+      input.parentElement.classList.remove(...activePayClasses);
+    });
+    const selected = payRadios.find((x) => x.value === value);
+    if (selected) {
+      selected.parentElement.classList.add(...activePayClasses);
+    }
+  }
+  payRadios.forEach((r) => {
+    r.addEventListener("change", (e) => {
+      updatePayModeHighlight(e.target.value);
+      setPayModeUI(e.target.value);
+    });
+  });
+  document.querySelectorAll('input[name="pm_choice"]').forEach((r) => {
+    r.addEventListener("change", (e) => {
+      if (pmHidden) pmHidden.value = e.target.value;
+    });
+  });
+  // Estado inicial
+  const initialInterval = radios.find((r) => r.checked)?.value || "{% if request.user.account.payment_interval == 'Mensal' %}month{% else %}year{% endif %}";
+  setActive(initialInterval);
+  const initialPayMode = (payRadios.find((r) => r.checked) || {}).value || "card";
+  updatePayModeHighlight(initialPayMode);
+  setPayModeUI(initialPayMode);
+})();
+</script>
+{% endblock %}

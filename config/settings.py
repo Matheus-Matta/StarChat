@@ -124,6 +124,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {'timeout': 60},
     }
 }
 
@@ -261,49 +262,30 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-STRIPE_LIVE_SECRET_KEY    = os.getenv("STRIPE_LIVE_SECRET_KEY", "")
-STRIPE_TEST_SECRET_KEY    = os.getenv("STRIPE_TEST_SECRET_KEY", "")
-STRIPE_LIVE_MODE          = os.getenv("STRIPE_LIVE_MODE", "False") == "True"
-DJSTRIPE_WEBHOOK_SECRET   = os.getenv("DJSTRIPE_WEBHOOK_SECRET", "")
+STRIPE_LIVE_SECRET_KEY    = os.getenv("STRIPE_LIVE_SECRET_KEY")
+STRIPE_TEST_SECRET_KEY    = os.getenv("STRIPE_TEST_SECRET_KEY")
+STRIPE_TEST_PUBLISHABLE_KEY = os.getenv("STRIPE_TEST_PUBLISHABLE_KEY")
+STRIPE_LIVE_PUBLISHABLE_KEY = os.getenv("STRIPE_LIVE_PUBLISHABLE_KEY")
+STRIPE_LIVE_MODE          = os.getenv("STRIPE_LIVE_MODE") == "True"
+DJSTRIPE_WEBHOOK_SECRET   = os.getenv("DJSTRIPE_WEBHOOK_SECRET")
 DJSTRIPE_USE_NATIVE_JSONFIELD = True
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
+# Chaves finais usadas pelo projeto
+if STRIPE_LIVE_MODE:
+    STRIPE_SECRET_KEY       = STRIPE_LIVE_SECRET_KEY
+    STRIPE_PUBLISHABLE_KEY  = STRIPE_LIVE_PUBLISHABLE_KEY
+else:
+    STRIPE_SECRET_KEY       = STRIPE_TEST_SECRET_KEY
+    STRIPE_PUBLISHABLE_KEY  = STRIPE_TEST_PUBLISHABLE_KEY
+
+# Validação básica (evita AttributeError e falhas silenciosas)
+if not STRIPE_SECRET_KEY or not STRIPE_PUBLISHABLE_KEY:
+    raise ImproperlyConfigured(
+        "Faltam variáveis do Stripe. "
+        "Defina TEST/LOCAL: STRIPE_TEST_SECRET_KEY, STRIPE_TEST_PUBLISHABLE_KEY "
+        "ou LIVE: STRIPE_LIVE_SECRET_KEY, STRIPE_LIVE_PUBLISHABLE_KEY, e STRIPE_LIVE_MODE=True."
+    )
 
 CHATWOOT_URL = os.getenv("CHATWOOT_URL", "")
 CHATWOOT_API_TOKEN = os.getenv("CHATWOOT_API_TOKEN", "")
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-
-    'formatters': {
-        'simple': {
-            'format': '[{levelname}] {name}: {message}',
-            'style': '{',
-        },
-    },
-
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
-        'django.server': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}

@@ -1,8 +1,8 @@
 import logging
 from typing import Dict, Any, Optional, Callable, List, Union
 from functools import wraps
+from django.apps import apps
 from .client import ChatwootClient
-from .models import ChatwootAccount
 from .features import CHATWOOT_FEATURES
 from .decorator import handle_chatwoot_exceptions
 from .exceptions import ChatwootNotFoundError
@@ -20,6 +20,7 @@ class ChatwootAccountService:
     
     def __init__(self):
         self.client = ChatwootClient()
+        self.ChatwootAccount = apps.get_model("starchat", "ChatwootAccount")
         
     def _get_account_limits(self, account: Account) -> Dict[str, int]:
         """
@@ -31,9 +32,12 @@ class ChatwootAccountService:
         Returns:
             Dictionary with agents and inboxes limits.
         """
+        agents = account.extra_agents + account.plan.included_agents
+        inboxes = account.extra_inboxes + account.plan.included_inboxes
+        
         return {
-            "agents": account.extra_agents + 1,
-            "inboxes": account.extra_inboxes + 1
+            "agents": agents if agents > 0 else 1,
+            "inboxes": inboxes if inboxes > 0 else 1,
         }
     
     @staticmethod
@@ -77,12 +81,13 @@ class ChatwootAccountService:
             return chatwoot_id
         except Exception as e:
             logger.error(f"Error creating Chatwoot account for {account}: {e}")
-            raise
+            return False
     
     def _create_account(self, account: Account) -> int:
         """Creates the Chatwoot account and validates the response."""
         chatwoot_id = self.client.create_account(
             name=str(account.email),
+            status=account.status,
             website_url=getattr(account, "website_url", None),
             features=self.get_enabled_features()
         )
@@ -96,7 +101,7 @@ class ChatwootAccountService:
             logger.error(f"Error creating Chatwoot account for {account}: {error_msg}")
             return False
         
-        ChatwootAccount.objects.create(account=account, chatwoot_id=chatwoot_id)
+        self.ChatwootAccount.objects.create(account=account, chatwoot_id=chatwoot_id)
         logger.debug(f"Created Chatwoot account {chatwoot_id} for {account}")
         return chatwoot_id
     
@@ -120,6 +125,7 @@ class ChatwootAccountService:
             self.client.update_account(
                 account_id=chatwoot_account.chatwoot_id,
                 name=str(account.email),
+                status=account.status,
                 website_url=getattr(account, "website_url", None),
                 limits=self._get_account_limits(account),
                 features=self.get_enabled_features(),
@@ -129,7 +135,7 @@ class ChatwootAccountService:
             )
         except Exception as e:
             logger.error(f"Error updating Chatwoot account for {account}: {e}")
-            raise
+            return
         
     def delete_chatwoot_account(self, account: Account) -> None:
         """
@@ -148,7 +154,7 @@ class ChatwootAccountService:
             
         except Exception as e:
             logger.error(f"Error deleting Chatwoot account for {account}: {e}")
-            raise
+            return False
     
     @handle_chatwoot_exceptions("create_chatwoot_user")
     def _create_chatwoot_user(self, user: User) -> Dict[str, Any]:
@@ -161,7 +167,7 @@ class ChatwootAccountService:
         chatwoot_id = user.account.chatwoot_account.chatwoot_id
         user_data = self.client.create_user(
             account_id=chatwoot_id,
-            name=user.get_full_name() or user.email,
+            name=user.first_name or user.email,
             email=user.email,
             password=raw_pwd
         )
@@ -297,8 +303,11 @@ class ChatwootAccountService:
         return updated
 
     @handle_chatwoot_exceptions("remove_agent", allow_not_found=True)
-    def remove_agent(self, account_id: int, agent_id: int) -> bool:
-        success = self.client.delete_agent(account_id, agent_id)
+    def remove_agent(self, account_id: int, agent_id: int, user_id: int) -> bool:
+        user = self.client.get_user(user_id)
+        if not user or 'access_token' not in user:
+            return []
+        success = self.client.delete_agent(account_id, agent_id, access_token=user.get("access_token"))
         if not success:
             logger.warning(f"Não foi possível remover agente {agent_id}")
             return False
@@ -373,12 +382,17 @@ class ChatwootAccountService:
         self,
         account_id: int,
         inbox_id: int,
-        access_token: Optional[str] = None
+        user_id: int,
     ) -> bool:
         """
         Deletes an inbox.
         DELETE /api/v1/accounts/{account_id}/inboxes/{inbox_id}
         """
+        user = self.client.get_user(user_id)
+        if not user or 'access_token' not in user:
+            return False
+        access_token = user.get("access_token")
+        
         success = self.client.delete_inbox(
             account_id=account_id,
             inbox_id=inbox_id,

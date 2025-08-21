@@ -1,13 +1,40 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-import re
-from accounts.models import Plan, Account, Company
-from django.utils import timezone
+from django.db.models import F, Value
+from django.db.models.functions import Replace
 from django.utils.translation import gettext_lazy as _
-
 from django.contrib.auth import get_user_model
+import re
+
+from accounts.models import Plan, Account, Company
+
 User = get_user_model()
+
+
+# --- helpers CNPJ ---
+def _only_digits(s: str) -> str:
+    return re.sub(r"\D", "", s or "")
+
+def _cnpj_check_digits(cnpj_digits: str) -> bool:
+    if len(cnpj_digits) != 14:
+        return False
+    if cnpj_digits == cnpj_digits[0] * 14:
+        return False
+
+    nums = [int(x) for x in cnpj_digits]
+
+    # DV1
+    w1 = [5,4,3,2,9,8,7,6,5,4,3,2]
+    r = sum(n*w for n, w in zip(nums[:12], w1)) % 11
+    dv1 = 0 if r < 2 else 11 - r
+
+    # DV2
+    w2 = [6,5,4,3,2,9,8,7,6,5,4,3,2]
+    r = sum(n*w for n, w in zip(nums[:13], w2)) % 11
+    dv2 = 0 if r < 2 else 11 - r
+
+    return nums[12] == dv1 and nums[13] == dv2
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'username'}))
@@ -57,10 +84,29 @@ class RegisterForm(forms.Form):
         return e
     
     def clean_cnpj(self):
-        c = self.cleaned_data["cnpj"]
-        if Company.objects.filter(cnpj=c).exists():
-            raise ValidationError(_('Este Cnpj já está em uso.'))
-        return c
+        raw = self.cleaned_data.get("cnpj", "")
+        digits = _only_digits(raw)
+
+        if not _cnpj_check_digits(digits):
+            raise ValidationError(_("CNPJ inválido."))
+
+        # checagem de duplicidade ignorando pontuação
+        # (funciona mesmo se no banco houver CNPJ com máscara)
+        exists = Company.objects.annotate(
+            cnpj_digits=Replace(
+                Replace(
+                    Replace(F("cnpj"), Value("."), Value("")),
+                    Value("-"), Value("")
+                ),
+                Value("/"), Value("")
+            )
+        ).filter(cnpj_digits=digits).exists()
+
+        if exists:
+            raise ValidationError(_("Este CNPJ já está em uso."))
+
+        # normalize: salvar só dígitos (recomendado)
+        return digits
 
     def clean(self):
         email = self.cleaned_data.get('email')
@@ -77,9 +123,10 @@ class RegisterForm(forms.Form):
     def save(self):
         data = self.cleaned_data
         
-        plan_obj = Plan.objects.get(name='free')  # Assume 'free' is the default plan
+        plan_obj = Plan.objects.get(name='free')
         if not plan_obj:
-            raise ValidationError(_('Plano "free" não encontrado.'))
+            self.add_error(None, _('Plano não encontrado entre em contato com o suporte.'))
+            return 
         
         account = Account.objects.create(
             plan=plan_obj,
@@ -91,7 +138,6 @@ class RegisterForm(forms.Form):
             account=account,
             name=data['company_name'],
             cnpj=data['cnpj'],
-            billing_address={},
             company_type=data['company_type'],
         )
         

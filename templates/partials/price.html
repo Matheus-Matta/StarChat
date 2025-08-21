@@ -11,6 +11,7 @@
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for plan in plans %}
+      {% if not plan.is_free %}
         <div class="col">
           <div style="border-radius: 1rem; visibility: visible; animation-name: fadeInUp;" class="card h-100 pricing-card shadow wow fadeInUp delay-0-6s {% if plan.is_favorite %} position-relative{% endif %}">
             {% if plan.is_favorite %}
@@ -66,7 +67,7 @@
             </div>
           </div>
         </div>
-        
+      {% endif %}
       {% empty %}
         <p class="text-center">{{ _("Nenhum plano disponível no momento.") }}</p>
       {% endfor %}
