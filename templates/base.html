@@ -38,6 +38,11 @@
     {% endblock %}
     {% include 'head.html' %}
     {% block extra_head %}{% endblock %}
+    <style>
+        html { scroll-behavior: smooth; }
+        /* se o header é fixo, evita “cortar” o topo da seção */
+        #pricing, #solucoes, #servicos, #sistema { scroll-margin-top: 120px; } /* ajuste 90px ao seu header */
+    </style>
 </head>
 
 <body id='home' class="home-three">

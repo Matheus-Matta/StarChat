@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <!--====== Serviços do StarChat Start ======-->
-<section id="servicos" class="services-section-three bg-lighter rel z-1 pt-250 pb-50 rpb-70">
+<section  class="services-section-three bg-lighter rel z-1 pt-250 pb-50 rpb-70">
   <div class="container">
     <div class="row justify-content-center text-center">
       <div class="col-xl-7 col-lg-8 col-md-10">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div id="servicos" class="row">
       {% for service in services %}
       <div style="cursor: pointer;" class="col-xl-4 col-md-6">
             <a href="{% url 'page:service_detail' service.slug %}">

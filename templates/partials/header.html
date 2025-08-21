@@ -29,11 +29,11 @@
 
                         <div class="navbar-collapse collapse clearfix" id="main-menu">
                             <ul class="navigation clearfix">
-                                <li><a href="{% url 'page:index' %}">{% trans "Início" %}</a></li>
-                                <li><a href="#pricing">{% trans "Preços" %}</a></li>
-                                <li><a href="#solucoes">{% trans "Soluções" %}</a></li>
-                                <li><a href="#servicos">{% trans "Serviços" %}</a></li>
-                                <li><a href="#sistema">{% trans "Sistema" %}</a></li>
+                                <li><a href="{% if request.path == home_url %}#home{% else %}{% url 'page:index' %}#home{% endif %}">{% trans "Início" %}</a></li>
+                                <li><a href="{% if request.path == home_url %}#pricing{% else %}{% url 'page:index' %}#pricing{% endif %}">{% trans "Preços" %}</a></li>
+                                <li><a href="{% if request.path == home_url %}#solucoes{% else %}{% url 'page:index' %}#solucoes{% endif %}">{% trans "Soluções" %}</a></li>
+                                <li><a href="{% if request.path == home_url %}#servicos{% else %}{% url 'page:index' %}#servicos{% endif %}">{% trans "Serviços" %}</a></li>
+                                <li><a href="{% if request.path == home_url %}#sistema{% else %}{% url 'page:index' %}#sistema{% endif %}">{% trans "Sistema" %}</a></li>
                             </ul>
                         </div>
                     </nav>
