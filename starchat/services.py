@@ -159,17 +159,21 @@ class ChatwootAccountService:
     @handle_chatwoot_exceptions("create_chatwoot_user")
     def _create_chatwoot_user(self, user: User) -> Dict[str, Any]:
         """Creates a user in Chatwoot and validates the response."""
+        
         raw_pwd = getattr(user, "_raw_password", None)
         if not raw_pwd:
+            logger.error(f"User {user} does not have a raw password set.")
             return False
         
         if not user.account.chatwoot_account:
+            logger.error(f"Account {user.account} does not have a Chatwoot set.")
             return False
         
         chatwoot_id = user.account.chatwoot_account.chatwoot_id
         if not chatwoot_id:
+            logger.error(f"Chatwoot account {user.account.chatwoot_account} does not have an id set.")
             return False
-        
+            
         user_data = self.client.create_user(
             account_id=chatwoot_id,
             name=user.first_name or user.email,

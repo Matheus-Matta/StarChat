@@ -7,7 +7,7 @@
       <!-- Logo -->
       <div class="bg-white text-center pt-6">
         <a href="/">
-          <img src="/static/assets/images/logos/logo.svg" alt="Starchat" class="inline-block h-12 mb-3">
+          <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% endif %}" alt="Starchat" class="inline-block h-12 mb-3">
         </a>
         <p class="text-slate-600 dark:text-slate-300">Crie sua conta grátis e teste sem limites.</p>
       </div>

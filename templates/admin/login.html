@@ -21,7 +21,7 @@
     <!-- Logo -->
     <div class="text-center mb-5">
       <a href="/">
-        <img src="{% static 'assets/images/logos/logo.svg' %}" alt="Starchat" class="mx-auto h-12" />
+        <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% endif %}" alt="Starchat" class="mx-auto h-12" />
       </a>
     </div>
 

@@ -17,7 +17,6 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 import os
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +38,7 @@ def _get_env_list(var_name: str) -> list[str]:
 SECRET_KEY = 'django-insecure-^+2@47@c*v$d!-se!&o(nk&e$@y7w6n&yspwzk&3qb_+(znk*6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv("DEBUG") == "True"
 
 ALLOWED_HOSTS = _get_env_list("ALLOWED_HOSTS")
 
@@ -96,7 +95,6 @@ EXTRA_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'colorfield',
-    'compressor',
 ]
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
@@ -106,7 +104,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -205,7 +202,7 @@ ROSETTA_ACCESS_CONTROL_FUNCTION = None
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/home/app/web/staticfiles"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
@@ -213,21 +210,20 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-]
-
 WHITENOISE_MANIFEST_STRICT = False
 
 COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = False
+COMPRESS_OFFLINE = True
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_OUTPUT_DIR = 'CACHE'
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT  = "/home/app/web/media"
+MEDIA_ROOT  = BASE_DIR / 'media'
 
 
 # Default primary key field type
@@ -337,9 +333,11 @@ LOGGING = {
         "console": {"class": "logging.StreamHandler"},
     },
     "loggers": {
+        # Erros de request (500, exceções não tratadas)
         "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        # Erros de template (ex.: AttributeError em template)
         "django.template": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        # Log geral
         "": {"handlers": ["console"], "level": os.getenv("DJANGO_LOG_LEVEL", "INFO")},
     },
 }
-
