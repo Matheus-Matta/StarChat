@@ -85,25 +85,29 @@ class ChatwootAccountService:
     
     def _create_account(self, account: Account) -> int:
         """Creates the Chatwoot account and validates the response."""
-        chatwoot_id = self.client.create_account(
-            name=str(account.email),
-            status=account.status,
-            website_url=getattr(account, "website_url", None),
-            features=self.get_enabled_features()
-        )
-        if not chatwoot_id:
-            error_msg = f"Failed to create Chatwoot account for {account}"
-            logger.error(error_msg)
+        try:
+            chatwoot_id = self.client.create_account(
+                name=str(account.email),
+                status=account.status,
+                website_url=getattr(account, "website_url", None),
+                features=self.get_enabled_features()
+            )
+            if not chatwoot_id:
+                error_msg = f"Failed to create Chatwoot account for {account}"
+                logger.error(error_msg)
+                return False
+            
+            if not self._is_valid_account_id(chatwoot_id):
+                error_msg = f"Invalid Chatwoot account id: {chatwoot_id}"
+                logger.error(f"Error creating Chatwoot account for {account}: {error_msg}")
+                return False
+            
+            self.ChatwootAccount.objects.create(account=account, chatwoot_id=chatwoot_id)
+            logger.debug(f"Created Chatwoot account {chatwoot_id} for {account}")
+            return chatwoot_id
+        except Exception as e:
+            logger.error(f"Error creating Chatwoot account for {account}: {e}")
             return False
-        
-        if not self._is_valid_account_id(chatwoot_id):
-            error_msg = f"Invalid Chatwoot account id: {chatwoot_id}"
-            logger.error(f"Error creating Chatwoot account for {account}: {error_msg}")
-            return False
-        
-        self.ChatwootAccount.objects.create(account=account, chatwoot_id=chatwoot_id)
-        logger.debug(f"Created Chatwoot account {chatwoot_id} for {account}")
-        return chatwoot_id
     
     
 
@@ -159,41 +163,45 @@ class ChatwootAccountService:
     @handle_chatwoot_exceptions("create_chatwoot_user")
     def _create_chatwoot_user(self, user: User) -> Dict[str, Any]:
         """Creates a user in Chatwoot and validates the response."""
-        
-        raw_pwd = getattr(user, "_raw_password", None)
-        if not raw_pwd:
-            logger.error(f"User {user} does not have a raw password set.")
-            return False
-        
-        if not user.account.chatwoot_account:
-            logger.error(f"Account {user.account} does not have a Chatwoot set.")
-            return False
-        
-        chatwoot_id = user.account.chatwoot_account.chatwoot_id
-        if not chatwoot_id:
-            logger.error(f"Chatwoot account {user.account.chatwoot_account} does not have an id set.")
-            return False
+        try:
+            raw_pwd = getattr(user, "_raw_password", None)
+            if not raw_pwd:
+                logger.error(f"User {user} does not have a raw password set.")
+                return False
             
-        user_data = self.client.create_user(
-            account_id=chatwoot_id,
-            name=user.first_name or user.email,
-            email=user.email,
-            password=raw_pwd
-        )
+            if not user.account.chatwoot_account:
+                logger.error(f"Account {user.account} does not have a Chatwoot set.")
+                return False
+            
+            chatwoot_id = user.account.chatwoot_account.chatwoot_id
+            if not chatwoot_id:
+                logger.error(f"Chatwoot account {user.account.chatwoot_account} does not have an id set.")
+                return False
+                
+            user_data = self.client.create_user(
+                account_id=chatwoot_id,
+                name=user.first_name or user.email,
+                email=user.email,
+                password=raw_pwd
+            )
+            
+            user.user_chatwoot_id = user_data.get('id')
+            user.save()
+            logger.debug(f"Created user {raw_pwd , user.password} for Chatwoot account {chatwoot_id}")
+            
+            if not user_data or 'id' not in user_data:
+                error_msg = f"Failed to create user in Chatwoot for account {chatwoot_id}"
+                logger.error(error_msg)
+                return False
+            
+            logger.debug(f"Created user {user_data['id']} for Chatwoot account {chatwoot_id}")
+            
+            self._create_account_user_association(chatwoot_id, user.user_chatwoot_id, user.role)
+            return user_data
         
-        user.user_chatwoot_id = user_data.get('id')
-        user.save()
-        logger.debug(f"Created user {raw_pwd , user.password} for Chatwoot account {chatwoot_id}")
-        
-        if not user_data or 'id' not in user_data:
-            error_msg = f"Failed to create user in Chatwoot for account {chatwoot_id}"
-            logger.error(error_msg)
+        except Exception as e:
+            logger.error(f"Error creating user in Chatwoot for account {user.account.chatwoot_account}: {e}")
             return False
-        
-        logger.debug(f"Created user {user_data['id']} for Chatwoot account {chatwoot_id}")
-        
-        self._create_account_user_association(chatwoot_id, user.user_chatwoot_id, user.role)
-        return user_data
     
     @handle_chatwoot_exceptions("create_account_user_association")
     def _create_account_user_association(self, chatwoot_id: int, user_id: int, role: str = "agent") -> None:
