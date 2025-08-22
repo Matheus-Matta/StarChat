@@ -17,14 +17,14 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
-      
+
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/staticfiles:ro
-      - media_volume:/home/app/web/media:ro
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/media
     ports:
-      - 8010:80
+      - 8020:80
 
 
 volumes:

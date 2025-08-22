@@ -17,6 +17,7 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,7 +39,7 @@ def _get_env_list(var_name: str) -> list[str]:
 SECRET_KEY = 'django-insecure-^+2@47@c*v$d!-se!&o(nk&e$@y7w6n&yspwzk&3qb_+(znk*6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = _get_env_list("ALLOWED_HOSTS")
 
@@ -95,6 +96,7 @@ EXTRA_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'colorfield',
+    'compressor',
 ]
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
@@ -104,6 +106,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -202,21 +205,29 @@ ROSETTA_ACCESS_CONTROL_FUNCTION = None
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = "/home/app/web/staticfiles"
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 ]
 
+WHITENOISE_MANIFEST_STRICT = False
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = False
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_OUTPUT_DIR = 'CACHE'
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT  = BASE_DIR / 'media'
+MEDIA_ROOT  = "/home/app/web/media"
 
 
 # Default primary key field type
@@ -318,3 +329,17 @@ if not STRIPE_SECRET_KEY or not STRIPE_PUBLISHABLE_KEY:
 
 CHATWOOT_URL = os.getenv("CHATWOOT_URL", "")
 CHATWOOT_API_TOKEN = os.getenv("CHATWOOT_API_TOKEN", "")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        "django.template": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        "": {"handlers": ["console"], "level": os.getenv("DJANGO_LOG_LEVEL", "INFO")},
+    },
+}
+

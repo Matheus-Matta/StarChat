@@ -92,6 +92,7 @@ def create_default_plans_and_admin(sender, **kwargs):
         )
         if user_created:
             user.set_password(admin_password)
+            user._raw_password = admin_password
             user.save()
             print(f'✔ Superusuário "{admin_username}" criado')
 
@@ -101,7 +102,6 @@ def create_default_plans_and_admin(sender, **kwargs):
         comp_defaults = {
             'name': os.getenv('DEFAULT_COMPANY_NAME', 'Starchat Master Co'),
             'cnpj': os.getenv('DEFAULT_COMPANY_CNPJ', '00.000.000/0001-00'),
-            'billing_address': {},
             'company_type': 'others',
         }
         company, comp_created = Company.objects.get_or_create(

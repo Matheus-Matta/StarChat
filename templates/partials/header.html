@@ -7,7 +7,7 @@
                 <div class="logo-outer">
                     <div class="logo">
                         <a href="{% url 'page:index' %}">
-                            <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% else %}{% static 'assets/images/logos/logo.png' %}{% endif %}" alt="Logo StarChat">
+                            <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% endif %}" alt="Logo StarChat">
                         </a>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="navbar-header">
                             <div class="logo-mobile">
                                 <a href="{% url 'page:index' %}">
-                                    <img src="{% static 'assets/images/logos/logo.png' %}" alt="Logo StarChat">
+                                    <img src="{% if site_config.logo %}{{ site_config.logo.url }}{% endif %}" alt="Logo StarChat">
                                 </a>
                             </div>
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="main-menu">

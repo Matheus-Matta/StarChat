@@ -13,7 +13,8 @@ python manage.py makemigrations --no-input
 python manage.py migrate --no-input
 
 # 3) executa collectstatic
-python manage.py collectstatic --no-input --clear
+find static -type f -name "*.min.js" -print0 | xargs -0 sed -i '/sourceMappingURL=.*\.map/d'
+python manage.py collectstatic -v 3 --noinput 
 
 # 4) executa o daphne (channels)
 exec uvicorn config.asgi:application --host 0.0.0.0 --port 8000
