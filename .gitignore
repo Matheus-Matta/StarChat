@@ -45,6 +45,8 @@ htmlcov/
 
 # Django migrations (if you prefer not to track)
 */migrations/
+./migrations*
+./migrations
 */migrations/*
 *migrations*
 migrations/*

@@ -7,6 +7,7 @@ until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" >/dev/null 2>&1; do
 done
 echo "→ PostgreSQL pronto!"
 
+python manage.py makemigrations accounts core starchat authentic page --no-input
 python manage.py makemigrations --no-input
 python manage.py migrate --no-input
 find static -type f -name "*.min.js" -print0 | xargs -0 sed -i '/sourceMappingURL=.*\.map/d'
