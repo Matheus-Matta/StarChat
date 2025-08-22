@@ -20,6 +20,7 @@ venv/
 ENV/
 .venv/
 .env
+.env.old
 
 # Django local settings and database
 local_settings.py
