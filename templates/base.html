@@ -38,13 +38,61 @@
     {% analytical_body_bottom %}
     {% include 'scripts.html' %}
     {% block extra_scripts %}{% endblock %}
+    <div id="cookieConsent" class="alert alert-dark fixed-bottom m-3 shadow-lg d-none" role="alert" style="z-index:9999;">
+        <div class="d-flex justify-content-between align-items-center">
+            <span>
+            📊 Usamos cookies para melhorar sua experiência e medir estatísticas com o Google Analytics.
+            <a href="/policy/" target="_blank">Saiba mais</a>.
+            </span>
+            <div>
+            <button id="acceptConsent" class="btn btn-success btn-sm ms-2">Permitir</button>
+            <button id="declineConsent" class="btn btn-secondary btn-sm ms-2">Recusar</button>
+            </div>
+        </div>
+    </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9JNK1VLVB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
 
-        gtag('config', 'G-Z9JNK1VLVB');
-    </script>
+  // Inicializa Consent Mode como "negado"
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'personalization_storage': 'denied',
+    'functionality_storage': 'denied',
+    'security_storage': 'granted' // Essenciais
+  });
+
+  gtag('js', new Date());
+  gtag('config', 'G-Z9JNK1VLVB');
+
+  // Controle de exibição do banner
+  document.addEventListener("DOMContentLoaded", function(){
+    if (!localStorage.getItem("consentChoice")) {
+      document.getElementById("cookieConsent").classList.remove("d-none");
+    }
+
+    document.getElementById("acceptConsent").addEventListener("click", function(){
+      gtag('consent', 'update', {
+        'analytics_storage': 'granted',
+        'ad_storage': 'granted',
+        'personalization_storage': 'granted'
+      });
+      localStorage.setItem("consentChoice", "granted");
+      document.getElementById("cookieConsent").classList.add("d-none");
+    });
+
+    document.getElementById("declineConsent").addEventListener("click", function(){
+      gtag('consent', 'update', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'personalization_storage': 'denied'
+      });
+      localStorage.setItem("consentChoice", "denied");
+      document.getElementById("cookieConsent").classList.add("d-none");
+    });
+  });
+</script>
 </body>
 </html>
