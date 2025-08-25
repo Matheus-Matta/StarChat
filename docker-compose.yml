@@ -25,7 +25,8 @@ services:
       - media_volume:/home/app/web/media:ro
     ports:
       - 8020:80
-
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
