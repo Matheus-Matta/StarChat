@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
 from taggit.managers import TaggableManager
+from django.urls import reverse
 
 class SiteService(models.Model):
     title = models.CharField(
@@ -86,3 +87,6 @@ class SiteService(models.Model):
                 idx += 1
             self.slug = slug
         super().save(*args, **kwargs)
+        
+    def get_absolute_url(self):
+        return reverse('service-detail', kwargs={'slug': self.slug})

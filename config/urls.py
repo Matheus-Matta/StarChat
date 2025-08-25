@@ -23,14 +23,20 @@ from django.shortcuts import redirect
 
 from accounts.views import StripeCustomerPortalView
 
+from django.contrib.sitemaps.views import index, sitemap
+from core.sitemaps import StaticSitemap, ServiceSitemap
+from core.views import robots_txt
+
+sitemaps = {
+    'static': StaticSitemap,
+    'services': ServiceSitemap,
+}
+
 urlpatterns = [
     path('stripe/', include("djstripe.urls", namespace="djstripe")),
     
     path('app/', admin.site.urls),
 
-    # Primeiro trate as URLs específicas do Stripe
-
-    # Depois suas rotas de app principais
     path('auth/', include('authentic.urls')),
     path('accounts/', include('accounts.urls')),
     
@@ -38,13 +44,15 @@ urlpatterns = [
     path('rosetta/', include('rosetta.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
-    # Por fim, os catch-all
+    path('robots.txt', robots_txt, name='robots_txt'),
+    path('sitemap.xml', index, {'sitemaps': sitemaps}, name='sitemap-index'),
+    path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap-section'),
+    
     path('', include('page.urls')),
     path('', include('core.urls')),
     
     
     path("stripe/portal/", StripeCustomerPortalView.as_view(), name="stripe_customer_portal"),
-
 ]
 
 if settings.DEBUG:
