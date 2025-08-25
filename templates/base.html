@@ -38,15 +38,13 @@
     {% analytical_body_bottom %}
     {% include 'scripts.html' %}
     {% block extra_scripts %}{% endblock %}
-    <div id="cookieConsent" class="alert alert-dark fixed-bottom m-3 shadow-lg d-none" role="alert" style="z-index:9999;">
+    <div id="cookieConsent" class="alert bg-white fixed-bottom m-3 shadow-sm d-none" role="alert" style="z-index:9999;">
         <div class="d-flex justify-content-between align-items-center">
             <span>
-            📊 Usamos cookies para melhorar sua experiência e medir estatísticas com o Google Analytics.
-            <a href="/policy/" target="_blank">Saiba mais</a>.
-            </span>
+            Usamos cookies para melhorar sua experiência e medir estatísticas.
             <div>
-            <button id="acceptConsent" class="btn btn-success btn-sm ms-2">Permitir</button>
-            <button id="declineConsent" class="btn btn-secondary btn-sm ms-2">Recusar</button>
+            <button id="acceptConsent" class="btn btn-primary ms-2">Permitir</button>
+            <button id="declineConsent" class="btn btn-danger ms-2">Recusar</button>
             </div>
         </div>
     </div>
