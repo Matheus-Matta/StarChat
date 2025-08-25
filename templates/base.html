@@ -1,41 +1,15 @@
-{% load static %}
+{% load static analytical google_analytics_gtag %}
 
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="pt-BR">
 <head>
-    
+    {% analytical_head_top %}
+    {% google_analytics_gtag %}
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>{% block title %}Starchat{% endblock %}</title>
-    {% block seo_meta %}
-        {% if site_config.meta_description %}
-            <meta name="description" content="{{ site_config.meta_description|escape }}">
-        {% endif %}
-        {% if site_config.tags %}
-            <meta name="keywords"    content="{{ site_config.tags|escape }}">
-        {% endif %}
-        {% if site_config.meta_title %}
-            <meta property="og:title" content="{{ site_config.meta_title|escape }}">
-            <title>{{ site_config.meta_title|escape }}</title>
-        {% endif %}
-        {% if site_config.meta_description %}
-            <meta property="og:description" content="{{ site_config.meta_description|escape }}">
-        {% endif %}
-        {% if site_config.hero_image %}
-            <meta property="og:image" content="{{ site_config.hero_image.url }}">
-            <meta name="twitter:image" content="{{ site_config.hero_image.url }}">
-        {% endif %}
-        <meta property="og:url" content="{{ request.build_absolute_uri }}">
-        <meta name="twitter:card" content="summary_large_image">
-        {% if site_config.meta_title %}
-            <meta name="twitter:title" content="{{ site_config.meta_title|escape }}">
-        {% endif %}
-        {% if site_config.meta_description %}
-            <meta name="twitter:description" content="{{ site_config.meta_description|escape }}">
-        {% endif %}
-    {% endblock %}
     {% include 'head.html' %}
     {% block extra_head %}{% endblock %}
     <style>
@@ -43,9 +17,11 @@
         /* se o header é fixo, evita “cortar” o topo da seção */
         #pricing, #solucoes, #servicos, #sistema { scroll-margin-top: 120px; } /* ajuste 90px ao seu header */
     </style>
+    {% analytical_head_bottom %}
 </head>
 
 <body id='home' class="home-three">
+    {% analytical_body_top %}
     <div class="page-wrapper">
         
         <!-- Preloader -->
@@ -59,6 +35,7 @@
     <button class="scroll-top scroll-to-target " data-target="html"><span class="fa fa-angle-up"></span></button>
 
     <!-- JS -->
+    {% analytical_body_bottom %}
     {% include 'scripts.html' %}
     {% block extra_scripts %}{% endblock %}
 </body>

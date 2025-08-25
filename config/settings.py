@@ -19,7 +19,7 @@ from django.utils.translation import gettext_lazy as _
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DOMAIN = os.getenv("DOMAIN")
 def _get_env_list(var_name: str) -> list[str]:
     """
     Retorna uma lista de strings a partir de uma variável de ambiente
@@ -83,6 +83,8 @@ INSTALLED = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 EXTRA_APPS = [
@@ -95,7 +97,11 @@ EXTRA_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'colorfield',
+    'robots',          
+    'analytical',
 ]
+
+SITE_ID = 1
 
 INSTALLED_APPS = UNFOLD_APPS + APPS + INSTALLED + EXTRA_APPS
 
@@ -341,3 +347,11 @@ LOGGING = {
         "": {"handlers": ["console"], "level": os.getenv("DJANGO_LOG_LEVEL", "INFO")},
     },
 }
+
+ROBOTS_USE_HOST = True
+ROBOTS_CACHE_TIMEOUT = 60 * 60
+ROBOTS_SITEMAP_URLS = [f'{DOMAIN}/sitemap.xml']
+
+GOOGLE_ANALYTICS_GTAG_PROPERTY_ID = os.getenv("GOOGLE_ANALYTICS_GTAG_PROPERTY_ID")
+INTERNAL_IPS = {"127.0.0.1"}
+GOOGLE_ANALYTICS_INTERNAL_IPS = INTERNAL_IPS

@@ -1,0 +1,80 @@
+{# templates/includes/seo_meta.html #}
+{% load static %}
+
+{% with cfg=site_config og_type="website" robots_value="index,follow" canonical_url=request.build_absolute_uri dom=request.scheme|add:"//"|add:request.get_host %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ cfg.meta_title }}</title>
+  <meta name="description" content="{{ cfg.meta_description }}">
+  {% if meta_keywords %}
+    <meta name="keywords" content="{{ cfg.tags }}">
+  {% endif %}
+  <meta name="robots" content="{{ robots_value }}">
+  <link rel="canonical" href="{{ canonical_url }}"/>
+
+  {# -------- Open Graph -------- #}
+  <meta property="og:site_name" content="{{ cfg.meta_title }}">
+  <meta property="og:title" content="{{ cfg.meta_title }}">
+  <meta property="og:description" content="{{ cfg.meta_description }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="pt_BR">
+  {% if cfg and cfg.hero_image %}
+    {% with img=cfg.hero_image.url %}
+      {% if img|slice:":1" == "/" %}
+        <meta property="og:image" content="{{ dom }}{{ img }}">
+      {% else %}
+        <meta property="og:image" content="{{ img }}">
+      {% endif %}
+    {% endwith %}
+  {% endif %}
+
+  {# -------- Twitter Cards -------- #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ cfg.meta_title }}">
+  <meta name="twitter:description" content="{{ cfg.meta_description }}">
+  {% if cfg and cfg.hero_image %}
+    {% with img=cfg.hero_image.url %}
+      {% if img|slice:":1" == "/" %}
+        <meta name="twitter:image" content="{{ dom }}{{ img }}">
+      {% else %}
+        <meta name="twitter:image" content="{{ img }}">
+      {% endif %}
+    {% endwith %}
+  {% endif %}
+
+  {# -------- JSON-LD (Organization) -------- #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ cfg.meta_title }}",
+    "url": "{{ dom }}/",
+    {% if cfg and cfg.logo %}"logo": "{{ dom }}{% if cfg.logo %}{{ cfg.logo.url }}{% endif %}",{% endif %}
+    {% if cfg and cfg.email %}"email": "{{ cfg.email|escapejs }}",{% endif %}
+    {% if cfg and cfg.phone %}"telephone": "{{ cfg.phone|escapejs }}",{% endif %}
+    "sameAs": [
+      {% if cfg and cfg.instagram %}"{{ cfg.instagram }}",{% endif %}
+      {% if cfg and cfg.whatsapp %}"{{ cfg.whatsapp }}",{% endif %}
+      {% if cfg and cfg.twitter %}"{{ cfg.twitter }}",{% endif %}
+      {% if cfg and cfg.linkedin %}"{{ cfg.linkedin }}"{% endif %}
+    ]
+  }
+  </script>
+
+  {# -------- JSON-LD (WebSite) -------- #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ cfg.meta_title }}",
+    "url": "{{ dom }}/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ dom }}/search/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+{% endwith %}
