@@ -1,0 +1,7 @@
+# Export original mantido apenas como backup local.
+Starchats Landing.html
+
+# Arquivos do sistema operacional.
+.DS_Store
+Thumbs.db
+Desktop.ini
