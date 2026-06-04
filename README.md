@@ -36,6 +36,8 @@ https://SEU-USUARIO.github.io/SEU-REPOSITORIO/
 
 ## Estrutura
 
-- `index.html`: landing page publicada.
+- `index.html`: estrutura e conteudo da landing page.
+- `style.css`: estilos e responsividade.
+- `script.js`: menu mobile e ano automatico do rodape.
+- `logo.png` e `favicon.png`: identidade visual.
 - `.nojekyll`: impede processamento desnecessario pelo Jekyll.
-- `Starchats Landing.html`: exportacao original, mantida apenas localmente como backup.
