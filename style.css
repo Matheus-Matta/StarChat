@@ -935,7 +935,6 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   border-radius: var(--radius-xl);
   background: rgba(255,255,255,.72);
   box-shadow: 0 24px 60px -48px rgba(17,24,39,.3);
-  overflow: hidden;
 }
 .integration-shell { background: linear-gradient(145deg, var(--accent-softer), rgba(255,255,255,.86) 42%); }
 .ecosystem-intro {
@@ -973,12 +972,11 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  width: 100%;
-  min-width: 0;
 }
 .ecosystem-card {
-  min-height: 180px;
-  padding: 18px;
+  min-height: 0;
+  min-width: 0;
+  padding: clamp(12px, 1.4vw, 18px);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: white;
@@ -993,10 +991,10 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   background: linear-gradient(145deg, var(--accent-softer), white 68%);
   border-color: var(--accent-soft);
 }
-.ecosystem-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.ecosystem-card-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: clamp(10px, 1.2vw, 18px); flex-wrap: wrap; }
 .ecosystem-mark {
-  width: 42px;
-  height: 42px;
+  width: clamp(30px, 3.2vw, 42px);
+  height: clamp(30px, 3.2vw, 42px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1007,27 +1005,27 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   letter-spacing: -.04em;
 }
 .ecosystem-mark i {
-  font-size: 32px;
+  font-size: clamp(18px, 2.2vw, 32px);
   color: var(--item-color);
 }
 .ecosystem-tag {
-  padding: 4px 8px;
+  padding: clamp(2px, 0.3vw, 4px) clamp(5px, 0.6vw, 8px);
   border-radius: 999px;
   background: #F3F4F6;
   color: var(--ink-3);
-  font: 600 9px/1 'Geist Mono', monospace;
+  font: 600 clamp(8px, 0.7vw, 9px)/1 'Geist Mono', monospace;
   letter-spacing: .04em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
-.ecosystem-card h3 { margin: 0 0 6px; font-size: 15px; letter-spacing: -.02em; }
-.ecosystem-card p { min-height: 38px; margin: 0 0 16px; color: var(--ink-3); font-size: 12.5px; line-height: 1.5; }
-.ecosystem-status { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: 10.5px; font-weight: 600; }
+.ecosystem-card h3 { margin: 0 0 4px; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: -.02em; }
+.ecosystem-card p { min-height: 0; margin: 0 0 clamp(8px, 1vw, 16px); color: var(--ink-3); font-size: clamp(10px, 0.9vw, 12.5px); line-height: 1.45; }
+.ecosystem-status { display: inline-flex; align-items: center; gap: 4px; color: var(--ink-2); font-size: clamp(9px, 0.8vw, 10.5px); font-weight: 600; }
 .ecosystem-status i { width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 0 3px #D1FAE5; }
 .ecosystem-api {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  min-width: 0;
   gap: 16px;
   margin-top: 18px;
   padding: 18px;
@@ -1057,14 +1055,12 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 }
 @media (max-width: 760px) {
   .ecosystem { padding-left: 18px; padding-right: 18px; }
-  .ecosystem-shell { padding: 16px; overflow: hidden; }
+  .ecosystem-shell { padding: 16px; }
   .ecosystem-intro { align-items: stretch; flex-direction: column; }
   .ecosystem-metric { min-width: 0; text-align: left; }
   .ecosystem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ecosystem-api { grid-template-columns: auto 1fr; min-width: 0; }
+  .ecosystem-api { grid-template-columns: auto 1fr; }
   .ecosystem-api .btn { grid-column: 1 / -1; justify-content: center; }
-  .ecosystem-api div:nth-child(2) { min-width: 0; overflow: hidden; }
-  .ecosystem-api span { white-space: normal; word-break: break-word; }
 }
 @media (max-width: 480px) {
   .ecosystem-grid { grid-template-columns: 1fr; }
@@ -2502,13 +2498,11 @@ noscript {
 
 /* ── Ecosystem / Canais ──────────────────────────────── */
 @media (max-width: 640px) {
-  .ecosystem-grid  { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-  .ecosystem-card  { padding: 14px; min-height: unset; }
-  .ecosystem-card h3{ font-size: 14px; }
-  .ecosystem-card p { font-size: 12px; color: var(--ink-3); }
+  .ecosystem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ecosystem-shell { padding: clamp(10px, 3vw, 20px); }
 }
 @media (max-width: 380px) {
-  .ecosystem-grid { grid-template-columns: 1fr !important; }
+  .ecosystem-grid { grid-template-columns: 1fr; }
 }
 
 /* ── Integrations ────────────────────────────────────── */
