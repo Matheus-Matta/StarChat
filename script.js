@@ -409,7 +409,7 @@ function initContactForm() {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ nome, email, empresa, telefone, equipe, canais, mensagem }).toString(),
+        body: new URLSearchParams({ ferramenta: "starchats", nome, email, empresa, telefone, equipe, canais, mensagem }).toString(),
       });
     } catch (_) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Solicitar demo gratuita"; }
