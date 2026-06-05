@@ -1,5 +1,5 @@
 const ACCENT = "#7C3AED";
-const WEBHOOK_URL = "https://n8n.starchats.com.br/webhook-test/d7fd4fbf-a39e-4972-b80a-5c859a455bab";
+const WEBHOOK_URL = "https://n8nwebhook.starchats.com.br/webhook/d7fd4fbf-a39e-4972-b80a-5c859a455bab";
 
 const scenarios = {
   atraso: {
