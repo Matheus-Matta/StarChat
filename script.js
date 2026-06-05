@@ -372,11 +372,22 @@ function initContactForm() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     form.querySelectorAll(".cf-err, .cf-send-err").forEach((el) => el.remove());
-    const values = Object.fromEntries(new FormData(form));
+
+    const nome = inputs[0]?.value.trim() ?? "";
+    const email = inputs[1]?.value.trim() ?? "";
+    const empresa = inputs[2]?.value.trim() ?? "";
+    const telefone = inputs[3]?.value.trim() ?? "";
+    const mensagem = textarea?.value.trim() ?? "";
+    const equipe = form.querySelector(".cf-seg button.on")?.textContent?.trim() ?? "";
+    const canais = [...form.querySelectorAll(".cf-chip.on")]
+      .map((b) => b.childNodes[b.childNodes.length - 1]?.textContent?.trim() ?? b.textContent.trim())
+      .filter(Boolean)
+      .join(", ");
+
     const checks = [
-      [inputs[0], values.nome?.trim() ? "" : "Como podemos te chamar?"],
-      [inputs[1], /.+@.+\..+/.test(values.email || "") ? "" : "E-mail inválido"],
-      [inputs[2], values.empresa?.trim() ? "" : "Qual sua empresa?"],
+      [inputs[0], nome ? "" : "Como podemos te chamar?"],
+      [inputs[1], /.+@.+\..+/.test(email) ? "" : "E-mail inválido"],
+      [inputs[2], empresa ? "" : "Qual sua empresa?"],
     ];
     const invalid = checks.filter(([, message]) => message);
     invalid.forEach(([input, message]) => {
@@ -390,8 +401,6 @@ function initContactForm() {
       return;
     }
 
-    const equipe = form.querySelector(".cf-seg button.on")?.textContent?.trim() || "";
-    const canais = [...form.querySelectorAll(".cf-chip.on")].map((b) => b.textContent.trim()).join(", ");
     const submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Enviando…"; }
 
@@ -400,15 +409,7 @@ function initContactForm() {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          nome: values.nome?.trim() ?? "",
-          email: values.email?.trim() ?? "",
-          empresa: values.empresa?.trim() ?? "",
-          telefone: values.telefone?.trim() ?? "",
-          equipe,
-          canais,
-          mensagem: values.mensagem?.trim() ?? "",
-        }).toString(),
+        body: new URLSearchParams({ nome, email, empresa, telefone, equipe, canais, mensagem }).toString(),
       });
     } catch (_) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Solicitar demo gratuita"; }
