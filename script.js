@@ -64,12 +64,12 @@ const responses = {
 };
 
 const faqAnswers = [
-  "Você tem 14 dias para testar todos os recursos do plano Growth, sem cartão de crédito. Ao final, escolhe se quer continuar e em qual plano.",
-  "No plano Starter, até 3 canais. Nos planos Growth e Enterprise, canais ilimitados - WhatsApp, Instagram, Messenger, Telegram, e-mail, chat do site, TikTok e mais.",
-  "Recursos básicos da IA estão disponíveis a partir do Starter. A IA Cosmos completa, com sugestões avançadas, resumos e análise de sentimento, faz parte do plano Growth.",
-  "Sim. Todo cliente novo tem um processo de implantação guiada com nossa equipe. No plano Enterprise, oferecemos onboarding personalizado com engenheiro dedicado.",
+  "Você tem 7 dias para testar todos os recursos da plataforma, sem cartão de crédito. Ao final, escolhe se quer continuar no Pacote Pequeno ou no Pacote Médio.",
+  "Todos os planos incluem os canais disponíveis — WhatsApp, Instagram, Messenger, Telegram, e-mail, chat do site, TikTok e mais. A diferença está no número de inboxes e usuários incluídos.",
+  "Sim. A IA Cosmos está disponível em todos os planos, com sugestões de resposta, análise de sentimento, resumo automático e tradução.",
+  "Sim. Todo cliente novo tem um processo de implantação guiada com nossa equipe — setup gratuito incluído em ambos os planos. O Pacote Médio inclui onboarding prioritário.",
   "Sim. Temos integrações nativas com os principais CRMs e ERPs, além de API REST completa e webhooks para qualquer sistema.",
-  "Suporte por chat e e-mail no Starter, com SLA de 24h úteis. Growth tem suporte prioritário com SLA de 8h. Enterprise tem gerente dedicado e SLA de 4h.",
+  "Suporte por chat e e-mail com SLA de 24h úteis no Pacote Pequeno. O Pacote Médio tem suporte prioritário com SLA de 8h. Enterprise conta com gerente dedicado e SLA de 4h.",
   "Sim. Infraestrutura em nuvem com criptografia em trânsito e em repouso, backups diários e conformidade com a LGPD.",
 ];
 
@@ -88,23 +88,62 @@ function initNav() {
   const burger = document.querySelector(".nav-burger");
   if (!nav || !burger) return;
 
+  // Build structured fullscreen mobile menu
   const mobile = document.createElement("div");
   mobile.className = "nav-mobile";
   mobile.hidden = true;
-  document.querySelectorAll(".nav-links a").forEach((link) => mobile.append(link.cloneNode(true)));
-  nav.append(mobile);
+  mobile.setAttribute("role", "dialog");
+  mobile.setAttribute("aria-modal", "true");
+  mobile.setAttribute("aria-label", "Menu de navegação");
+
+  // Head: brand clone + close button
+  const mHead = document.createElement("div");
+  mHead.className = "nav-mobile-head";
+  const brandClone = nav.querySelector(".brand")?.cloneNode(true);
+  if (brandClone) { brandClone.href = "#top"; mHead.append(brandClone); }
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "nav-mobile-close";
+  closeBtn.setAttribute("aria-label", "Fechar menu");
+  closeBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+  mHead.append(closeBtn);
+  mobile.append(mHead);
+
+  // Links section
+  const mLinks = document.createElement("nav");
+  mLinks.className = "nav-mobile-links";
+  document.querySelectorAll(".nav-links a").forEach((link) => mLinks.append(link.cloneNode(true)));
+  mobile.append(mLinks);
+
+  // CTA section
+  const mCta = document.createElement("div");
+  mCta.className = "nav-mobile-cta";
+  mCta.innerHTML = `<a class="btn btn-ghost" href="#contact">Falar com especialista</a><a class="btn btn-primary" href="#pricing">Testar agora</a>`;
+  mobile.append(mCta);
+
+  // Append to body so it escapes nav's stacking context
+  document.body.append(mobile);
+
+  function openMenu() {
+    mobile.hidden = false;
+    burger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
+  }
+
+  function closeMenu() {
+    mobile.hidden = true;
+    burger.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+  }
 
   window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
   burger.setAttribute("aria-expanded", "false");
-  burger.addEventListener("click", () => {
-    mobile.hidden = !mobile.hidden;
-    burger.setAttribute("aria-expanded", String(!mobile.hidden));
-  });
+  burger.addEventListener("click", () => mobile.hidden ? openMenu() : closeMenu());
+  closeBtn.addEventListener("click", closeMenu);
   mobile.addEventListener("click", (event) => {
-    if (event.target.closest("a")) {
-      mobile.hidden = true;
-      burger.setAttribute("aria-expanded", "false");
-    }
+    if (event.target.closest("a")) closeMenu();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !mobile.hidden) closeMenu();
   });
 }
 
@@ -357,25 +396,25 @@ function initContactForm() {
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Enviando…"; }
 
     try {
-      const res = await fetch(WEBHOOK_URL, {
+      await fetch(WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome: values.nome?.trim(),
-          email: values.email?.trim(),
-          empresa: values.empresa?.trim(),
-          telefone: values.telefone?.trim() || "",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          nome: values.nome?.trim() ?? "",
+          email: values.email?.trim() ?? "",
+          empresa: values.empresa?.trim() ?? "",
+          telefone: values.telefone?.trim() ?? "",
           equipe,
           canais,
-          mensagem: values.mensagem?.trim() || "",
-        }),
+          mensagem: values.mensagem?.trim() ?? "",
+        }).toString(),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
     } catch (_) {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Solicitar demo gratuita"; }
       const errEl = document.createElement("p");
       errEl.className = "cf-send-err";
-      errEl.textContent = "Erro ao enviar. Tente novamente ou fale pelo WhatsApp.";
+      errEl.textContent = "Erro de rede. Tente novamente ou fale pelo WhatsApp: +55 21 96662-1486.";
       submitBtn?.insertAdjacentElement("beforebegin", errEl);
       return;
     }
