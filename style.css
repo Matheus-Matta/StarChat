@@ -2533,6 +2533,26 @@ noscript {
   .foot-grid { grid-template-columns: 1fr; }
 }
 
+/* Mantém os blocos do rodapé alinhados no eixo horizontal. */
+@media (min-width: 769px) {
+  .foot-grid {
+    grid-template-columns: minmax(180px, 1.6fr) repeat(3, minmax(135px, 1fr));
+    align-items: start;
+  }
+
+  .foot-brand,
+  .foot-col {
+    align-self: start;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .foot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
 /* ── Very small phones (< 380px) ────────────────────── */
 @media (max-width: 380px) {
   .hero-title        { font-size: 27px; }
