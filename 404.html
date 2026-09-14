@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Página não encontrada | Starchats</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/favicon.png"><link rel="stylesheet" href="/help.css"></head><body><div id="help-app"></div><script>
+  const aliases = {
+    '/hc/inboxes':'/docs/inboxes/', '/hc/agents':'/docs/agents/', '/hc/teams':'/docs/teams/', '/hc/labels':'/docs/labels/',
+    '/hc/canned':'/docs/canned-responses/', '/hc/custom-roles':'/docs/custom-roles/', '/hc/custom-attributes':'/docs/custom-attributes/',
+    '/hc/macros':'/docs/macros/', '/hc/sla':'/docs/sla/', '/hc/audit-logs':'/docs/audit-logs/', '/hc/agent-bots':'/docs/agent-bots/',
+    '/hc/integrations':'/docs/integrations/', '/hc/dashboard-apps':'/docs/dashboard-apps/', '/hc/webhooks':'/docs/webhooks/',
+    '/hc/saml':'/docs/saml/', '/hc/cosmos-tools':'/docs/cosmos-tools/', '/hc/campaigns':'/docs/campaigns/', '/hc/reports':'/docs/reports/',
+    '/hc/help-center':'/docs/help-center/', '/hc/email':'/docs/email/', '/hc/fb':'/docs/facebook/',
+    '/hc/whatsapp-business-management-token':'/docs/whatsapp-business-management-token/', '/zm7g2yu':'/docs/whatsapp-business-management-token/',
+    '/cosmos-docs':'/docs/cosmos/', '/cosmos-assistant':'/docs/cosmos-assistants/', '/cosmos-document':'/docs/cosmos-documents/',
+    '/cosmos-faq':'/docs/cosmos-faqs/', '/migrate-whatsapp':'/docs/whatsapp-migration/', '/dev/ms':'/docs/microsoft-email/',
+    '/v4/migration':'/docs/pgvector/', '/g2-review':'/docs/campaigns/'
+  };
+  const path = location.pathname.replace(/\/+$/, '').toLowerCase() || '/';
+  const target = aliases[path] || '/docs/';
+  document.querySelector('#help-app').innerHTML = '<main class="help-home"><h1>Abrindo a documentação...</h1><p>Se nada acontecer, <a href="'+target+'">acesse o guia correspondente</a>.</p></main>';
+  location.replace(target + location.search + location.hash);
+</script></body></html>

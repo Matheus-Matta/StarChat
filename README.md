@@ -39,5 +39,15 @@ https://SEU-USUARIO.github.io/SEU-REPOSITORIO/
 - `index.html`: estrutura e conteudo da landing page.
 - `style.css`: estilos e responsividade.
 - `script.js`: menu mobile e ano automatico do rodape.
-- `logo.png` e `favicon.png`: identidade visual.
+- `docs/`: rotas canonicas da central de documentacao.
+- `help.js`: conteudo e renderizacao dos artigos.
+- `help.css`: identidade visual e responsividade da documentacao.
+- `hc/` e demais aliases: redirecionamentos das URLs legadas do produto para `/docs/...`.
+- `logo2.png` e `favicon.png`: identidade visual.
 - `.nojekyll`: impede processamento desnecessario pelo Jekyll.
+
+## Documentacao
+
+A pagina principal fica em `https://starchats.com.br/docs/`. Cada artigo possui uma rota
+canonica propria. Os enderecos antigos usados pelo aplicativo continuam funcionando por meio
+de redirecionamentos estaticos com fallback em `404.html`.
