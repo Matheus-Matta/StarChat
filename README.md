@@ -42,6 +42,7 @@ https://SEU-USUARIO.github.io/SEU-REPOSITORIO/
 - `docs/`: rotas canonicas da central de documentacao.
 - `help.js`: conteudo e renderizacao dos artigos.
 - `help.css`: identidade visual e responsividade da documentacao.
+- `api.js` e `api.css`: navegacao, sidebar e estilos da referencia da API.
 - `hc/` e demais aliases: redirecionamentos das URLs legadas do produto para `/docs/...`.
 - `logo2.png` e `favicon.png`: identidade visual.
 - `.nojekyll`: impede processamento desnecessario pelo Jekyll.

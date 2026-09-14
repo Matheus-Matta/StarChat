@@ -5,6 +5,7 @@
   const end = `<div class="article-end"><h2>Precisa de ajuda?</h2><p>Fale com nosso time pelo <a href="https://wa.me/5521966621486" target="_blank" rel="noopener">WhatsApp</a> ou envie um e-mail para <a href="mailto:stardev.sistemas@gmail.com">stardev.sistemas@gmail.com</a>.</p></div>`;
 
   const docs = {
+    'api': { title: 'Referência da API', eyebrow: 'Desenvolvedores', description: 'Autenticação, recursos, modelos, webhooks, limites e exemplos das quatro APIs do Starchats.' },
     'inboxes': article('Caixas de entrada', 'Configuração', 'Entenda os canais, membros, horários e regras que organizam o atendimento no Starchats.', `
       <h2>O que é uma caixa de entrada</h2>
       <p>Uma caixa de entrada representa um canal de atendimento. As mensagens recebidas nesse canal viram <strong>conversas</strong> e são associadas a <strong>contatos</strong>. Um mesmo contato pode conversar por mais de um canal sem que as equipes precisem trabalhar em ferramentas separadas.</p>
@@ -210,6 +211,9 @@ sudo -u postgres psql -d starchats -c "SELECT extversion FROM pg_extension WHERE
   };
 
   const groups = [
+    { title: 'API para desenvolvedores', className: 'doc-featured', items: [
+      ['api','/docs/api/']
+    ]},
     { title: 'Configuração e equipe', items: [
       ['inboxes','/docs/inboxes/'], ['agents','/docs/agents/'], ['teams','/docs/teams/'],
       ['labels','/docs/labels/'], ['canned','/docs/canned-responses/'], ['custom-roles','/docs/custom-roles/'],
@@ -234,7 +238,7 @@ sudo -u postgres psql -d starchats -c "SELECT extversion FROM pg_extension WHERE
 
   const header = () => `<nav class="help-nav"><div class="help-nav-inner">
     <a class="help-brand" href="/"><img src="/logo2.png" alt="Starchats"><span class="help-badge">Documentação</span></a>
-    <div class="help-nav-links"><a href="/docs/">Todos os guias</a><a href="/">Site</a><a class="help-cta" href="https://wa.me/5521966621486" target="_blank" rel="noopener">Falar com suporte</a></div>
+    <div class="help-nav-links"><a href="/docs/api/">API</a><a href="/docs/">Todos os guias</a><a href="/">Site</a><a class="help-cta" href="https://wa.me/5521966621486" target="_blank" rel="noopener">Falar com suporte</a></div>
   </div></nav>`;
 
   const footer = () => `<footer class="help-footer"><div class="help-footer-inner"><span>© 2026 Stardev · Starchats</span><div class="help-footer-links"><a href="/politica-de-privacidade">Privacidade</a><a href="/termos-de-servico">Termos</a><a href="mailto:stardev.sistemas@gmail.com">Contato</a></div></div></footer>`;
@@ -242,7 +246,7 @@ sudo -u postgres psql -d starchats -c "SELECT extversion FROM pg_extension WHERE
   const slugify = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   function renderHome(root) {
-    const cards = groups.map(group => `<section class="doc-section"><h2>${group.title}</h2><div class="doc-grid">${group.items.map(([key, url]) => {
+    const cards = groups.map(group => `<section class="doc-section ${group.className || ''}"><h2>${group.title}</h2><div class="doc-grid">${group.items.map(([key, url]) => {
       const item = docs[key];
       return `<a class="doc-card" href="${url}" data-search="${item.title} ${item.eyebrow} ${item.description}"><small>${item.eyebrow}</small><strong>${item.title}</strong><p>${item.description}</p></a>`;
     }).join('')}</div></section>`).join('');
