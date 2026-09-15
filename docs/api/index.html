@@ -34,15 +34,15 @@
       <div class="api-sidebar-head"><span>Referência da API</span><button class="api-sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
       <div class="api-nav-group"><strong>Começar</strong><a href="#overview">Visão geral</a><a href="#authentication">Autenticação</a><a href="#api-token">Token de API</a><a href="#session-mfa">Sessão e MFA</a><a href="#bot-tokens">Tokens de bot</a></div>
       <div class="api-nav-group"><strong>Superfícies</strong><a href="#application-api">API de Aplicação</a><a href="#platform-api">API de Plataforma</a><a href="#public-api">Canal API pública</a><a href="#widget-api">API do Widget</a></div>
-      <div class="api-nav-group"><strong>Modelos da aplicação</strong><a href="#model-conversations">Conversas e mensagens</a><a href="#model-contacts">Contatos e empresas</a><a href="#model-inboxes">Caixas e canais</a><a href="#model-service">Atendimento</a><a href="#model-automation">Automação e SLA</a><a href="#model-cosmos">Cosmos IA</a><a href="#model-reports">Relatórios</a><a href="#model-campaigns">Campanhas e portais</a><a href="#model-admin">Integrações e administração</a></div>
-      <div class="api-nav-group"><strong>Operação</strong><a href="#webhooks">Webhooks</a><a href="#rate-limits">Rate limits</a><a href="#responses">Respostas e paginação</a><a href="#examples">Exemplos completos</a><a href="#differences">Diferenças do Chatwoot</a><a href="#security">Segurança</a></div>
+      <div id="api-model-nav"></div>
+      <div class="api-nav-group"><strong>Operação</strong><a href="#webhooks">Webhooks</a><a href="#rate-limits">Rate limits</a><a href="#responses">Respostas e paginação</a><a href="#examples">Exemplos completos</a><a href="#security">Segurança</a></div>
     </aside>
 
     <article class="api-content">
       <section class="api-section" id="overview">
         <span class="api-kicker">Começar</span><h2>Visão geral</h2>
         <p>O Starchats expõe quatro APIs com objetivos e credenciais diferentes. A API de Aplicação atende a maior parte das integrações. Plataforma administra contas externamente, Canal API cria canais próprios e Widget sustenta o chat do site.</p>
-        <div class="api-note warning"><p><strong>Swagger não é a única fonte.</strong> O OpenAPI servido em <code>/swagger</code> e <code>/doc</code> é herdado do upstream e não cobre rotas exclusivas como protocolos, fluxos, Evolution, Cosmos e empresas.</p></div>
+        <div class="api-note warning"><p><strong>Consulte esta referência junto ao OpenAPI.</strong> O esquema servido em <code>/swagger</code> e <code>/doc</code> ainda não cobre protocolos, fluxos, Evolution, Cosmos e empresas.</p></div>
         <div class="api-card-grid">
           <div class="api-card"><strong>API de Aplicação</strong><p>Conversas, contatos, caixas, equipe, relatórios e administração.</p><span class="api-prefix">/api/v1/accounts/:account_id</span></div>
           <div class="api-card"><strong>API de Plataforma</strong><p>Criação e gestão externa de contas e usuários.</p><span class="api-prefix">/platform/api/v1</span></div>
@@ -60,7 +60,7 @@
           <tr><td><code>inbox_identifier</code></td><td>Canal API pública</td><td>Parte da URL; trate como segredo</td></tr>
           <tr><td><code>website_token</code> + <code>X-Auth-Token</code></td><td>Widget</td><td>Identificador do site e JWT de sessão</td></tr>
         </tbody></table></div>
-        <p>A API está habilitada incondicionalmente por conta neste fork. Uma resposta <code>403</code> com “API access is not enabled for this account” só deve aparecer se essa regra for alterada na instalação.</p>
+        <p>A API está habilitada por padrão em todas as contas. Uma resposta <code>403</code> com “API access is not enabled for this account” só deve aparecer se essa regra for alterada na instalação.</p>
       </section>
 
       <section class="api-section" id="api-token">
@@ -137,62 +137,7 @@ expiry:       &lt;timestamp&gt;</code></pre>
         <div class="api-note"><p>Trocar <code>SECRET_KEY_BASE</code> invalida sessões de widget, tokens MFA e estados OAuth em andamento.</p></div>
       </section>
 
-      <section class="api-section" id="model-conversations">
-        <span class="api-kicker">Modelos</span><h2>Conversas e mensagens</h2>
-        <p>Recursos para criar, consultar e movimentar o atendimento, enviar mensagens e controlar participantes.</p>
-        <div class="model-list"><code>conversations</code><code>messages</code><code>assignments</code><code>labels</code><code>participants</code><code>direct_uploads</code><code>custom_attributes</code><code>transcript</code><code>bulk_actions</code><code>calls <span class="star">★</span></code><code>whatsapp_calls <span class="star">★</span></code></div>
-        <p>Mensagens com <code>message_type: "outgoing"</code> são enviadas ao contato. Use <code>private: true</code> para criar uma nota interna invisível ao cliente.</p>
-      </section>
-
-      <section class="api-section" id="model-contacts">
-        <span class="api-kicker">Modelos</span><h2>Contatos e empresas</h2>
-        <p>Gerencie perfis, seus vínculos com canais, histórico, notas e organizações.</p>
-        <div class="model-list"><code>contacts</code><code>contacts/conversations</code><code>contact_inboxes</code><code>contacts/labels</code><code>contacts/notes</code><code>companies <span class="star">★</span></code><code>companies/contacts <span class="star">★</span></code><code>companies/conversations <span class="star">★</span></code><code>companies/notes <span class="star">★</span></code><code>data_imports</code></div>
-        <p><span class="star">★</span> marca recursos exclusivos do fork Starchats.</p>
-      </section>
-
-      <section class="api-section" id="model-inboxes">
-        <span class="api-kicker">Modelos</span><h2>Caixas de entrada e canais</h2>
-        <p>Configure origens de atendimento, membros e provedores de comunicação.</p>
-        <div class="model-list"><code>inboxes</code><code>inbox_members</code><code>channels/evolution_channel <span class="star">★</span></code><code>whatsapp</code><code>callbacks</code><code>google</code><code>microsoft</code></div>
-        <p>As rotas Google e Microsoft participam dos fluxos OAuth de e-mail; callbacks não devem ser tratados como endpoints comuns de CRUD.</p>
-      </section>
-
-      <section class="api-section" id="model-service">
-        <span class="api-kicker">Modelos</span><h2>Atendimento</h2>
-        <p>Recursos de equipe, capacidade, distribuição e produtividade operacional.</p>
-        <div class="model-list"><code>agents</code><code>teams</code><code>assignable_agents</code><code>custom_roles</code><code>agent_capacity_policies</code><code>assignment_policies</code><code>canned_responses</code><code>macros</code><code>labels</code><code>custom_attribute_definitions</code><code>custom_filters</code></div>
-      </section>
-
-      <section class="api-section" id="model-automation">
-        <span class="api-kicker">Modelos</span><h2>Automação e SLA</h2>
-        <p>Automatize ações, aplique metas de atendimento e controle protocolos e fluxos exclusivos.</p>
-        <div class="model-list"><code>automation_rules</code><code>sla_policies</code><code>applied_slas</code><code>conversation_flows <span class="star">★</span></code><code>protocol_policies <span class="star">★</span></code><code>protocols <span class="star">★</span></code><code>protocol_comments <span class="star">★</span></code></div>
-      </section>
-
-      <section class="api-section" id="model-cosmos">
-        <span class="api-kicker">Modelos</span><h2>Cosmos IA</h2>
-        <p>O namespace inteiro de IA é <code>cosmos</code> no Starchats. Integrações herdadas do Chatwoot que usam <code>captain</code> precisam ser adaptadas.</p>
-        <div class="model-list"><code>cosmos/assistants</code><code>scenarios</code><code>inboxes</code><code>guardrails</code><code>response_guidelines</code><code>cosmos/documents</code><code>assistant_responses</code><code>faq_suggestions</code><code>custom_tools</code><code>copilot_threads</code><code>copilot_messages</code><code>agent_sessions</code><code>bulk_actions</code><code>message_reports</code></div>
-      </section>
-
-      <section class="api-section" id="model-reports">
-        <span class="api-kicker">Modelos</span><h2>Relatórios</h2>
-        <p>Os relatórios usam o prefixo <code>/api/v2/accounts/:account_id</code> e a mesma autenticação da API de Aplicação.</p>
-        <div class="model-list"><code>reports</code><code>reports/summary</code><code>reports/drilldown</code><code>csat_survey_responses</code><code>reporting_events</code></div>
-      </section>
-
-      <section class="api-section" id="model-campaigns">
-        <span class="api-kicker">Modelos</span><h2>Campanhas e central de ajuda</h2>
-        <p>Crie comunicação proativa e gerencie portais públicos de autoatendimento.</p>
-        <div class="model-list"><code>campaigns</code><code>campaign_contacts</code><code>portals</code><code>categories</code><code>articles</code></div>
-      </section>
-
-      <section class="api-section" id="model-admin">
-        <span class="api-kicker">Modelos</span><h2>Integrações e administração</h2>
-        <p>Conexões externas, notificações, auditoria e configurações administrativas da conta.</p>
-        <div class="model-list"><code>integrations/apps</code><code>integrations/hooks</code><code>webhooks</code><code>dashboard_apps</code><code>agent_bots</code><code>audit_logs</code><code>saml_settings</code><code>notification_settings</code><code>notifications</code><code>upload</code><code>branded_email_layout</code><code>onboarding <span class="star">★</span></code></div>
-      </section>
+      <div id="api-model-sections"></div>
 
       <section class="api-section" id="webhooks">
         <span class="api-kicker">Operação</span><h2>Webhooks de saída</h2>
@@ -204,7 +149,7 @@ expiry:       &lt;timestamp&gt;</code></pre>
         <pre><code>X-Starchats-Signature = "sha256=" +
   HMAC_SHA256(segredo, timestamp + "." + corpo_cru)</code></pre>
         <p>Calcule sobre o corpo cru, rejeite timestamps antigos e compare em tempo constante. Não reserialize o JSON antes de validar.</p>
-        <div class="api-note warning"><p>Os headers são <code>X-Starchats-*</code>, não <code>X-Chatwoot-*</code>. Entregas saem por SafeFetch: URLs privadas, localhost e redirecionamentos para rede interna são bloqueados. Falhas têm três retentativas com espera de três segundos.</p></div>
+        <div class="api-note warning"><p>Entregas saem por SafeFetch: URLs privadas, localhost e redirecionamentos para rede interna são bloqueados. Falhas têm três retentativas com espera de três segundos.</p></div>
       </section>
 
       <section class="api-section" id="rate-limits">
@@ -259,11 +204,6 @@ curl -sS -X POST \
   -d '{"content":"Preciso de ajuda"}'</code></pre>
       </section>
 
-      <section class="api-section" id="differences">
-        <span class="api-kicker">Migração</span><h2>Diferenças em relação ao Chatwoot</h2>
-        <div class="table-wrap"><table><thead><tr><th>Área</th><th>No Starchats</th></tr></thead><tbody><tr><td>Webhook</td><td><code>X-Starchats-*</code> substitui <code>X-Chatwoot-*</code></td></tr><tr><td>IA</td><td><code>/cosmos/...</code> substitui <code>/captain/...</code>; campos também usam <code>cosmos_*</code></td></tr><tr><td>Gate por plano</td><td>API e webhooks estão sempre habilitados</td></tr><tr><td>Billing</td><td>Rotas de checkout, assinatura e limites foram removidas</td></tr><tr><td>Novos recursos</td><td>Empresas, protocolos, fluxos, chamadas, chamadas WhatsApp e Evolution</td></tr><tr><td>Telemetria</td><td>Não há chamadas para <code>hub.2.chatwoot.com</code></td></tr></tbody></table></div>
-      </section>
-
       <section class="api-section" id="security">
         <span class="api-kicker">Checklist</span><h2>Segurança</h2>
         <ul><li>Crie um usuário dedicado e restrito para cada integração; o token de API não possui escopo próprio.</li><li>Trate <code>inbox_identifier</code> como credencial e habilite HMAC de identidade para usuários autenticados.</li><li>Valide assinatura, timestamp e identificador de entrega de todos os webhooks.</li><li>Planeje a rotação de <code>SECRET_KEY_BASE</code>, pois ela encerra widgets e fluxos MFA/OAuth em andamento.</li><li>Trocar a senha derruba sessões, mas não invalida <code>api_access_token</code>; use o endpoint de rotação.</li><li>Não grave tokens, corpos sensíveis ou segredos de webhook em logs.</li></ul>
@@ -273,6 +213,7 @@ curl -sS -X POST \
   </main>
 
   <footer class="help-footer"><div class="help-footer-inner"><span>© 2026 Stardev · Starchats</span><div class="help-footer-links"><a href="/politica-de-privacidade">Privacidade</a><a href="/termos-de-servico">Termos</a><a href="mailto:stardev.sistemas@gmail.com">Contato</a></div></div></footer>
+  <script src="/api-models.js"></script>
   <script src="/api.js"></script>
 </body>
 </html>

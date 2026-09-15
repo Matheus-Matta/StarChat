@@ -22,6 +22,32 @@
   overlay?.addEventListener('click', close);
   links.forEach(link => link.addEventListener('click', close));
 
+  document.querySelectorAll('[data-code-tabs]').forEach(component => {
+    const tabs = [...component.querySelectorAll('[role="tab"]')];
+    const panels = [...component.querySelectorAll('[role="tabpanel"]')];
+    const activate = tab => {
+      const language = tab.dataset.language;
+      tabs.forEach(item => {
+        const active = item === tab;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      panels.forEach(panel => { panel.hidden = !panel.id.includes(`-${language}-panel`); });
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activate(tab));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft','ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const next = tabs[(index + direction + tabs.length) % tabs.length];
+        activate(next);
+        next.focus();
+      });
+    });
+  });
+
   const observer = new IntersectionObserver(entries => {
     const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
     if (!visible) return;
