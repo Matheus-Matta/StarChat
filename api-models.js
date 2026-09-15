@@ -1,38 +1,38 @@
 (() => {
   'use strict';
 
-  const A = '/api/v1/accounts/1';
-  const V2 = '/api/v2/accounts/1';
+  const A = '/api/v1/accounts/{account_id}';
+  const V2 = '/api/v2/accounts/{account_id}';
   const resource = (id, title, path, description, method = 'GET', body) => ({ id, title, path, description, method, body });
   const groups = [
     { title:'Conversas', resources:[
       resource('conversations','Conversas',`${A}/conversations`,'Liste e filtre as conversas da conta.'),
-      resource('messages','Mensagens',`${A}/conversations/42/messages`,'Envie uma mensagem pública ou uma nota interna.','POST',{ content:'Olá! Como posso ajudar?', message_type:'outgoing', private:false }),
-      resource('assignments','Atribuições',`${A}/conversations/42/assignments`,'Atribua uma conversa a um agente ou time.','POST',{ assignee_id:7, team_id:3 }),
-      resource('conversation-labels','Etiquetas da conversa',`${A}/conversations/42/labels`,'Consulte ou substitua as etiquetas de uma conversa.','POST',{ labels:['cliente-vip','prioridade-alta'] }),
-      resource('participants','Participantes',`${A}/conversations/42/participants`,'Consulte os participantes associados à conversa.'),
-      resource('direct-uploads','Uploads da conversa',`${A}/conversations/42/direct_uploads`,'Crie um upload para anexar arquivos ao atendimento.','POST',{ file_name:'comprovante.pdf', content_type:'application/pdf' }),
-      resource('conversation-custom-attributes','Atributos da conversa',`${A}/conversations/42/custom_attributes`,'Atualize atributos personalizados da conversa.','POST',{ custom_attributes:{ numero_pedido:'PED-1042', prioridade:'alta' } }),
-      resource('transcript','Transcrição',`${A}/conversations/42/transcript`,'Obtenha ou solicite a transcrição de uma conversa.'),
-      resource('conversation-bulk-actions','Ações em lote',`${A}/conversations/bulk_actions`,'Execute a mesma alteração em várias conversas.','POST',{ conversation_ids:[42,43], action:'resolve' }),
+      resource('messages','Mensagens',`${A}/conversations/{conversation_id}/messages`,'Envie uma mensagem pública ou uma nota interna.','POST',{ content:'Olá! Como posso ajudar?', message_type:'outgoing', private:false }),
+      resource('assignments','Atribuições',`${A}/conversations/{conversation_id}/assignments`,'Atribua uma conversa a um agente ou time.','POST',{ assignee_id:'{agent_id}', team_id:'{team_id}' }),
+      resource('conversation-labels','Etiquetas da conversa',`${A}/conversations/{conversation_id}/labels`,'Consulte ou substitua as etiquetas de uma conversa.','POST',{ labels:['cliente-vip','prioridade-alta'] }),
+      resource('participants','Participantes',`${A}/conversations/{conversation_id}/participants`,'Consulte os participantes associados à conversa.'),
+      resource('direct-uploads','Uploads da conversa',`${A}/conversations/{conversation_id}/direct_uploads`,'Crie um upload para anexar arquivos ao atendimento.','POST',{ file_name:'comprovante.pdf', content_type:'application/pdf' }),
+      resource('conversation-custom-attributes','Atributos da conversa',`${A}/conversations/{conversation_id}/custom_attributes`,'Atualize atributos personalizados da conversa.','POST',{ custom_attributes:{ numero_pedido:'PED-1042', prioridade:'alta' } }),
+      resource('transcript','Transcrição',`${A}/conversations/{conversation_id}/transcript`,'Obtenha ou solicite a transcrição de uma conversa.'),
+      resource('conversation-bulk-actions','Ações em lote',`${A}/conversations/bulk_actions`,'Execute a mesma alteração em várias conversas.','POST',{ conversation_ids:['{conversation_id_1}','{conversation_id_2}'], action:'resolve' }),
       resource('calls','Chamadas',`${A}/calls`,'Consulte registros de chamadas associados à conta.'),
       resource('whatsapp-calls','Chamadas do WhatsApp',`${A}/whatsapp_calls`,'Consulte chamadas realizadas pelo canal WhatsApp.')
     ]},
     { title:'Contatos e empresas', resources:[
       resource('contacts','Contatos',`${A}/contacts`,'Liste contatos ou crie um novo perfil.','POST',{ name:'Maria Silva', email:'maria@exemplo.com.br', phone_number:'+5521999999999', identifier:'cliente-123' }),
-      resource('contact-conversations','Conversas do contato',`${A}/contacts/25/conversations`,'Liste o histórico de conversas de um contato.'),
-      resource('contact-inboxes','Vínculos de canal',`${A}/contacts/25/contact_inboxes`,'Consulte os vínculos do contato com caixas de entrada.'),
-      resource('contact-labels','Etiquetas do contato',`${A}/contacts/25/labels`,'Aplique etiquetas ao cadastro do contato.','POST',{ labels:['lead','cliente-vip'] }),
-      resource('contact-notes','Notas do contato',`${A}/contacts/25/notes`,'Registre uma anotação interna no contato.','POST',{ content:'Cliente prefere contato no período da manhã.' }),
+      resource('contact-conversations','Conversas do contato',`${A}/contacts/{contact_id}/conversations`,'Liste o histórico de conversas de um contato.'),
+      resource('contact-inboxes','Vínculos de canal',`${A}/contacts/{contact_id}/contact_inboxes`,'Consulte os vínculos do contato com caixas de entrada.'),
+      resource('contact-labels','Etiquetas do contato',`${A}/contacts/{contact_id}/labels`,'Aplique etiquetas ao cadastro do contato.','POST',{ labels:['lead','cliente-vip'] }),
+      resource('contact-notes','Notas do contato',`${A}/contacts/{contact_id}/notes`,'Registre uma anotação interna no contato.','POST',{ content:'Cliente prefere contato no período da manhã.' }),
       resource('companies','Empresas',`${A}/companies`,'Liste empresas ou cadastre uma organização.','POST',{ name:'Empresa Exemplo', domain:'exemplo.com.br', industry:'Tecnologia' }),
-      resource('company-contacts','Contatos da empresa',`${A}/companies/8/contacts`,'Liste os contatos vinculados a uma empresa.'),
-      resource('company-conversations','Conversas da empresa',`${A}/companies/8/conversations`,'Consulte conversas de todos os contatos da empresa.'),
-      resource('company-notes','Notas da empresa',`${A}/companies/8/notes`,'Adicione contexto interno ao cadastro da empresa.','POST',{ content:'Contrato renovado até dezembro.' }),
+      resource('company-contacts','Contatos da empresa',`${A}/companies/{company_id}/contacts`,'Liste os contatos vinculados a uma empresa.'),
+      resource('company-conversations','Conversas da empresa',`${A}/companies/{company_id}/conversations`,'Consulte conversas de todos os contatos da empresa.'),
+      resource('company-notes','Notas da empresa',`${A}/companies/{company_id}/notes`,'Adicione contexto interno ao cadastro da empresa.','POST',{ content:'Contrato renovado até dezembro.' }),
       resource('data-imports','Importações de dados',`${A}/data_imports`,'Acompanhe importações de contatos e outros registros.')
     ]},
     { title:'Caixas e canais', resources:[
       resource('inboxes','Caixas de entrada',`${A}/inboxes`,'Liste as caixas de entrada disponíveis na conta.'),
-      resource('inbox-members','Membros da caixa',`${A}/inboxes/9/inbox_members`,'Consulte os agentes autorizados em uma caixa.'),
+      resource('inbox-members','Membros da caixa',`${A}/inboxes/{inbox_id}/inbox_members`,'Consulte os agentes autorizados em uma caixa.'),
       resource('evolution-channel','Canal Evolution',`${A}/channels/evolution_channel`,'Consulte a configuração do canal Evolution.'),
       resource('whatsapp-channel','Canal WhatsApp',`${A}/whatsapp`,'Consulte recursos e configurações do WhatsApp.'),
       resource('channel-callbacks','Callbacks de canais',`${A}/callbacks`,'Acompanhe callbacks usados na autorização de canais.'),
@@ -59,20 +59,20 @@
       resource('conversation-flows','Fluxos de conversa',`${A}/conversation_flows`,'Liste fluxos de reengajamento e resolução automática.'),
       resource('protocol-policies','Políticas de protocolo',`${A}/protocol_policies`,'Consulte regras de numeração e prefixos.'),
       resource('protocols','Protocolos',`${A}/protocols`,'Liste protocolos de atendimento gerados.'),
-      resource('protocol-comments','Comentários de protocolo',`${A}/protocols/1024/protocol_comments`,'Consulte ou registre comentários em um protocolo.','POST',{ content:'Validação concluída pelo suporte.' })
+      resource('protocol-comments','Comentários de protocolo',`${A}/protocols/{protocol_id}/protocol_comments`,'Consulte ou registre comentários em um protocolo.','POST',{ content:'Validação concluída pelo suporte.' })
     ]},
     { title:'Cosmos IA', resources:[
       resource('cosmos-assistants','Assistentes',`${A}/cosmos/assistants`,'Liste os assistentes de IA da conta.'),
-      resource('cosmos-scenarios','Cenários',`${A}/cosmos/assistants/7/scenarios`,'Consulte cenários configurados para um assistente.'),
-      resource('cosmos-inboxes','Caixas do assistente',`${A}/cosmos/assistants/7/inboxes`,'Liste as caixas conectadas ao assistente.'),
-      resource('cosmos-guardrails','Limites de atuação',`${A}/cosmos/assistants/7/guardrails`,'Consulte as regras de segurança do assistente.'),
-      resource('cosmos-response-guidelines','Diretrizes de resposta',`${A}/cosmos/assistants/7/response_guidelines`,'Liste as orientações de tom e formato.'),
+      resource('cosmos-scenarios','Cenários',`${A}/cosmos/assistants/{assistant_id}/scenarios`,'Consulte cenários configurados para um assistente.'),
+      resource('cosmos-inboxes','Caixas do assistente',`${A}/cosmos/assistants/{assistant_id}/inboxes`,'Liste as caixas conectadas ao assistente.'),
+      resource('cosmos-guardrails','Limites de atuação',`${A}/cosmos/assistants/{assistant_id}/guardrails`,'Consulte as regras de segurança do assistente.'),
+      resource('cosmos-response-guidelines','Diretrizes de resposta',`${A}/cosmos/assistants/{assistant_id}/response_guidelines`,'Liste as orientações de tom e formato.'),
       resource('cosmos-documents','Documentos',`${A}/cosmos/documents`,'Consulte documentos da base de conhecimento.'),
       resource('cosmos-assistant-responses','Respostas do assistente',`${A}/cosmos/assistant_responses`,'Analise respostas produzidas pelo Cosmos.'),
       resource('cosmos-faq-suggestions','Sugestões de FAQ',`${A}/cosmos/faq_suggestions`,'Liste perguntas frequentes sugeridas.'),
       resource('cosmos-custom-tools','Ferramentas personalizadas',`${A}/cosmos/custom_tools`,'Consulte ferramentas externas disponíveis ao assistente.'),
       resource('cosmos-copilot-threads','Threads do copiloto',`${A}/cosmos/copilot_threads`,'Liste sessões de conversa com o copiloto.'),
-      resource('cosmos-copilot-messages','Mensagens do copiloto',`${A}/cosmos/copilot_threads/9/copilot_messages`,'Consulte mensagens de uma thread do copiloto.'),
+      resource('cosmos-copilot-messages','Mensagens do copiloto',`${A}/cosmos/copilot_threads/{copilot_thread_id}/copilot_messages`,'Consulte mensagens de uma thread do copiloto.'),
       resource('cosmos-agent-sessions','Sessões de agentes',`${A}/cosmos/agent_sessions`,'Consulte sessões de agentes do Cosmos.'),
       resource('cosmos-bulk-actions','Ações em lote do Cosmos',`${A}/cosmos/bulk_actions`,'Acompanhe operações em lote da base de IA.'),
       resource('cosmos-message-reports','Relatórios de mensagem',`${A}/cosmos/message_reports`,'Consulte feedback e relatórios de respostas.')
@@ -86,10 +86,10 @@
     ]},
     { title:'Campanhas e portais', resources:[
       resource('campaigns','Campanhas',`${A}/campaigns`,'Liste campanhas da conta.'),
-      resource('campaign-contacts','Contatos da campanha',`${A}/campaigns/12/campaign_contacts`,'Consulte os destinatários de uma campanha.'),
+      resource('campaign-contacts','Contatos da campanha',`${A}/campaigns/{campaign_id}/campaign_contacts`,'Consulte os destinatários de uma campanha.'),
       resource('portals','Portais',`${A}/portals`,'Liste portais públicos da central de ajuda.'),
-      resource('portal-categories','Categorias do portal',`${A}/portals/4/categories`,'Consulte as categorias de um portal.'),
-      resource('portal-articles','Artigos do portal',`${A}/portals/4/articles`,'Liste os artigos publicados no portal.')
+      resource('portal-categories','Categorias do portal',`${A}/portals/{portal_id}/categories`,'Consulte as categorias de um portal.'),
+      resource('portal-articles','Artigos do portal',`${A}/portals/{portal_id}/articles`,'Liste os artigos publicados no portal.')
     ]},
     { title:'Integrações e administração', resources:[
       resource('integration-apps','Aplicativos de integração',`${A}/integrations/apps`,'Liste aplicativos disponíveis para integração.'),
@@ -109,22 +109,42 @@
 
   const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' })[character]);
   const fullUrl = path => `https://SEU_DOMINIO${path}`;
+  const idInfo = {
+    account_id:['ID da sua conta',1], conversation_id:['ID da conversa',42], conversation_id_1:['ID da primeira conversa',42], conversation_id_2:['ID da segunda conversa',43],
+    contact_id:['ID do contato',25], company_id:['ID da empresa',8], inbox_id:['ID numérico da caixa de entrada',9], agent_id:['ID do agente',7], team_id:['ID do time',3],
+    protocol_id:['ID do protocolo',1024], assistant_id:['ID do assistente Cosmos',7], copilot_thread_id:['ID da thread do copiloto',9], campaign_id:['ID da campanha',12], portal_id:['ID do portal',4]
+  };
+  const placeholders = item => [...new Set(`${item.path} ${JSON.stringify(item.body || {})}`.match(/\{[a-z0-9_]+\}/g) || [])].map(value => value.slice(1,-1));
+  const camelCase = value => value.replace(/_([a-z0-9])/g, (_, character) => character.toUpperCase());
   const requestObject = item => {
     const request = { method:item.method, url:fullUrl(item.path), headers:{ api_access_token:'SEU_TOKEN', 'Content-Type':'application/json' } };
     if (item.body) request.body = item.body;
     return request;
   };
-  const pythonLiteral = value => JSON.stringify(value, null, 2).replace(/\btrue\b/g,'True').replace(/\bfalse\b/g,'False').replace(/\bnull\b/g,'None');
+  const pythonLiteral = (value, names) => {
+    let output = JSON.stringify(value, null, 2).replace(/\btrue\b/g,'True').replace(/\bfalse\b/g,'False').replace(/\bnull\b/g,'None');
+    names.forEach(name => { output = output.replaceAll(`"{${name}}"`, name); });
+    return output;
+  };
   const pythonExample = item => {
-    const lines = [`import requests`, ``, `url = "${fullUrl(item.path)}"`, `headers = {`, `    "api_access_token": "SEU_TOKEN",`, `    "Content-Type": "application/json",`, `}`];
-    if (item.body) lines.push(`payload = ${pythonLiteral(item.body)}`);
+    const names = placeholders(item);
+    const declarations = names.map(name => `${name} = ${idInfo[name]?.[1] ?? 1}  # substitua {${name}} pelo ${idInfo[name]?.[0] ?? 'ID correspondente'}`);
+    const lines = [`import requests`, ``, ...declarations, declarations.length ? `` : '', `url = f"${fullUrl(item.path)}"`, `headers = {`, `    "api_access_token": "SEU_TOKEN",`, `    "Content-Type": "application/json",`, `}`];
+    if (item.body) lines.push(`payload = ${pythonLiteral(item.body,names)}`);
     lines.push(``, `response = requests.${item.method.toLowerCase()}(`, `    url,`, `    headers=headers,${item.body ? '\n    json=payload,' : ''}`, `)`, `response.raise_for_status()`, `print(response.json())`);
-    return lines.join('\n');
+    return lines.filter((line,index,array) => line !== '' || array[index-1] !== '').join('\n');
   };
   const javascriptExample = item => {
+    const names = placeholders(item);
+    const declarations = names.map(name => `const ${camelCase(name)} = ${idInfo[name]?.[1] ?? 1}; // substitua {${name}} pelo ${idInfo[name]?.[0] ?? 'ID correspondente'}`);
     const options = [`  method: '${item.method}',`, `  headers: {`, `    api_access_token: 'SEU_TOKEN',`, `    'Content-Type': 'application/json',`, `  },`];
-    if (item.body) options.push(`  body: JSON.stringify(${JSON.stringify(item.body, null, 2).split('\n').join('\n  ')}),`);
-    return [`const response = await fetch(`, `  '${fullUrl(item.path)}',`, `  {`, ...options, `  }`, `);`, ``, `if (!response.ok) throw new Error(\`HTTP \${response.status}\`);`, `const data = await response.json();`, `console.log(data);`].join('\n');
+    if (item.body) {
+      let body = JSON.stringify(item.body,null,2);
+      names.forEach(name => { body = body.replaceAll(`"{${name}}"`, camelCase(name)); });
+      options.push(`  body: JSON.stringify(${body.split('\n').join('\n  ')}),`);
+    }
+    const jsPath = fullUrl(item.path).replace(/\{([a-z0-9_]+)\}/g, (_,name) => `\${${camelCase(name)}}`);
+    return [...declarations, declarations.length ? '' : '', `const response = await fetch(`, `  \`${jsPath}\`,`, `  {`, ...options, `  }`, `);`, ``, `if (!response.ok) throw new Error(\`HTTP \${response.status}\`);`, `const data = await response.json();`, `console.log(data);`].filter((line,index,array) => line !== '' || array[index-1] !== '').join('\n');
   };
   const panel = (item, language, label, code, selected = false) => `<div class="code-panel" role="tabpanel" id="${item.id}-${language}-panel" aria-labelledby="${item.id}-${language}-tab"${selected ? '' : ' hidden'}><pre><code>${escapeHtml(code)}</code></pre></div>`;
   const example = item => `<div class="api-example" data-code-tabs>
@@ -137,10 +157,12 @@
     ${panel(item,'python','Python',pythonExample(item))}
     ${panel(item,'javascript','JavaScript',javascriptExample(item))}
   </div>`;
+  const placeholderGuide = item => `<div class="placeholder-guide"><strong>Identificadores deste exemplo</strong><span>${placeholders(item).map(name => `<code>{${name}}</code> = ${escapeHtml(idInfo[name]?.[0] ?? 'ID correspondente')}`).join(' · ')}</span><small>Substitua cada placeholder pelo valor real, sem enviar as chaves <code>{ }</code>.</small></div>`;
   const section = (item, group) => `<section class="api-section api-model" id="model-${item.id}">
     <span class="api-kicker">${escapeHtml(group.title)}</span><h2>${escapeHtml(item.title)}</h2>
     <p>${escapeHtml(item.description)}</p>
     <div class="endpoint"><span class="method ${item.method.toLowerCase()}">${item.method}</span><code>${escapeHtml(item.path)}</code></div>
+    ${placeholderGuide(item)}
     ${example(item)}
   </section>`;
 

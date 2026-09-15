@@ -42,6 +42,10 @@
 .model-list code { padding:6px 9px; border-color:#e5e7eb; background:#fff; }
 .api-model { padding-top:34px!important; border-top:1px solid var(--line); }
 .api-model .endpoint { margin-bottom:18px; }
+.placeholder-guide { display:grid; gap:7px; margin:14px 0 18px; padding:14px 16px; border:1px solid #bfdbfe; border-radius:11px; background:#eff6ff; color:#42526a; font-size:12px; line-height:1.55; }
+.placeholder-guide strong { color:#1e3a8a; }
+.placeholder-guide code { color:#1d4ed8; background:#fff; border-color:#bfdbfe; }
+.placeholder-guide small { color:#64748b; font-size:11px; }
 .api-example { overflow:hidden; margin:18px 0 4px; border:1px solid #273449; border-radius:14px; background:#101827; box-shadow:0 18px 40px -34px #0f172a; }
 .code-tabs { display:flex; gap:4px; padding:8px; border-bottom:1px solid #334155; background:#172033; }
 .code-tab { padding:8px 13px; border:0; border-radius:7px; color:#94a3b8; background:transparent; font:650 11px 'Geist Mono',monospace; cursor:pointer; }

@@ -306,11 +306,11 @@ function initPricing() {
 
   function update(annual) {
     setActive(buttons, annual ? buttons[0] : buttons[1]);
-    prices[0].textContent = annual ? "R$ 499" : "R$ 699";
-    prices[1].textContent = annual ? "R$ 999" : "R$ 1.199";
+    prices[0].textContent = annual ? "R$ 489,30" : "R$ 699";
+    prices[1].textContent = annual ? "R$ 839,30" : "R$ 1.199";
     prices[2].textContent = "Sob consulta";
-    if (notes[0]) notes[0].textContent = annual ? "R$ 5.988 cobrado anualmente" : "ou R$ 5.988/ano no plano anual";
-    if (notes[1]) notes[1].textContent = annual ? "R$ 11.988 cobrado anualmente" : "ou R$ 11.988/ano no plano anual";
+    if (notes[0]) notes[0].textContent = annual ? "R$ 5.871,60 cobrado anualmente" : "ou R$ 5.871,60/ano no plano anual";
+    if (notes[1]) notes[1].textContent = annual ? "R$ 10.071,60 cobrado anualmente" : "ou R$ 10.071,60/ano no plano anual";
   }
   buttons[0].addEventListener("click", () => update(true));
   buttons[1].addEventListener("click", () => update(false));

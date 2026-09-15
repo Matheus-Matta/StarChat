@@ -32,7 +32,7 @@
   <main class="api-layout">
     <aside class="api-sidebar" id="api-sidebar" aria-label="Navegação da API">
       <div class="api-sidebar-head"><span>Referência da API</span><button class="api-sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
-      <div class="api-nav-group"><strong>Começar</strong><a href="#overview">Visão geral</a><a href="#authentication">Autenticação</a><a href="#api-token">Token de API</a><a href="#session-mfa">Sessão e MFA</a><a href="#bot-tokens">Tokens de bot</a></div>
+      <div class="api-nav-group"><strong>Começar</strong><a href="#overview">Visão geral</a><a href="#identifiers">IDs e placeholders</a><a href="#authentication">Autenticação</a><a href="#api-token">Token de API</a><a href="#session-mfa">Sessão e MFA</a><a href="#bot-tokens">Tokens de bot</a></div>
       <div class="api-nav-group"><strong>Superfícies</strong><a href="#application-api">API de Aplicação</a><a href="#platform-api">API de Plataforma</a><a href="#public-api">Canal API pública</a><a href="#widget-api">API do Widget</a></div>
       <div id="api-model-nav"></div>
       <div class="api-nav-group"><strong>Operação</strong><a href="#webhooks">Webhooks</a><a href="#rate-limits">Rate limits</a><a href="#responses">Respostas e paginação</a><a href="#examples">Exemplos completos</a><a href="#security">Segurança</a></div>
@@ -44,12 +44,46 @@
         <p>O Starchats expõe quatro APIs com objetivos e credenciais diferentes. A API de Aplicação atende a maior parte das integrações. Plataforma administra contas externamente, Canal API cria canais próprios e Widget sustenta o chat do site.</p>
         <div class="api-note warning"><p><strong>Consulte esta referência junto ao OpenAPI.</strong> O esquema servido em <code>/swagger</code> e <code>/doc</code> ainda não cobre protocolos, fluxos, Evolution, Cosmos e empresas.</p></div>
         <div class="api-card-grid">
-          <div class="api-card"><strong>API de Aplicação</strong><p>Conversas, contatos, caixas, equipe, relatórios e administração.</p><span class="api-prefix">/api/v1/accounts/:account_id</span></div>
+          <div class="api-card"><strong>API de Aplicação</strong><p>Conversas, contatos, caixas, equipe, relatórios e administração.</p><span class="api-prefix">/api/v1/accounts/{account_id}</span></div>
           <div class="api-card"><strong>API de Plataforma</strong><p>Criação e gestão externa de contas e usuários.</p><span class="api-prefix">/platform/api/v1</span></div>
-          <div class="api-card"><strong>Canal API pública</strong><p>Crie contatos, conversas e mensagens em um canal próprio.</p><span class="api-prefix">/public/api/v1/inboxes/:identifier</span></div>
+          <div class="api-card"><strong>Canal API pública</strong><p>Crie contatos, conversas e mensagens em um canal próprio.</p><span class="api-prefix">/public/api/v1/inboxes/{inbox_identifier}</span></div>
           <div class="api-card"><strong>API do Widget</strong><p>Uso interno do widget com website token e sessão JWT.</p><span class="api-prefix">/api/v1/widget</span></div>
         </div>
-        <p>Relatórios também possuem rotas em <code>/api/v2/accounts/:account_id/reports</code>, com a mesma autenticação da API de Aplicação.</p>
+        <p>Relatórios também possuem rotas em <code>/api/v2/accounts/{account_id}/reports</code>, com a mesma autenticação da API de Aplicação.</p>
+      </section>
+
+      <section class="api-section" id="identifiers">
+        <span class="api-kicker">Começar</span><h2>Como obter IDs e substituir placeholders</h2>
+        <div class="api-note warning"><p><strong>Todo texto entre chaves é um placeholder.</strong> Em <code>/accounts/{account_id}/conversations/{conversation_id}</code>, substitua <code>{account_id}</code> pelo ID da sua conta e <code>{conversation_id}</code> pelo ID da conversa. Não envie os caracteres <code>{</code> e <code>}</code>.</p></div>
+        <h3>Obter o <code>{account_id}</code></h3>
+        <p>O <code>{account_id}</code> é o identificador numérico da conta, não o ID do usuário. Você pode encontrá-lo de duas formas:</p>
+        <ol><li><strong>No painel:</strong> abra a conta e observe a URL. Em <code>/app/accounts/123/...</code>, o <code>{account_id}</code> é <code>123</code>.</li><li><strong>Pela API:</strong> consulte o perfil autenticado. O array <code>accounts</code> retorna o campo <code>id</code> de cada conta acessível ao token.</li></ol>
+        <div class="endpoint"><span class="method get">GET</span><code>/api/v1/profile</code></div>
+        <pre><code>{
+  "id": 7,
+  "email": "agente@empresa.com.br",
+  "accounts": [
+    { "id": 123, "name": "Minha empresa", "role": "administrator" }
+  ]
+}</code></pre>
+        <p>Nesse exemplo, use <code>123</code> no lugar de <code>{account_id}</code>.</p>
+        <h3>Obter IDs dos recursos</h3>
+        <p>Liste ou crie o recurso e guarde o campo <code>id</code> devolvido no JSON. Todos os exemplos da referência mostram quais placeholders são necessários.</p>
+        <div class="table-wrap"><table><thead><tr><th>Placeholder</th><th>Significado</th><th>Como obter</th></tr></thead><tbody>
+          <tr><td><code>{conversation_id}</code></td><td>ID da conversa</td><td><code>GET /api/v1/accounts/{account_id}/conversations</code></td></tr>
+          <tr><td><code>{contact_id}</code></td><td>ID do contato</td><td><code>GET /api/v1/accounts/{account_id}/contacts</code></td></tr>
+          <tr><td><code>{company_id}</code></td><td>ID da empresa</td><td><code>GET /api/v1/accounts/{account_id}/companies</code></td></tr>
+          <tr><td><code>{inbox_id}</code></td><td>ID numérico da caixa</td><td><code>GET /api/v1/accounts/{account_id}/inboxes</code></td></tr>
+          <tr><td><code>{agent_id}</code></td><td>ID do agente</td><td><code>GET /api/v1/accounts/{account_id}/agents</code></td></tr>
+          <tr><td><code>{team_id}</code></td><td>ID do time</td><td><code>GET /api/v1/accounts/{account_id}/teams</code></td></tr>
+          <tr><td><code>{assistant_id}</code></td><td>ID do assistente Cosmos</td><td><code>GET /api/v1/accounts/{account_id}/cosmos/assistants</code></td></tr>
+          <tr><td><code>{copilot_thread_id}</code></td><td>ID da thread do copiloto</td><td><code>GET /api/v1/accounts/{account_id}/cosmos/copilot_threads</code></td></tr>
+          <tr><td><code>{protocol_id}</code></td><td>ID do protocolo</td><td><code>GET /api/v1/accounts/{account_id}/protocols</code></td></tr>
+          <tr><td><code>{campaign_id}</code></td><td>ID da campanha</td><td><code>GET /api/v1/accounts/{account_id}/campaigns</code></td></tr>
+          <tr><td><code>{portal_id}</code></td><td>ID do portal</td><td><code>GET /api/v1/accounts/{account_id}/portals</code></td></tr>
+        </tbody></table></div>
+        <h3>Identificadores da Canal API</h3>
+        <p><code>{inbox_identifier}</code> não é igual a <code>{inbox_id}</code>. Ele identifica e autentica uma caixa do tipo API e aparece na configuração dessa caixa. Trate-o como segredo. Já <code>{source_id}</code> é retornado ao criar um contato pela Canal API e identifica aquele contato dentro da caixa.</p>
       </section>
 
       <section class="api-section" id="authentication">
@@ -66,8 +100,8 @@
       <section class="api-section" id="api-token">
         <span class="api-kicker">Autenticação</span><h2>Token de API</h2>
         <p><code>api_access_token</code> é um token opaco de longa duração associado a um usuário ou Agent Bot. Não é JWT e não usa o esquema Bearer.</p>
-        <div class="endpoint"><span class="method get">GET</span><code>/api/v1/accounts/1/conversations</code></div>
-        <pre><code>curl -sS 'https://SEU_DOMINIO/api/v1/accounts/1/conversations' \
+        <div class="endpoint"><span class="method get">GET</span><code>/api/v1/accounts/{account_id}/conversations</code></div>
+        <pre><code>curl -sS 'https://SEU_DOMINIO/api/v1/accounts/{account_id}/conversations' \
   -H 'api_access_token: SEU_TOKEN'</code></pre>
         <div class="api-note warning"><p><strong>Não use <code>Authorization: Bearer</code>.</strong> O header aceito é exatamente <code>api_access_token</code>.</p></div>
         <h3>Obter e rotacionar</h3>
@@ -106,7 +140,7 @@ expiry:       &lt;timestamp&gt;</code></pre>
       <section class="api-section" id="application-api">
         <span class="api-kicker">Superfícies</span><h2>API de Aplicação</h2>
         <p>É a superfície principal do produto. Todos os recursos vivem sob o prefixo da conta e aceitam <code>api_access_token</code> ou a sessão usada pelo dashboard.</p>
-        <span class="api-prefix">/api/v1/accounts/:account_id/...</span>
+        <span class="api-prefix">/api/v1/accounts/{account_id}/...</span>
         <p style="margin-top:16px">O token precisa pertencer a um usuário membro da conta indicada, com permissão para a ação. Para conferir verbos, caminhos e parâmetros exatos da versão instalada:</p>
         <pre><code>bundle exec rails routes | grep 'api/v1/accounts'</code></pre>
       </section>
@@ -121,7 +155,7 @@ expiry:       &lt;timestamp&gt;</code></pre>
       <section class="api-section" id="public-api">
         <span class="api-kicker">Superfícies</span><h2>Canal API pública</h2>
         <p>A Canal API não usa header de autenticação. O <code>inbox_identifier</code> na URL é a credencial que permite criar contatos, conversas e mensagens naquela caixa.</p>
-        <span class="api-prefix">/public/api/v1/inboxes/:inbox_identifier/...</span>
+        <span class="api-prefix">/public/api/v1/inboxes/{inbox_identifier}/...</span>
         <div class="api-note warning"><p>Quem conhece o identificador pode escrever na caixa. Não o exponha em repositórios ou logs públicos.</p></div>
         <h3>HMAC de identidade</h3>
         <p>Quando <code>hmac_mandatory</code> está ativo, envie <code>identifier_hash</code> como hexadecimal de:</p>
@@ -141,7 +175,7 @@ expiry:       &lt;timestamp&gt;</code></pre>
 
       <section class="api-section" id="webhooks">
         <span class="api-kicker">Operação</span><h2>Webhooks de saída</h2>
-        <div class="endpoint"><span class="method post">POST</span><code>/api/v1/accounts/:account_id/webhooks</code></div>
+        <div class="endpoint"><span class="method post">POST</span><code>/api/v1/accounts/{account_id}/webhooks</code></div>
         <p>A lista de eventos é fechada. Um nome fora dela falha na validação.</p>
         <div class="model-list"><code>conversation_created</code><code>conversation_updated</code><code>conversation_status_changed</code><code>conversation_typing_on</code><code>conversation_typing_off</code><code>conversation_sla_breached</code><code>message_created</code><code>message_updated</code><code>contact_created</code><code>contact_updated</code><code>inbox_created</code><code>inbox_updated</code><code>webwidget_triggered</code></div>
         <h3>Assinatura HMAC</h3>
@@ -176,30 +210,31 @@ expiry:       &lt;timestamp&gt;</code></pre>
 
       <section class="api-section" id="examples">
         <span class="api-kicker">Operação</span><h2>Exemplos completos</h2>
+        <div class="api-note"><p>Substitua todos os valores entre chaves pelos IDs reais obtidos nas respostas da API. Por exemplo: <code>{account_id}</code> é o ID da conta e <code>{conversation_id}</code> é o ID da conversa.</p></div>
         <h3>Listar conversas abertas</h3>
-        <pre><code>curl -sS 'https://SEU_DOMINIO/api/v1/accounts/1/conversations?status=open' \
+        <pre><code>curl -sS 'https://SEU_DOMINIO/api/v1/accounts/{account_id}/conversations?status=open' \
   -H 'api_access_token: SEU_TOKEN'</code></pre>
         <h3>Enviar uma mensagem</h3>
         <pre><code>curl -sS -X POST \
-  'https://SEU_DOMINIO/api/v1/accounts/1/conversations/42/messages' \
+  'https://SEU_DOMINIO/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages' \
   -H 'api_access_token: SEU_TOKEN' \
   -H 'Content-Type: application/json' \
   -d '{"content":"Olá! Como posso ajudar?","message_type":"outgoing","private":false}'</code></pre>
         <h3>Criar contato, conversa e mensagem pelo Canal API</h3>
         <pre><code># 1. Criar contato; guarde o source_id retornado
 curl -sS -X POST \
-  'https://SEU_DOMINIO/public/api/v1/inboxes/IDENTIFICADOR/contacts' \
+  'https://SEU_DOMINIO/public/api/v1/inboxes/{inbox_identifier}/contacts' \
   -H 'Content-Type: application/json' \
   -d '{"identifier":"cliente-123","name":"Maria","email":"maria@exemplo.com.br"}'
 
 # 2. Criar conversa
 curl -sS -X POST \
-  'https://SEU_DOMINIO/public/api/v1/inboxes/IDENTIFICADOR/contacts/SOURCE_ID/conversations' \
+  'https://SEU_DOMINIO/public/api/v1/inboxes/{inbox_identifier}/contacts/{source_id}/conversations' \
   -H 'Content-Type: application/json'
 
 # 3. Enviar mensagem
 curl -sS -X POST \
-  'https://SEU_DOMINIO/public/api/v1/inboxes/IDENTIFICADOR/contacts/SOURCE_ID/conversations/ID/messages' \
+  'https://SEU_DOMINIO/public/api/v1/inboxes/{inbox_identifier}/contacts/{source_id}/conversations/{conversation_id}/messages' \
   -H 'Content-Type: application/json' \
   -d '{"content":"Preciso de ajuda"}'</code></pre>
       </section>
